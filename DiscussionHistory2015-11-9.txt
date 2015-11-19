@@ -1,216 +1,216 @@
-[12:36:52] SoluLab Inc: Basic questions regarding app:
-[12:37:03] SoluLab Inc: 1) Is multi language supported?
+[12:36:52] XXX Inc: Basic questions regarding app:
+[12:37:03] XXX Inc: 1) Is multi language supported?
 [12:37:06] tianyi_shen: yes
 [12:37:12] tianyi_shen: need localization
-[12:37:22] SoluLab Inc: which languages please
+[12:37:22] XXX Inc: which languages please
 [12:37:39] tianyi_shen: Chinese, English
 [12:37:45] tianyi_shen: But the language should be extensible
 [12:38:03] tianyi_shen: I am not sure how many languages should be added in in the near future
-[12:38:55] SoluLab Inc: Certain data is dynamic like KPI discussion. If user has added that in English and he changes language, do we have to show that dynamic text in other language as well?
+[12:38:55] XXX Inc: Certain data is dynamic like KPI discussion. If user has added that in English and he changes language, do we have to show that dynamic text in other language as well?
 [12:39:07] tianyi_shen: I prefer to use the standard localization solution in iOS and Android platform
 [12:39:40] tianyi_shen: No, localization here means only the UI text and alert text
-[12:39:50] SoluLab Inc: Okay
+[12:39:50] XXX Inc: Okay
 [12:39:53] tianyi_shen: User created content is language independent
-[12:41:18] SoluLab Inc: In that case, standard localization framework in Androidn and iOS is sufficient. Adding new language should be relatively straightforwad. We will add all static text in one file and when adding support for new language, you have to provide us translation of that text in other language
-[12:41:27] SoluLab Inc: 2) Is it phone only or tablet version app as well?
+[12:41:18] XXX Inc: In that case, standard localization framework in Androidn and iOS is sufficient. Adding new language should be relatively straightforwad. We will add all static text in one file and when adding support for new language, you have to provide us translation of that text in other language
+[12:41:27] XXX Inc: 2) Is it phone only or tablet version app as well?
 [12:44:21] tianyi_shen: Only phone
 [12:44:34] tianyi_shen: In this phase only phone
-[12:45:12] SoluLab Inc: portait only mode I guess?
+[12:45:12] XXX Inc: portait only mode I guess?
 [12:45:17] tianyi_shen: but I am not sure whether we need a tablet version in the future. Does it very matter on your coding in this period?
 [12:45:43] tianyi_shen: Yes, Portait. But there is one page needs landscope mode
-[12:45:53] SoluLab Inc: chart page, right?
+[12:45:53] XXX Inc: chart page, right?
 [12:46:00] tianyi_shen: S03-2-1
 [12:46:02] tianyi_shen: S03-2-2
 [12:46:32] tianyi_shen: But you don't need to make layout auto adjustment
-[12:48:49] SoluLab Inc: Regarding phone Vs Tablet, there are two ways people generally handle this - some people build for phone and then just add support for 2X scale, so it work on tablet as well. (which is not recommended approach but it works) and some people redesign screens to take advantage of tablet's bigger UI screen. If we have to redesign all screens that way then our current development in this phase won't be impacted
+[12:48:49] XXX Inc: Regarding phone Vs Tablet, there are two ways people generally handle this - some people build for phone and then just add support for 2X scale, so it work on tablet as well. (which is not recommended approach but it works) and some people redesign screens to take advantage of tablet's bigger UI screen. If we have to redesign all screens that way then our current development in this phase won't be impacted
 [12:49:59] tianyi_shen: Ok. Then we move this job to the next phase
-[12:50:00] SoluLab Inc: We will have redesign screens differently and it takes about 1/3 time of UI development of phone version
+[12:50:00] XXX Inc: We will have redesign screens differently and it takes about 1/3 time of UI development of phone version
 [12:50:33] tianyi_shen: But you may take it into consideration when you are writting the view controller class in order it can be reused in the future
-[12:51:20] SoluLab Inc: certainly. iOS has auto layout feature so we just need to rewrite view. Model and controller will be reused as much as possible
+[12:51:20] XXX Inc: certainly. iOS has auto layout feature so we just need to rewrite view. Model and controller will be reused as much as possible
 [12:52:15] tianyi_shen: Ok
-[12:52:22] SoluLab Inc: Does this app requires password pattern like whatsapp to open?
-[12:53:16] SoluLab Inc: There is login/password but people generally don't log out of the app and if someone left unlocked phone on the desk then his colleagues could see KPI data and other confidential info on his phone
-[12:53:37] SoluLab Inc: Generally enterprise apps have some higher level of security, hence asked
+[12:52:22] XXX Inc: Does this app requires password pattern like whatsapp to open?
+[12:53:16] XXX Inc: There is login/password but people generally don't log out of the app and if someone left unlocked phone on the desk then his colleagues could see KPI data and other confidential info on his phone
+[12:53:37] XXX Inc: Generally enterprise apps have some higher level of security, hence asked
 [12:54:13] tianyi_shen: The pattern password is interesting. But I am not sure how many workloads will it increase
-[12:54:29] SoluLab Inc: If phone gets lost or stolen then data should be wiped out by admin - is it in scope?
+[12:54:29] XXX Inc: If phone gets lost or stolen then data should be wiped out by admin - is it in scope?
 [12:55:06] tianyi_shen: Since it's a web service based app, the account can be managed also from website.
-[12:55:38] SoluLab Inc: I am just throwing some ideas which might be necessory for enterprise app. Let's agree on all requirements first and will discuss about timing after that
-[12:56:09] SoluLab Inc: Agree its web service based app but if someone lost the phone then anyone could see the data for logged in user
+[12:55:38] XXX Inc: I am just throwing some ideas which might be necessory for enterprise app. Let's agree on all requirements first and will discuss about timing after that
+[12:56:09] XXX Inc: Agree its web service based app but if someone lost the phone then anyone could see the data for logged in user
 [12:57:33] tianyi_shen: Practically if user is lazy enough to ignoring setting a phone lock password, he will also not set a password for app. Just ignore tha
-[12:57:50] SoluLab Inc: ok
-[12:58:03] SoluLab Inc: starting with login module
-[12:58:32] SoluLab Inc: there is no privacy policy and TOS on sign up page. Is this required?
+[12:57:50] XXX Inc: ok
+[12:58:03] XXX Inc: starting with login module
+[12:58:32] XXX Inc: there is no privacy policy and TOS on sign up page. Is this required?
 [12:59:00] tianyi_shen: No, it is a in-house distributed app
-[12:59:22] SoluLab Inc: S01-5 - alert message should have just OK than yes/no
+[12:59:22] XXX Inc: S01-5 - alert message should have just OK than yes/no
 [12:59:33] tianyi_shen: ok
-[13:00:07] SoluLab Inc: what's the restriction for password field? Standard 6 to 8 chars long with 1 number/special char?
+[13:00:07] XXX Inc: what's the restriction for password field? Standard 6 to 8 chars long with 1 number/special char?
 [13:01:11] tianyi_shen: The password restriction is defined by the backend and will change time to time. The password validation will be done on the server side
-[13:02:35] SoluLab Inc: That doesn't seem right approach as it could avoid one web service call if managed at client side
+[13:02:35] XXX Inc: That doesn't seem right approach as it could avoid one web service call if managed at client side
 [13:03:29] tianyi_shen: But it would be changed time to time. We can't update the app everytime we change the password policy
-[13:04:04] SoluLab Inc: ok, at least basic validation should be added on client side - say user is just typing "a" as password
-[13:04:14] SoluLab Inc: let's move to next one
-[13:04:25] SoluLab Inc: forgot password screen is mising - we will add
+[13:04:04] XXX Inc: ok, at least basic validation should be added on client side - say user is just typing "a" as password
+[13:04:14] XXX Inc: let's move to next one
+[13:04:25] XXX Inc: forgot password screen is mising - we will add
 [13:04:38] tianyi_shen: ok
-[13:04:43] SoluLab Inc: Should get a link to reset his password to his registered email address
+[13:04:43] XXX Inc: Should get a link to reset his password to his registered email address
 [13:04:57] tianyi_shen: yes
-[13:06:29] SoluLab Inc: splash window will have mp4 video?
+[13:06:29] XXX Inc: splash window will have mp4 video?
 [13:07:01] tianyi_shen: We studies some example app and we prefer the LinkedIn's start
-[13:07:24] SoluLab Inc: OK
-[13:08:41] SoluLab Inc: One last question for this module is, there is no place for user to upload image but during discussion page, we can see his image. So this image is extracted from outlook or other sources and provided by web service?
+[13:07:24] XXX Inc: OK
+[13:08:41] XXX Inc: One last question for this module is, there is no place for user to upload image but during discussion page, we can see his image. So this image is extracted from outlook or other sources and provided by web service?
 [13:09:26] tianyi_shen: it should be in account setting part but I forget to put it in
-[13:10:34] SoluLab Inc: Ok, we will add it
-[13:10:39] SoluLab Inc: in wireframes
-[13:11:00] SoluLab Inc: Any questions for me before we move to next module?
+[13:10:34] XXX Inc: Ok, we will add it
+[13:10:39] XXX Inc: in wireframes
+[13:11:00] XXX Inc: Any questions for me before we move to next module?
 [13:12:00] tianyi_shen: No for login
-[13:12:33] SoluLab Inc: ok, now for KPI management module
+[13:12:33] XXX Inc: ok, now for KPI management module
 [13:12:40] tianyi_shen: Oh moment
-[13:12:45] SoluLab Inc:  search KPI - what parameters user can use to search?
+[13:12:45] XXX Inc:  search KPI - what parameters user can use to search?
 [13:12:49] tianyi_shen: How about the user instruction
 [13:13:05] tianyi_shen: do you have standard method to do it?
-[13:13:37] SoluLab Inc: Yes, we have done it on couple of our apps. Let me give you one iOS app example which we created recently
-[13:14:09] SoluLab Inc: https://itunes.apple.com/us/app/mydimoda/id951504559?mt=8
+[13:13:37] XXX Inc: Yes, we have done it on couple of our apps. Let me give you one iOS app example which we created recently
+[13:14:09] XXX Inc: https://itunes.apple.com/us/app/mydimoda/id951504559?mt=8
 [13:15:34] tianyi_shen: Ok. I will install it later. Let's move to KPI management
 [13:15:56] tianyi_shen: the search is a full-text search, you need to invoke web service each time the user enter a character
-[13:16:54] SoluLab Inc: ok, so just the search box. No seperate page for search where user can specify ecrtain parameters for search?
+[13:16:54] XXX Inc: ok, so just the search box. No seperate page for search where user can specify ecrtain parameters for search?
 [13:17:15] tianyi_shen: no, no filter needed
-[13:17:29] SoluLab Inc: and invoke web service when user enters character or user presses enter?
+[13:17:29] XXX Inc: and invoke web service when user enters character or user presses enter?
 [13:17:45] tianyi_shen: You can move to a new page to show the result from web service easily
 [13:17:54] tianyi_shen: Enters each character
-[13:17:56] SoluLab Inc: Is it provide auto fill functionality like Google search?
+[13:17:56] XXX Inc: Is it provide auto fill functionality like Google search?
 [13:18:05] tianyi_shen: Yes
-[13:18:44] SoluLab Inc: ok, so net connectivity is mandatory throughout this app?
-[13:19:12] SoluLab Inc: Like LinkedIn or other app where user can see offline data but can't do any posting or other activities without internet
+[13:18:44] XXX Inc: ok, so net connectivity is mandatory throughout this app?
+[13:19:12] XXX Inc: Like LinkedIn or other app where user can see offline data but can't do any posting or other activities without internet
 [13:19:57] tianyi_shen: Yes, user can see offline data but can't do any posting without internet
-[13:20:03] SoluLab Inc: Ok
-[13:20:53] SoluLab Inc: If user follows RFT from feed page, would it auto followed to each country?
+[13:20:03] XXX Inc: Ok
+[13:20:53] XXX Inc: If user follows RFT from feed page, would it auto followed to each country?
 [13:21:51] tianyi_shen: no
 [13:22:44] tianyi_shen: let me see
 [13:23:03] tianyi_shen: should move to S02-2
-[13:23:09] SoluLab Inc: if user clicks on follow button in S02-1, what would happen? Control goes to S02-2 where user has to manually select which contries to follow?
-[13:23:33] SoluLab Inc: Ok
-[13:24:04] SoluLab Inc: If user selects Asia Pacific Area then all countries, under it should be selected/followed, right?
+[13:23:09] XXX Inc: if user clicks on follow button in S02-1, what would happen? Control goes to S02-2 where user has to manually select which contries to follow?
+[13:23:33] XXX Inc: Ok
+[13:24:04] XXX Inc: If user selects Asia Pacific Area then all countries, under it should be selected/followed, right?
 [13:24:05] tianyi_shen: let me think over that
 [13:24:14] tianyi_shen: last sentence is right
 [13:24:44] tianyi_shen: Yes, should jump to S02-2
-[13:25:57] SoluLab Inc: ok
-[13:26:15] SoluLab Inc: Any alert box for follow/unfollow action?
+[13:25:57] XXX Inc: ok
+[13:26:15] XXX Inc: Any alert box for follow/unfollow action?
 [13:26:48] tianyi_shen: Yes, an alert box is neccessary
-[13:27:46] SoluLab Inc: Ok, will add that in wireframe
-[13:28:32] SoluLab Inc: When user clicks on Manage button in S02-1 - we need to design screen for that?
+[13:27:46] XXX Inc: Ok, will add that in wireframe
+[13:28:32] XXX Inc: When user clicks on Manage button in S02-1 - we need to design screen for that?
 [13:29:13] tianyi_shen: should move to S02-5
 [13:29:45] tianyi_shen: where the fields are filled but can be changed
-[13:29:46] SoluLab Inc: ok, with data pre filled for that KPI/RFT
+[13:29:46] XXX Inc: ok, with data pre filled for that KPI/RFT
 [13:29:52] tianyi_shen: yes
-[13:29:53] SoluLab Inc: makes sense
-[13:30:13] SoluLab Inc: screen/pop up for unit of mesaurement field?
+[13:29:53] XXX Inc: makes sense
+[13:30:13] XXX Inc: screen/pop up for unit of mesaurement field?
 [13:30:18] tianyi_shen: RFT is just an example KPI name here
-[13:30:28] SoluLab Inc: ok
+[13:30:28] XXX Inc: ok
 [13:30:41] tianyi_shen: Yes, a screen for selection
-[13:30:53] SoluLab Inc: what are possible values?
+[13:30:53] XXX Inc: what are possible values?
 [13:31:07] tianyi_shen: I have'nt draw the selection page of all items. They are standard selection pages.
 [13:31:13] tianyi_shen: You will download from server
 [13:31:31] tianyi_shen: just like the city list in checkin project
-[13:31:56] SoluLab Inc: User can add unlimited number of fields on S02-6 or is there any upper limit?
-[13:32:17] SoluLab Inc: And only possible values for each field are text/number/location?
+[13:31:56] XXX Inc: User can add unlimited number of fields on S02-6 or is there any upper limit?
+[13:32:17] XXX Inc: And only possible values for each field are text/number/location?
 [13:32:18] tianyi_shen: unlimited number but the name must be unique
-[13:32:34] SoluLab Inc: Ok
+[13:32:34] XXX Inc: Ok
 [13:33:20] tianyi_shen: text, number, location is only for our own statistic usage. But we will not set any restriction on that
-[13:34:06] SoluLab Inc: So, what values user will see on S02-7? All values we get from web services?
+[13:34:06] XXX Inc: So, what values user will see on S02-7? All values we get from web services?
 [13:35:03] tianyi_shen: S02-7?
 [13:35:35] tianyi_shen: This is a field to let user input the attribute name
-[13:35:49] SoluLab Inc: when user adds any new field, he has to specify type of the data that field will hold as well, right?
+[13:35:49] XXX Inc: when user adds any new field, he has to specify type of the data that field will hold as well, right?
 [13:36:43] tianyi_shen: yes, but don't need to make any validation
-[13:37:42] SoluLab Inc: that's fine. I think I wasn't clear. I just want to know, if these 3 types will be static or it could be dynamic from server?
+[13:37:42] XXX Inc: that's fine. I think I wasn't clear. I just want to know, if these 3 types will be static or it could be dynamic from server?
 [13:37:57] tianyi_shen: It's statics
-[13:38:02] SoluLab Inc: OK
-[13:39:37] SoluLab Inc: in S02-13, user could see unlimited list that he has saved?
+[13:38:02] XXX Inc: OK
+[13:39:37] XXX Inc: in S02-13, user could see unlimited list that he has saved?
 [13:39:58] tianyi_shen: yes
-[13:40:00] SoluLab Inc: As its menu item, pagination won't be possible
+[13:40:00] XXX Inc: As its menu item, pagination won't be possible
 [13:40:23] tianyi_shen: Just show unlimited list
-[13:40:38] SoluLab Inc: ok
-[13:42:07] SoluLab Inc: any priority order user can set to see KPIs in different order in feed page?
+[13:40:38] XXX Inc: ok
+[13:42:07] XXX Inc: any priority order user can set to see KPIs in different order in feed page?
 [13:45:02] tianyi_shen: Should be sorted by the name of the KPI
-[13:45:38] SoluLab Inc: ok, user can't change the order, right?
+[13:45:38] XXX Inc: ok, user can't change the order, right?
 [13:45:55] tianyi_shen: yes
-[13:46:27] SoluLab Inc: Only manual KPI creation is in scope for now?
-[13:47:14] SoluLab Inc: on S02-1.1, for KPIs created by me, there should not be follow button, right?
+[13:46:27] XXX Inc: Only manual KPI creation is in scope for now?
+[13:47:14] XXX Inc: on S02-1.1, for KPIs created by me, there should not be follow button, right?
 [13:47:43] tianyi_shen: Yes, only manual kpi
 [13:48:03] tianyi_shen: there should be a follow. The creater can also follow his own KPI
-[13:48:52] SoluLab Inc: so what's the significance of following any KPI? It would show up in your followed tab and for any updates, you will be notified?
-[13:49:19] SoluLab Inc: I just realized, it may be your lunch time. We can discuss this after your lunch
+[13:48:52] XXX Inc: so what's the significance of following any KPI? It would show up in your followed tab and for any updates, you will be notified?
+[13:49:19] XXX Inc: I just realized, it may be your lunch time. We can discuss this after your lunch
 [13:50:45] tianyi_shen: When you follow a kpi, you will receive auto notification of this KPI and it will shown on S03-1
-[13:51:33] SoluLab Inc: S03-1 is my KPI page. Shouldn't it shows only KPIs created by me?
+[13:51:33] XXX Inc: S03-1 is my KPI page. Shouldn't it shows only KPIs created by me?
 [13:51:54] tianyi_shen: No, it shows "KPI I followed"
 [13:52:13] tianyi_shen: The name should be "Followed KPI" exactly
-[13:52:18] SoluLab Inc: then what will shown under followed tab on S02-1?
+[13:52:18] XXX Inc: then what will shown under followed tab on S02-1?
 [13:52:45] tianyi_shen: The KPI I followed
 [13:53:23] tianyi_shen: The difference between S02-1 and S03-1 is:
 [13:55:02] tianyi_shen: S02-1 shows the meta data of a KPI and S03-1 shows the KPI performance in certain organization node
-[13:55:39] SoluLab Inc: Ok, I see now
-[13:56:50] SoluLab Inc: As a user, I think I don't need to follow my created KPIs. I should get auto notifications and it should be placed under my KPIs page automatically
+[13:55:39] XXX Inc: Ok, I see now
+[13:56:50] XXX Inc: As a user, I think I don't need to follow my created KPIs. I should get auto notifications and it should be placed under my KPIs page automatically
 [13:57:23] tianyi_shen: Not really.
 [13:57:45] tianyi_shen: For example I am the asia pacific area's manager and I create a KPI RFT.
 [13:58:28] tianyi_shen: But I may need to know the RFT performance of asia pacific area and Shanghai office where has the largest RFT performance
 [13:58:52] tianyi_shen: In this case , you must enable the user to process the standard follow process.
 [14:00:17] tianyi_shen: SHANGHAI office is a child node of Asia pacific area
-[14:01:19] SoluLab Inc: I think its debatable but let's go with this. I am thinking as an end user point of view to avoid one extra step as I would be interested to look at notifications for 90% of areas for KPIs I create
-[14:01:31] SoluLab Inc: I am fine here
-[14:01:48] SoluLab Inc: last question about this module is What's the significance of blue and green button?
+[14:01:19] XXX Inc: I think its debatable but let's go with this. I am thinking as an end user point of view to avoid one extra step as I would be interested to look at notifications for 90% of areas for KPIs I create
+[14:01:31] XXX Inc: I am fine here
+[14:01:48] XXX Inc: last question about this module is What's the significance of blue and green button?
 [14:03:09] tianyi_shen: But if I am the top manager of a large company, when I create a KPI, the KPI performance of all 1000 nodes are added into my KPI, it is very troublesome
-[14:03:32] SoluLab Inc: Yes, you are right there
+[14:03:32] XXX Inc: Yes, you are right there
 [14:04:08] tianyi_shen: Green means the KPI is not followed at all. Blue means it has been partly followed.
-[14:04:19] SoluLab Inc: OK
+[14:04:19] XXX Inc: OK
 [14:04:29] tianyi_shen: But designer can decide the color
 [14:04:39] tianyi_shen: I just show they are two different color
-[14:04:47] SoluLab Inc: sure
-[14:05:30] SoluLab Inc: on S02-1 page, against OEE (last item) there is just Created - why Follow button is missing?
-[14:05:42] SoluLab Inc: or does it mean, its fully followed?
-[14:06:45] SoluLab Inc: Also there should be Manage button for that line item under Created page
+[14:04:47] XXX Inc: sure
+[14:05:30] XXX Inc: on S02-1 page, against OEE (last item) there is just Created - why Follow button is missing?
+[14:05:42] XXX Inc: or does it mean, its fully followed?
+[14:06:45] XXX Inc: Also there should be Manage button for that line item under Created page
 [14:07:16] tianyi_shen: It's my fault
 [14:07:22] tianyi_shen: It should be followed
 [14:07:27] tianyi_shen: means fully followed
-[14:07:52] SoluLab Inc: ok, just wanted to check I am not missing anything based on my assumption
+[14:07:52] XXX Inc: ok, just wanted to check I am not missing anything based on my assumption
 [14:07:53] tianyi_shen: But it would be problematic here
 [14:08:00] tianyi_shen: I just realize it
 [14:08:12] tianyi_shen: If it is fully followed. How can I unfollow it
 [14:08:48] tianyi_shen: Should I click the row and jump to S02-2 and unfollowed one by one?
-[14:09:03] SoluLab Inc: For fully followed KPI, we can change lable to unfollow but what if user wants to follow partially?
+[14:09:03] XXX Inc: For fully followed KPI, we can change lable to unfollow but what if user wants to follow partially?
 [14:09:55] tianyi_shen: Then we should put a unfollow button on S02-2
-[14:10:25] SoluLab Inc: yes, there should be button to follow all nodes and unfollow all nodes on S02-2
+[14:10:25] XXX Inc: yes, there should be button to follow all nodes and unfollow all nodes on S02-2
 [14:11:07] tianyi_shen: If this node is followed just change the button from followed to unfollowed
 [14:11:46] tianyi_shen: on S02-2 if you click unfollow of asia pacific area, then all the nodes will be unfollowed
-[14:12:15] SoluLab Inc: So for Shanghai in S02-2, change lable from followed to Unfollow
-[14:12:18] SoluLab Inc: Ok
-[14:13:10] SoluLab Inc: S02-8, this list will come from web service, right?
+[14:12:15] XXX Inc: So for Shanghai in S02-2, change lable from followed to Unfollow
+[14:12:18] XXX Inc: Ok
+[14:13:10] XXX Inc: S02-8, this list will come from web service, right?
 [14:13:17] tianyi_shen: yes
 [14:13:46] tianyi_shen: yes, it will come from web service
-[14:14:16] SoluLab Inc: I think I don't have any other question for KPI module. Anything I should aware of?
+[14:14:16] XXX Inc: I think I don't have any other question for KPI module. Anything I should aware of?
 [14:14:30] tianyi_shen: let me look through it
 [14:15:12] tianyi_shen: So for the viewable for module, have you seen any case before?
-[14:15:43] SoluLab Inc: I haven't go through all test cases throughly
-[14:16:24] SoluLab Inc: I can go after our discussion and come back to you if I have any questions or something is contradictory or tricky to achieve
+[14:15:43] XXX Inc: I haven't go through all test cases throughly
+[14:16:24] XXX Inc: I can go after our discussion and come back to you if I have any questions or something is contradictory or tricky to achieve
 [14:16:28] tianyi_shen: I mean have you seen any similar case in other app?
-[14:16:37] SoluLab Inc: oh, sorry
+[14:16:37] XXX Inc: oh, sorry
 [14:16:37] tianyi_shen: Like in facebook, whatapp
-[14:18:23] SoluLab Inc: NewsFeed is quiet common in most of the app these days. We are creating 2 other apps currently which have similar feed concept - we are creating social fitness app where users can post fitness events, other can follow, chat/discuss that event with others and so on
-[14:19:35 | �ѱ༭ 14:19:56] SoluLab Inc: get notification when number of users join that event reach about certain limit, when someone new joins/remove from the group, etc...
+[14:18:23] XXX Inc: NewsFeed is quiet common in most of the app these days. We are creating 2 other apps currently which have similar feed concept - we are creating social fitness app where users can post fitness events, other can follow, chat/discuss that event with others and so on
+[14:19:35 | �ѱ༭ 14:19:56] XXX Inc: get notification when number of users join that event reach about certain limit, when someone new joins/remove from the group, etc...
 [14:19:56] tianyi_shen: Ok. How about the access control part
 [14:20:41] tianyi_shen: Have you understood completely S02-13 and S02-14?
-[14:22:54] SoluLab Inc: sure, these 2 screenshots are showing flow where after creating KPI, user can either make it viewable to public/private or partial public (only subset of people can see that). Now for partial public flow, user can either select list of people from his previous save or select specific set of people and save them as a list which he could use in future
+[14:22:54] XXX Inc: sure, these 2 screenshots are showing flow where after creating KPI, user can either make it viewable to public/private or partial public (only subset of people can see that). Now for partial public flow, user can either select list of people from his previous save or select specific set of people and save them as a list which he could use in future
 [14:23:13] tianyi_shen: Ok good.
-[14:23:17] SoluLab Inc: Regarding, access control I believe it should be handled by server side
+[14:23:17] XXX Inc: Regarding, access control I believe it should be handled by server side
 [14:23:32] tianyi_shen: Yes, it would be handled by server side
 [14:23:41] tianyi_shen: Let's then move toe S03
-[14:24:37] SoluLab Inc: This is interesting one
-[14:25:17] SoluLab Inc: you confirmed that, only S03-2-1 and S03-2-2 2 screens will be in both landscape and portraite mode, right?
+[14:24:37] XXX Inc: This is interesting one
+[14:25:17] XXX Inc: you confirmed that, only S03-2-1 and S03-2-2 2 screens will be in both landscape and portraite mode, right?
 [14:25:51] tianyi_shen: yes
-[14:26:29] SoluLab Inc: How filters and chart type are going to change? User could right click and change chart type or something like that?
-[14:27:01] SoluLab Inc: Or chart data along with chart type will be provided from server based on data that fits best in particular chart type?
-[14:27:36] SoluLab Inc: Android and iOS will render those charts on mobile screens based on server instructions?
+[14:26:29] XXX Inc: How filters and chart type are going to change? User could right click and change chart type or something like that?
+[14:27:01] XXX Inc: Or chart data along with chart type will be provided from server based on data that fits best in particular chart type?
+[14:27:36] XXX Inc: Android and iOS will render those charts on mobile screens based on server instructions?
 [14:30:22] tianyi_shen: Sorry just picked a tea
-[14:30:51] SoluLab Inc: Take your time
+[14:30:51] XXX Inc: Take your time
 [14:31:11] tianyi_shen: What do you mean filter?
-[14:31:44] SoluLab Inc: Filter that showed in S03-2-2
+[14:31:44] XXX Inc: Filter that showed in S03-2-2
 [14:32:38] tianyi_shen: let me explain a little here to show you S03-2-1 and S03-2-2
 [14:33:03] tianyi_shen: Let me try... it is a little complicated if you have no experience on business intelligent
 [14:34:25] tianyi_shen: So when you are ready to enter S03-2, you have actually all the query conditions to get data from server (KPI ID, organization chart node id, from time and to time)
@@ -220,293 +220,288 @@
 [14:35:33] tianyi_shen: If you want to have a live demo, any stock trading app will have similar function
 [14:36:17] tianyi_shen: Then what's in S03-2-2? If you turn to S02-6
 [14:36:24] tianyi_shen: you will find when user created a KPI
-[14:36:30] SoluLab Inc: Okay, I understand about S03-2-1
+[14:36:30] XXX Inc: Okay, I understand about S03-2-1
 [14:37:01] tianyi_shen: He may define some addtioanl attributes and each time the user input the value, he will also input the attribute value
 [14:37:41] tianyi_shen: S03-2-2 offers a aggregative anaylsis based on the user defined attribute
 [14:38:10] tianyi_shen: The content in the filter is the attributes name with its possible values
 [14:38:40] tianyi_shen: And to show this kind of data, only pie chart can do it. Therefore S03-2-2 is always a pie
-[14:39:08] SoluLab Inc: Okay, I get it now. Finding link between S02-6 and S03-2-2 was tricky
+[14:39:08] XXX Inc: Okay, I get it now. Finding link between S02-6 and S03-2-2 was tricky
 [14:39:16] tianyi_shen: This is very similar to the result of a SQL group by trasaction
-[14:39:31] SoluLab Inc: sure, S03-2-2 is clear now
+[14:39:31] XXX Inc: sure, S03-2-2 is clear now
 [14:40:20] tianyi_shen: For S03-2 and S03-2-1, some interaction on the chart can not been expressed by the wireframe
-[14:40:41] SoluLab Inc: Radio button Vs Checkbox on bottom table of S03-2-2?
+[14:40:41] XXX Inc: Radio button Vs Checkbox on bottom table of S03-2-2?
 [14:41:00] tianyi_shen: Just delete this column
 [14:41:11] tianyi_shen: It shows it's a table to show the data in the pie
-[14:41:52] SoluLab Inc: There will be just line chart and pie chart options in the app, right? Just to make it double confirm
+[14:41:52] XXX Inc: There will be just line chart and pie chart options in the app, right? Just to make it double confirm
 [14:41:59] tianyi_shen: yes
 [14:42:02] tianyi_shen: This can be confirmed
 [14:42:15] tianyi_shen: But we have some requirement on the interaction of line and pie
-[14:42:42] SoluLab Inc: Yes, I understand it should be similar to trading app
-[14:43:01] SoluLab Inc: Is S03-5-2 shows image gllary when user clicks on evidence?
+[14:42:42] XXX Inc: Yes, I understand it should be similar to trading app
+[14:43:01] XXX Inc: Is S03-5-2 shows image gllary when user clicks on evidence?
 [14:43:01] tianyi_shen: yes
 [14:43:16] tianyi_shen: let me check
-[14:44:29] SoluLab Inc: Can user uploads unlimited images under evidence or max limit is 3?
+[14:44:29] XXX Inc: Can user uploads unlimited images under evidence or max limit is 3?
 [14:46:57] tianyi_shen: Is S03-5-2 shows image gllary when user clicks on evidence?
 [14:47:25] tianyi_shen: No, use case is when I am in S03-5, and I add a comment, I go into S03-5-2
 [14:48:22] tianyi_shen: I think I should take a picture to support my evidence.Then I press the camera icon and I take a picture. Then the picture's thumbnail will be shown on the evidence position
 [14:49:46] tianyi_shen: The position of three evidence placeholder is actually a controller something like a flow collection view table in iOS where unlimited thumbsnail can be added in.
-[14:49:54] SoluLab Inc: Ok, so question is how do you add comment from S03-5? If you click on plus sign then you can add anyone to the discussion, right?
+[14:49:54] XXX Inc: Ok, so question is how do you add comment from S03-5? If you click on plus sign then you can add anyone to the discussion, right?
 [14:50:07] tianyi_shen: Yes
-[14:50:16] SoluLab Inc: Okay, regarding unlimited number of images
-[14:50:44] SoluLab Inc: How do you add comment from S03-5 page?
+[14:50:16] XXX Inc: Okay, regarding unlimited number of images
+[14:50:44] XXX Inc: How do you add comment from S03-5 page?
 [14:51:11] tianyi_shen: click the add button
-[14:52:42] SoluLab Inc: Sorry I don't see Add button on S03-5 page. Its in S03-6 page but that flow is different
+[14:52:42] XXX Inc: Sorry I don't see Add button on S03-5 page. Its in S03-6 page but that flow is different
 [14:53:31] tianyi_shen: These are two button here. The user button for manage member and the plus button to add a comment
-[14:53:56] SoluLab Inc: Ok, my bad. I thought that plus button is to add new member to the discussion
-[14:54:03] SoluLab Inc: So, can anyone add any other member to discussion?
+[14:53:56] XXX Inc: Ok, my bad. I thought that plus button is to add new member to the discussion
+[14:54:03] XXX Inc: So, can anyone add any other member to discussion?
 [14:54:08] tianyi_shen: yes
-[14:54:56] SoluLab Inc: When user changes orientation while at S03-2 screen it will display whole screen in landscape mode, right?
+[14:54:56] XXX Inc: When user changes orientation while at S03-2 screen it will display whole screen in landscape mode, right?
 [14:55:10] tianyi_shen: No
 [14:55:35] tianyi_shen: When user click the chart on S03-2, page will jump to S03-2-1 and change the orientation
-[14:55:50] SoluLab Inc: Ok, makes sense
+[14:55:50] XXX Inc: Ok, makes sense
 [14:56:07] tianyi_shen: A correctness here
 [14:57:05] tianyi_shen: You may move the tipdialog in S-3-2, because it is complicated to handle a move gestrure and a click gesture at the same time
 [14:57:32] tianyi_shen: If the user want to see a detail of point, he needs to go to S03-2-1
-[14:58:48] SoluLab Inc: Ok. I can try to design these 2 screens in Android tomorrow to show you what's possible
+[14:58:48] XXX Inc: Ok. I can try to design these 2 screens in Android tomorrow to show you what's possible
 [14:59:14] tianyi_shen: Ok
-[14:59:26] SoluLab Inc: and how would user jump from S03-2-1 to S03-2-2? Those 2 charts are in sliding banner?
+[14:59:26] XXX Inc: and how would user jump from S03-2-1 to S03-2-2? Those 2 charts are in sliding banner?
 [15:00:41] tianyi_shen: Generally it should be enter from a selected point
 [15:01:11] tianyi_shen: But need the design how can we enter a data point. Because when we are viewing a point our finger must on the screen
-[15:02:49] SoluLab Inc: So user has selected specific point and when he clicks on tip, it will move to S03-2-2, if he has selected specific attributes?
-[15:03:21] SoluLab Inc: What about user did not select any numeric attributes while creating KPI
+[15:02:49] XXX Inc: So user has selected specific point and when he clicks on tip, it will move to S03-2-2, if he has selected specific attributes?
+[15:03:21] XXX Inc: What about user did not select any numeric attributes while creating KPI
 [15:04:03] tianyi_shen: It's ok. The pie just show a 100% status
 [15:04:32] tianyi_shen: Or when user enters S03-2-2, there is a blank list in the filter and the user can do nothing
-[15:05:07] SoluLab Inc: Ok
-[15:05:32] SoluLab Inc: Send to button on S03-2 - does it send entire discussion to email?
-[15:06:59] SoluLab Inc: On S03-2, when user click on some point, that data will be coming from client side, right? So for Day, week, month and other views, we have to define appropriate scaling
+[15:05:07] XXX Inc: Ok
+[15:05:32] XXX Inc: Send to button on S03-2 - does it send entire discussion to email?
+[15:06:59] XXX Inc: On S03-2, when user click on some point, that data will be coming from client side, right? So for Day, week, month and other views, we have to define appropriate scaling
 [15:07:04] tianyi_shen: It actually has the other meaning
 [15:07:49] tianyi_shen: Send to button on S03-2 - does it send entire discussion to email?
 [15:08:20] tianyi_shen: Send to means add a comment to existing discussion
-[15:08:48] SoluLab Inc: Okay. Isn't it confusing?
-[15:09:16] SoluLab Inc: Just change label to Add Commnet?
+[15:08:48] XXX Inc: Okay. Isn't it confusing?
+[15:09:16] XXX Inc: Just change label to Add Commnet?
 [15:10:15] tianyi_shen: Yes
 [15:10:44] tianyi_shen: We can find a reasonale text
 [15:11:30] tianyi_shen: On S03-2, when user click on some point, that data will be coming from client side, right? So for Day, week, month and other views, we have to define appropriate scaling
 [15:12:30] tianyi_shen: You will download a set of data with the details. (The data format is very similar to you get in the checkin project history page)
 [15:12:48] tianyi_shen: Then you can show the tip with details from these data
-[15:13:02] SoluLab Inc: Okay I see. That should be helpful then
+[15:13:02] XXX Inc: Okay I see. That should be helpful then
 [15:13:05] tianyi_shen: But here is a very critical non-functional chanllenge
-[15:14:13] SoluLab Inc: For day view, we will get data at minute level interval from Server. Same way for week view, we will get data in appropriate interval and we don't need to slice and dice data on client side
+[15:14:13] XXX Inc: For day view, we will get data at minute level interval from Server. Same way for week view, we will get data in appropriate interval and we don't need to slice and dice data on client side
 [15:14:14] tianyi_shen: When user scale down the chart, there will be thousands of pieces of data stored locally. You have to have method to manage the memory
 [15:14:57] tianyi_shen: Yes, we have a complete data requiring API. What you need to do is just make the moving on the chart smooth
-[15:15:22] SoluLab Inc: Do you have that web service ready with same dummy data? I can ask Dipen to have something ready by tomorrow
+[15:15:22] XXX Inc: Do you have that web service ready with same dummy data? I can ask Dipen to have something ready by tomorrow
 [15:15:30] tianyi_shen: Yes
 [15:15:32] tianyi_shen: We have
-[15:15:38] SoluLab Inc: I think this is most crtical and challenging part and let's start with that
+[15:15:38] XXX Inc: I think this is most crtical and challenging part and let's start with that
 [15:15:50] tianyi_shen: Later I will talk with Charlot to prepare the instance for you
-[15:15:55] SoluLab Inc: Give me few mins - brb.
-[15:31:15] SoluLab Inc: back now
+[15:15:55] XXX Inc: Give me few mins - brb.
+[15:31:15] XXX Inc: back now
 [15:31:54] tianyi_shen: Charlot will offer you the API URL, account and parameter for testing
-[15:32:41] SoluLab Inc: I spoke with him as he pinged me
-[15:33:47] SoluLab Inc: are evidence made up of images upload only or there could be video as well?
+[15:32:41] XXX Inc: I spoke with him as he pinged me
+[15:33:47] XXX Inc: are evidence made up of images upload only or there could be video as well?
 [15:34:19] tianyi_shen: Is it possible to have a video?
 [15:34:29] tianyi_shen: For video, the uploading process is hard to control
-[15:35:20] SoluLab Inc: possible to have video and while user upload video we can show view to select only portion of the video
+[15:35:20] XXX Inc: possible to have video and while user upload video we can show view to select only portion of the video
 [15:36:22] tianyi_shen: Then we can put the video
-[15:36:29] SoluLab Inc: Ok
+[15:36:29] XXX Inc: Ok
 [15:36:42] tianyi_shen:  There is a tricky place here
 [15:37:04] tianyi_shen: If you press  send to  from S03-2
 [15:37:24] tianyi_shen: You will jump to S03-5-1,
 [15:37:38] tianyi_shen: at this page, you will have a thumbsnail of the chart
 [15:37:53] tianyi_shen: In our system, there is snapshot function
 [15:38:36] tianyi_shen: System will save the real time data when user click send to and the data can be retrieved with a snapshot id
-[15:40:29] SoluLab Inc: hmm, thanks for the explanation. My understanding was different - I thought Evidence is user uploaded images.
+[15:40:29] XXX Inc: hmm, thanks for the explanation. My understanding was different - I thought Evidence is user uploaded images.
 [15:41:02] tianyi_shen: Evidence is expected as any medium supporting insight
-[15:41:28] SoluLab Inc: Ok
+[15:41:28] XXX Inc: Ok
 [15:41:47] tianyi_shen: currently, image, video, chart snapshot are three media
 [15:42:14] tianyi_shen: So what happens when user click an evidence with the type of snapshot?
-[15:43:08] SoluLab Inc: I suggest to create a new page, where he can either take picture or he can choose image or video from gallary
+[15:43:08] XXX Inc: I suggest to create a new page, where he can either take picture or he can choose image or video from gallary
 [15:43:39] tianyi_shen: I forgot to put the page in the wireframe. It should be a page with the same layout of S03-2 but without the discussion and obviously marked it's a snapshot
-[15:44:02] SoluLab Inc: Ok
+[15:44:02] XXX Inc: Ok
 [15:44:05] tianyi_shen: No, I mean the user click a certain evidence on S03-3 or S03-5
-[15:44:16] SoluLab Inc: I get your point now
-[15:46:07] SoluLab Inc: Should display pop up to enlarge that evidence and user should move to next or previous evidence by swipping left or right
+[15:44:16] XXX Inc: I get your point now
+[15:46:07] XXX Inc: Should display pop up to enlarge that evidence and user should move to next or previous evidence by swipping left or right
 [15:46:37] tianyi_shen: For video and pictures it's ok
 [15:46:54] tianyi_shen: But for a snapshot type, it needs a totoally different container
 [15:47:12] tianyi_shen: Just like the page of S03-2
-[15:47:22] SoluLab Inc: for snapshot, user can double click on it and it will be full screen
-[15:48:59] SoluLab Inc: so how would user upload some page as snapshot when he clicks on evidence?
+[15:47:22] XXX Inc: for snapshot, user can double click on it and it will be full screen
+[15:48:59] XXX Inc: so how would user upload some page as snapshot when he clicks on evidence?
 [15:50:37] tianyi_shen: One point must be clarified
 [15:50:48] tianyi_shen: On the wireframe, evidence is not a button
-[15:51:00] SoluLab Inc: Tianyi, I have to take a call with one client in 10 mins. Let's finish any pending discussion on KPI page for now and I will be free after an hour from other call and lunch
+[15:51:00] XXX Inc: Tianyi, I have to take a call with one client in 10 mins. Let's finish any pending discussion on KPI page for now and I will be free after an hour from other call and lunch
 [15:51:05] tianyi_shen: It is an already uploaded picture or video or snapshot
 [15:51:30] tianyi_shen: For picture and video, user uploads them on S03-5-1
 [15:51:39] tianyi_shen: But for snapshot it is another process
 [15:53:44] tianyi_shen: Typical case is, user is in say, RFT for asia pacific area page (S03-2) and he find some idea from data which may contribute to certain discussion. Then he click send to button and then he selects a discussion group and then he enters S03-5-1, at that time , the snapshot has been created and the thumbnail of the snapshot are shown in the collecation table view in S03-5-1
 [15:54:07] tianyi_shen: Then he may also take a picture, leave some text and publish his comment to the discussion
-[15:54:33] SoluLab Inc: Ok, I see. Highly sophisticated
-[15:55:30] SoluLab Inc: So when user selects discussion group, snapshot of that discussion group will be auto added
+[15:54:33] XXX Inc: Ok, I see. Highly sophisticated
+[15:55:30] XXX Inc: So when user selects discussion group, snapshot of that discussion group will be auto added
 [15:56:09] tianyi_shen: No, snapshot here means only a snapshot of the KPI data
 [15:56:17] tianyi_shen: Technical point of view:
-[15:56:44] SoluLab Inc: ok
-[15:58:16] SoluLab Inc: KPI data means, any alert, plus description + chart?
+[15:56:44] XXX Inc: ok
+[15:58:16] XXX Inc: KPI data means, any alert, plus description + chart?
 [16:00:03] tianyi_shen: I enters S03-2, and I decide to share my insight into a discussion group. Then I click send to. At this time, the backend system will store the whole data context (the KPI data under current condition) in a snapshot and give back a snapshot ID. Next time when you open a snapshot, the whole KPI data under the context will be shown
 [16:00:05] tianyi_shen: Yes
 [16:00:31] tianyi_shen: That means the page to show the snapshot is exactly the age of S03-2. But it must be obviously marked it is a snapshot
-[16:01:03] SoluLab Inc: Okay
+[16:01:03] XXX Inc: Okay
 [16:01:59] tianyi_shen: The reason to have a snapshot is sometimes user will analyze data on monthly basis. If he find the data problem on 12th. Nov., the chart can actually not realized again in after 12th Nov because a new data comes in and all the context changes.
-[16:03:02] SoluLab Inc: Make sense. It is not possible to recreate state of same chart for that date/week/month by selecting date range in chart?
-[16:04:04] SoluLab Inc: Let's hold this discussion here - need to take another scheduled call. What time works for you to continue this discussion?
+[16:03:02] XXX Inc: Make sense. It is not possible to recreate state of same chart for that date/week/month by selecting date range in chart?
+[16:04:04] XXX Inc: Let's hold this discussion here - need to take another scheduled call. What time works for you to continue this discussion?
 [16:05:26] tianyi_shen: A snapshot looks like that
-[16:05:27] SoluLab Inc: Okay, this is clear
+[16:05:27] XXX Inc: Okay, this is clear
 [16:06:05] tianyi_shen: Make sense. It is not possible to recreate state of same chart for that date/week/month by selecting date range in chart?
 [16:06:22] tianyi_shen: to some technical background of our platform,it is not possible
-[16:06:39] SoluLab Inc: Ok
+[16:06:39] XXX Inc: Ok
 [16:07:24] tianyi_shen: So have you got the process here - what is an evidence, and how can I add an snapshot to a discussion?
-[16:07:53] SoluLab Inc: I think so. Need to review and digest it to make sure I am not missing any point
+[16:07:53] XXX Inc: I think so. Need to review and digest it to make sure I am not missing any point
 [16:08:08] tianyi_shen: If you find it is still unclear. We can move on. I will draft a clearer mockup for you during your holiday. It is very critical part of the app
-[16:09:28] SoluLab Inc: I need prob 30 minutes to review our chat again and to make sure I understand entire flow properly
-[16:09:59] SoluLab Inc: I agree this is most critical part of the app. Rest of the screens are relatively straightforward like alerts, settings, etc
+[16:09:28] XXX Inc: I need prob 30 minutes to review our chat again and to make sure I understand entire flow properly
+[16:09:59] XXX Inc: I agree this is most critical part of the app. Rest of the screens are relatively straightforward like alerts, settings, etc
 [16:10:21] tianyi_shen: yes
 [16:10:24] tianyi_shen: please
-[16:11:08] SoluLab Inc: Ok, I will ping you when I am ready
+[16:11:08] XXX Inc: Ok, I will ping you when I am ready
 [16:11:17] tianyi_shen: In the rest may only the transit from S04-1 to S04-2 and S04-6 may make you confused
-[16:11:46] SoluLab Inc: true
+[16:11:46] XXX Inc: true
 [17:12:59] tianyi_shen: hi Chintan?
 [17:18:40] tianyi_shen: I need the final Android build of the check in app with BLE. Can you upload it today? I have a meeting with the customer tomorrow and I need this build with BLE
-[17:18:48] SoluLab Inc: sURE
-[17:19:09] SoluLab Inc: Just give me few mins, doing final testing and uploading on basecamp
+[17:18:48] XXX Inc: sURE
+[17:19:09] XXX Inc: Just give me few mins, doing final testing and uploading on basecamp
 [17:20:43] tianyi_shen: ok
-[17:24:13] SoluLab Inc: Shall we start with remaining wireframes? I have proper idea about charts and evidence flow after reviewing our chat again
+[17:24:13] XXX Inc: Shall we start with remaining wireframes? I have proper idea about charts and evidence flow after reviewing our chat again
 [17:24:41] tianyi_shen: Just one thing about the check in app
 [17:25:23] tianyi_shen: Have I told you the KPI_id parameter is various and will changed time to time?
-[17:26:16] SoluLab Inc: currently its hardcoded to 1 (as per Charlot) but we can change this based on updated logic
+[17:26:16] XXX Inc: currently its hardcoded to 1 (as per Charlot) but we can change this based on updated logic
 [17:26:44] tianyi_shen: Is it possible to set a configure page to enable user to change it?
-[17:27:18] SoluLab Inc: We can have a new field in check in page itself
-[17:27:55] SoluLab Inc: Default value will be populated and if user wants to change then only he has to change the value
+[17:27:18] XXX Inc: We can have a new field in check in page itself
+[17:27:55] XXX Inc: Default value will be populated and if user wants to change then only he has to change the value
 [17:28:48] tianyi_shen: Is it possible to add a menu option below history
 [17:29:18] tianyi_shen: and when user select, just enable user to change the value and save and next time you upload the data, use the saved kpi id
-[17:29:30] SoluLab Inc: yes, it is possible.
+[17:29:30] XXX Inc: yes, it is possible.
 [17:30:06] tianyi_shen: I mean, is it possible today? I have a complete demo to the customer tomorrow
-[17:30:47] SoluLab Inc: Yes, its possible today. We don't need any new web service for this, I think
+[17:30:47] XXX Inc: Yes, its possible today. We don't need any new web service for this, I think
 [17:31:03] tianyi_shen: No, just a new page to set a value
 [17:31:26] tianyi_shen: It would be perfect if you can give us the build with BLE and setting today.
-[17:31:29] SoluLab Inc: what's the name of new menu option - Update KPI Value?
+[17:31:29] XXX Inc: what's the name of new menu option - Update KPI Value?
 [17:31:36] tianyi_shen: just settings
-[17:32:21] SoluLab Inc: Ok and when user click on settings new page will open where user can set KPI Value?
+[17:32:21] XXX Inc: Ok and when user click on settings new page will open where user can set KPI Value?
 [17:32:40] tianyi_shen: set KPI_id
 [17:33:04] tianyi_shen: In your code, the kpi_id is hardcoded as "1"
 [17:33:27] tianyi_shen: After the changing, you will read the setting which will be set by user though menu-settings
-[17:33:30] SoluLab Inc: Ok. got it - will replace with what user set from settings page
+[17:33:30] XXX Inc: Ok. got it - will replace with what user set from settings page
 [17:33:37] tianyi_shen: yes
-[17:34:00] SoluLab Inc: give me 5 mins to discuss this with Dipen
+[17:34:00] XXX Inc: give me 5 mins to discuss this with Dipen
 [17:34:07] tianyi_shen: Ok
 [17:34:54] tianyi_shen: Don't make it too complicated. It is only a temp solution. Later we will change our web service to reserve some system KPI ID
-[17:35:18] SoluLab Inc: If not set by user then will continue to send 1, is that fine?
+[17:35:18] XXX Inc: If not set by user then will continue to send 1, is that fine?
 [17:37:39] tianyi_shen: yes
-[17:38:45] SoluLab Inc: Ok.
+[17:38:45] XXX Inc: Ok.
 [17:40:31] tianyi_shen: If Dipen can do that, let's move to the rest of the wireframe
-[17:40:57] SoluLab Inc: sure, let's move on to next module
+[17:40:57] XXX Inc: sure, let's move on to next module
 [17:41:04] tianyi_shen: Ok.
 [17:41:27] tianyi_shen: Do you do understand the discussion module?
-[17:43:17] SoluLab Inc: My understanding is that, anyone could add anyone to discussion. People could start new discussion, add memners, add commnets, resolve and everyone would get notification
+[17:43:17] XXX Inc: My understanding is that, anyone could add anyone to discussion. People could start new discussion, add memners, add commnets, resolve and everyone would get notification
 [17:43:38] tianyi_shen: And key is the snapshot
-[17:44:03] SoluLab Inc: Question is, could anyone resolve discussion or only person who started the discussion could resolve that?
+[17:44:03] XXX Inc: Question is, could anyone resolve discussion or only person who started the discussion could resolve that?
 [17:44:30] tianyi_shen: No, only people who started the discussion can close the discussion
-[17:45:05] SoluLab Inc: For S03-4, invite member screen - shouldn't this flow be similar to invite others while creating new group?
-[17:45:29] SoluLab Inc: Having tokenized auto complete for this field makes it different than rest of the flow
+[17:45:05] XXX Inc: For S03-4, invite member screen - shouldn't this flow be similar to invite others while creating new group?
+[17:45:29] XXX Inc: Having tokenized auto complete for this field makes it different than rest of the flow
 [17:45:54] tianyi_shen: let me see
 [17:46:08] tianyi_shen: It can follow the standard selecting user process
 [17:46:21] tianyi_shen: Just remove the auto complete
-[17:47:14] SoluLab Inc: ok
-[17:48:25] SoluLab Inc: so how could user resolve particular discussion? I can see resolve button in S03-6 but don't see clearly how user will land here
+[17:47:14] XXX Inc: ok
+[17:48:25] XXX Inc: so how could user resolve particular discussion? I can see resolve button in S03-6 but don't see clearly how user will land here
 [17:49:12] tianyi_shen: There should be a close button on S03-5
 [17:49:17] tianyi_shen: I missed that
-[17:49:46] SoluLab Inc: On top rigth corner or bottom of the screen?
+[17:49:46] XXX Inc: On top rigth corner or bottom of the screen?
 [17:52:07] tianyi_shen: This can be decide by the UI designer
-[17:52:11] SoluLab Inc: ok
-[17:52:43] SoluLab Inc: Any questions on your side before moving to S04 module?
+[17:52:11] XXX Inc: ok
+[17:52:43] XXX Inc: Any questions on your side before moving to S04 module?
 [17:53:05] tianyi_shen: Do you know what happen when user click a portion of the pie?
-[17:54:28] SoluLab Inc: When user selects portion of pie chart, it will open up all parameters he has added while adding KPI to let him view data with additional set of params
+[17:54:28] XXX Inc: When user selects portion of pie chart, it will open up all parameters he has added while adding KPI to let him view data with additional set of params
 [17:55:07] tianyi_shen: No, it will show its content on the right
 [17:55:25] tianyi_shen: You can see "group","value" and "percentage"
 [17:55:47] tianyi_shen: But this is calcualted by the server. You just need to assign the data to these three fields
-[17:55:53] SoluLab Inc: Yes you are right
-[17:56:26] SoluLab Inc: So, bottom data should be displayed as soon we load pie chart
+[17:55:53] XXX Inc: Yes you are right
+[17:56:26] XXX Inc: So, bottom data should be displayed as soon we load pie chart
 [17:56:37] tianyi_shen: yes
 [17:57:08] tianyi_shen: Bottom data is the complete data of the pie
-[17:57:14] SoluLab Inc: Ok, clear now
-[17:59:08] SoluLab Inc: Regarding S04-1, user can assign all tasks from his task view - not just one that are due, right?
+[17:57:14] XXX Inc: Ok, clear now
+[17:59:08] XXX Inc: Regarding S04-1, user can assign all tasks from his task view - not just one that are due, right?
 [18:00:47] tianyi_shen: Yes, logic is: I am the head of a global company and I assign a KPI to my COO. But COO will absolutly not input the data by himself. Then he can go on assigning the KPI task to his sub-branch. So does his sub-branch
-[18:01:13] SoluLab Inc: OK, I see
+[18:01:13] XXX Inc: OK, I see
 [18:01:20] tianyi_shen: I made a mistake here
 [18:01:39] tianyi_shen: actually if a task is due, he can not assign it any more until he finish the task
 [18:02:00] tianyi_shen: In the wireframe, the further assign button occationally falls in the dued task
 [18:05:48] tianyi_shen: But if the user don't want to further assign the KPI, he needs only click the row to input his task.
-[18:06:20] SoluLab Inc: Ok, I am discussing one use case to Dipen for check in
+[18:06:20] XXX Inc: Ok, I am discussing one use case to Dipen for check in
 [18:10:29] tianyi_shen: Ok
-[18:34:43] SoluLab Inc: So, user can not further assign the tasks that are due
+[18:34:43] XXX Inc: So, user can not further assign the tasks that are due
 [18:34:52] tianyi_shen: yes
 [18:35:15] tianyi_shen: No, they can't
-[18:35:23] SoluLab Inc: so in S04-7, user will click and reset the value?
+[18:35:23] XXX Inc: so in S04-7, user will click and reset the value?
 [18:36:01] tianyi_shen: This is not reset, but input a new data
 [18:36:09] tianyi_shen: I make an example
 [18:37:02] tianyi_shen: I create a KPI named RFT and assign to Cherry. Her input frequency is one time per day on 18:00. These elements compose a task.
-[18:37:22] SoluLab Inc: Ok
+[18:37:22] XXX Inc: Ok
 [18:37:32] tianyi_shen: Each day before 18:00 Cherry must input the RFT of the current day in, otherwise it's a due
 [18:38:05] tianyi_shen: Suppose Cherry forgot to input for three days, she will have three seperate dued tasks in S04-6
 [18:38:30] tianyi_shen: And she must input the RFT performance for the missed three days seperately
-[18:39:24] SoluLab Inc: And she needs to enter value for all fields that you have added while creating KPI
+[18:39:24] XXX Inc: And she needs to enter value for all fields that you have added while creating KPI
 [18:39:54] tianyi_shen: yes
-[18:39:57] SoluLab Inc: So in this example its just single text box but it could be 10 text boxes, 10 numeric fields and 10 location fields in theory
+[18:39:57] XXX Inc: So in this example its just single text box but it could be 10 text boxes, 10 numeric fields and 10 location fields in theory
 [18:40:07] tianyi_shen: yes
 [18:40:28] tianyi_shen: but in this version, even it's a location, numeric, you need only render text input
-[18:40:49] SoluLab Inc: Ok, I think rest is clear. Assignment flow is same as previous
+[18:40:49] XXX Inc: Ok, I think rest is clear. Assignment flow is same as previous
 [18:41:21] tianyi_shen: S04-7 is difficult. The field must be rendered in real time. Maybe a webview will be easy. But maybe you have your own solution for such dynamic page layout
-[18:43:19] SoluLab Inc: Dynamic fields in form are tricky. Will have to check couple of things before agree on this page's design
-[18:43:59] SoluLab Inc: Regarding S05, how can user clear past unwanted alerts?
+[18:43:19] XXX Inc: Dynamic fields in form are tricky. Will have to check couple of things before agree on this page's design
+[18:43:59] XXX Inc: Regarding S05, how can user clear past unwanted alerts?
 [18:44:32] tianyi_shen: Click it up
 [18:44:52] tianyi_shen: User can not delete alert
-[18:45:02] SoluLab Inc: So alerts once viewed, will be removed from the view
+[18:45:02] XXX Inc: So alerts once viewed, will be removed from the view
 [18:45:35] tianyi_shen: No, it will stay there. I mean the callout number will be remvoed
-[18:45:43] SoluLab Inc: Ok
-[18:46:17] SoluLab Inc: So total number of alerts will grow over time, if user can not delete and we don't purge old alerts
+[18:45:43] XXX Inc: Ok
+[18:46:17] XXX Inc: So total number of alerts will grow over time, if user can not delete and we don't purge old alerts
 [18:46:29] tianyi_shen: yes
-[18:48:12] SoluLab Inc: as a user I might not need alerts which are older than X months or at least need a way to purge old alerts
+[18:48:12] XXX Inc: as a user I might not need alerts which are older than X months or at least need a way to purge old alerts
 [18:48:36] tianyi_shen: You can use delay load
 [18:49:08] tianyi_shen: Always show the latest 5 pieces. If he want to view more, he will pull the page and another 5 pieces will be loaded
-[18:49:19] SoluLab Inc: ok
-[18:50:02] SoluLab Inc: For S05-2, control will go to same page as S04-7, when user clicks on fill now button
+[18:49:19] XXX Inc: ok
+[18:50:02] XXX Inc: For S05-2, control will go to same page as S04-7, when user clicks on fill now button
 [18:51:09] tianyi_shen: Should go to S04-6
 [18:51:22] tianyi_shen: or S04-7
 [18:51:25] tianyi_shen: both is ok
-[18:52:51] SoluLab Inc: Simple yes/no dialogue box when user clicks on approve/reject button on S05-3
+[18:52:51] XXX Inc: Simple yes/no dialogue box when user clicks on approve/reject button on S05-3
 [18:53:07] tianyi_shen: yes
-[18:53:43] SoluLab Inc: All hyper links on S05 sections, should go to KPI discussion, user profile, team page, department page, etc..?
+[18:53:43] XXX Inc: All hyper links on S05 sections, should go to KPI discussion, user profile, team page, department page, etc..?
 [18:54:05] tianyi_shen: which hyperlinks?
 [18:54:18] tianyi_shen: Oh I see
-[18:54:26] SoluLab Inc: Why tpf exceeds 3 for 5 days and others in S05-3
+[18:54:26] XXX Inc: Why tpf exceeds 3 for 5 days and others in S05-3
 [18:54:27] tianyi_shen: No, it is only an underline mark
 [18:54:31] tianyi_shen: not a hyperlink
-[18:54:34] SoluLab Inc: Ok
+[18:54:34] XXX Inc: Ok
 [18:54:43] tianyi_shen: Just indicate you this is a variable
-[18:54:57] SoluLab Inc: Ok, sure
-[18:55:22] SoluLab Inc: Missing screen for system messages is same as abnormal data?
+[18:54:57] XXX Inc: Ok, sure
+[18:55:22] XXX Inc: Missing screen for system messages is same as abnormal data?
 [18:55:49] tianyi_shen: yes, system message is just pieces of text without any link
-[18:55:59] SoluLab Inc: Ok
-[18:56:42] SoluLab Inc:  Diff between S06-2 and S06-4 screens?
+[18:55:59] XXX Inc: Ok
+[18:56:42] XXX Inc:  Diff between S06-2 and S06-4 screens?
 [18:57:11] tianyi_shen: They are essentially the same
 [18:57:23] tianyi_shen: You are in a organization three
 [18:57:25] tianyi_shen: tree
 [18:57:42] tianyi_shen: So when you enter the next node, the node will also have childen and direct users
-[18:57:51] SoluLab Inc: Ok
+[18:57:51] XXX Inc: Ok
 [18:57:51] tianyi_shen: it's a loop
-[18:58:37] SoluLab Inc: So in S06-1, you can see top node of department you are part of and you can also add new department (I guess only admin/manager will have this option)?
-[19:00:06] SoluLab Inc: S06-2 opens when user clicks on Quality department on S06-1, right?
+[18:58:37] XXX Inc: So in S06-1, you can see top node of department you are part of and you can also add new department (I guess only admin/manager will have this option)?
+[19:00:06] XXX Inc: S06-2 opens when user clicks on Quality department on S06-1, right?
 [19:00:12] tianyi_shen: yes
-[19:01:09] SoluLab Inc: and when user clicks on Add a new department in S06-2, he will reach to S06-3
+[19:01:09] XXX Inc: and when user clicks on Add a new department in S06-2, he will reach to S06-3
 [19:01:44] tianyi_shen: No, S06-7
-[19:02:12] SoluLab Inc: Oh yes
-[19:02:26] SoluLab Inc: then how will user reach to S06-3 and S06-4?
+[19:02:12] XXX Inc: Oh yes
+[19:02:26] XXX Inc: then how will user reach to S06-3 and S06-4?
 [19:03:34] tianyi_shen: S06-3 and S06-4 is essentially same as S06-2
 [19:03:46] tianyi_shen: I just want to show the tree relationship
 [19:03:54] tianyi_shen: It may be a little misleading
-[19:08:48] SoluLab Inc: Ok, I see it now. So department could have multiple depts inside or direct users depending on the node level in org tree
+[19:08:48] XXX Inc: Ok, I see it now. So department could have multiple depts inside or direct users depending on the node level in org tree
 [19:09:40] tianyi_shen: yes
-[19:10:04] SoluLab Inc: when user clicks on add new dept staff, he will reach to S06-5
-[19:10:16] SoluLab Inc: I think rest is clear
-[19:10:35] tianyi_shen: Yes
-[19:11:02] SoluLab Inc: Ok, let me review list of ques I sent last week to check i am not missing anything
-[19:12:29] tianyi_shen: Ok.
-[19:12:36] tianyi_shen:  I will leave home soon
-[19:12:58] tianyi_shen: Will you update the wireframe based our discussion today?
+[19:10:04] XXX Inc: when user clicks on add new dept staff, he will reach to S06-5
+[19:10:16] XXX Inc: I think rest is clear
