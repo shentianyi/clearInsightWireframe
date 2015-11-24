@@ -1,0 +1,721 @@
+swagger: '2.0'
+info:
+  version: 0.0.1
+  title: 'clearinsight web service api'
+  
+definitions:
+  brief_user_info:
+    type: object
+    required:
+      - user_id
+      - nick_name
+      - department
+    properties:
+      user_id:
+        type: string
+        format: email
+        description: the user id
+      nick_name:
+        type: string
+        description: the nick name of the user
+      department:
+        $ref: '#/definitions/department'
+        
+  user_group_list:
+    type: object
+    required:
+      - list_name
+      - users
+    properties:
+      list_name:
+        type: string
+        description: the unique list name
+      users:
+        description: the user_ids in the list
+        type: array
+        items: 
+          type: string
+
+
+  kpi_settings:
+    type: object
+    required:
+      - kpi
+      - assignments
+    properties:
+      kpi:
+        $ref: '#/definitions/kpi'
+      assignments:
+        type: array
+        items:
+          $ref: '#/definitions/assignment'
+      
+  assignment:
+    type: object
+    required:
+      - user
+      - department_id
+      - time
+      - frequency
+    properties:
+      user:
+        type: string
+        format: email
+        description: user id
+      department_id:
+        type: string
+        description: the department id to assign
+      time:
+        type: string
+        format: date-time
+        description: the UTC time string to remind the user to finish the task
+      frequency:
+        type: string
+        description: the frequency to input the KPI
+        enum: 
+          - "hour"
+          - "day"
+          - "week"
+          - "month"
+          - "quater"
+          - "year"
+        
+  attribute:
+    type: object
+    required:
+      - attribute_name
+      - attribute_type
+    properties:
+      attribute_name:
+        type: string
+        description: the attribute name
+      attribute_type:
+        type: string
+        description: the type of the attributes
+        enum:
+          - "text"
+          - "number"
+          - "location"
+          
+  viewable:
+    type: object
+    required: 
+      - viewable_code
+    properties:
+      viewable_code:
+        type: string
+        description: the viewable type
+        enum:
+          - "private"
+          - "public"
+          - "partial_allow"
+          - "partial_block"
+      user_group_id:
+        type: string
+        description: the tagged user group
+        
+  basic_feedback:
+    type: object
+    required: 
+    - result_code
+    - token
+    - need_instruction
+    properties:
+      result_code:
+        type: string
+        description: has enum
+        enum:
+          - "successfully"
+          - "wrong password or user name"
+      messages:
+        type: array
+        items:
+          type: string
+      token: 
+        description: OAuth token getting from the server. May expire based on the web service settings. Need to attach the token to the http head each time invoking the api
+        type: string
+      need_instruction:
+        description: a flag to show the page id that the user has not entered in order the 
+        type: boolean
+
+  kpi:
+    type: object
+    required:
+    - kpi_id
+    - kpi_name
+    - description
+    - creator
+    - created_on
+    - target_max
+    - target_min
+    - uom
+    - calculate_method
+    - viewable
+    properties:
+      kpi_id:
+        type: string
+        description: the kpi unique key
+      kpi_name:
+        type: string
+        description: the kpi name
+      description:
+        type: string
+        description: the description of the KPI
+      creator:
+        type: string
+        description: the creator's nick name
+      created_on:
+        type: string
+        description: the creation time in UTC format
+      target_max:
+        type: number
+        description: the default max target
+      target_min:
+        type: number
+        format: float
+        description: the default min target
+      uom:
+        type: string
+        description: the unit of measurement code
+      calculate_method:
+        type: string
+        description: the calculate methode code of the kpi
+      viewable:
+        $ref: '#/definitions/viewable'
+      attributes:
+        type: array
+        description: the attributes
+        items:
+          $ref: '#/definitions/attribute'
+          
+  department:
+    type: object
+    properties:
+      department_id:
+        type: string
+        description: the department's id
+      department_name:
+        type: string
+        description: the department name
+      department_description:
+        type: string
+        description: the department description
+      parent_department:
+        type: string
+        description: the parent department object, null if current department is the top department of the user
+      has_children:
+        type: boolean
+        description: flag to indicate whether it has chilren department
+  
+  department_follow_status:
+    type: object
+    required:
+      - department
+      - follow_flag
+    properties:
+      follow_flag:
+        type: string
+        description: indicate the follow status of the user to the kpi
+        enum:
+          - "NONE"
+          - "PARTLY"
+          - "ALL"
+          - "NA"
+      department:
+        $ref: '#/definitions/department'
+        description: the departments
+        
+  user_kpi_on_departments:
+    type: object
+    required:
+      - department_follow_states
+      - kpi
+      - user
+    properties:
+      user:
+        $ref: '#/definitions/brief_user_info'
+        description: the user
+      department_follow_states:
+        type: array
+        items:
+          $ref: '#/definitions/department_follow_status'
+        description: the departments
+      kpi:
+        $ref: '#/definitions/kpi'
+        description: the kp
+  
+  kpi_on_user:
+    type: object
+    required:
+      - user
+      - kpi
+      - follow_flag
+    properties:
+      user:
+        $ref: '#/definitions/brief_user_info'
+        description: the user
+      kpi:
+        $ref: '#/definitions/kpi'
+        description: the kp
+      follow_flag:
+        type: string
+        description: indicate the follow status of the user to the kpi
+        enum:
+          - "NONE"
+          - "PARTLY"
+          - "ALL"
+          - "NA"
+      is_created:
+        type: boolean
+        description: indicate whether the KPI is created by current user
+      is_managable:
+        type: boolean
+        description: indicate whether the user has the authorization to manage the KPI
+        
+
+paths:
+  /user_sessions:
+    post:
+      description: |
+        User Login for external app invoke
+      parameters:
+        - name: user_name
+          in: query
+          description: user name
+          required: true
+          type: string
+        - name: password
+          in: query
+          description: user password
+          required: true
+          type: string
+        - name: language
+          in: header
+          description: the language code of the current user environment
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            "$ref": "#/definitions/basic_feedback"
+
+  /user_infos:
+      post:
+        description:
+          create user account
+        parameters:
+          - name: user_name
+            in: query
+            description: user name to register
+            required: true
+            type: string
+          - name: password
+            in: query
+            description: user password
+            required: true
+            type: string
+          - name: nick_name
+            in: query
+            description: the user name shown in the application
+            required: true
+            type: string
+          - name: language
+            in: header
+            description: the language code of the current user environment
+            required: true
+            type: string
+        responses:
+          '200':
+            description: Successful response
+            schema:
+              $ref: '#/definitions/basic_feedback'
+  
+  /user_kpis:
+      get:
+        description:
+          get all the kpis the user has access.
+        parameters:
+          - name: language
+            in: header
+            description: the language code of the current user environment
+            required: true
+            type: string
+          - name: token
+            in: header
+            description: the oauth token from the server
+            required: true
+            type: string
+        responses:
+          '200':
+            description: Successful response
+            schema:
+              type: array
+              items:
+               $ref: '#/definitions/kpi_on_user'
+          '403':
+            description: indicate the token or user session has expired
+
+  /user_departments:
+      get:
+        description:
+          get all the departments the user has access on one level.
+        parameters:
+          - name: language
+            in: header
+            description: the language code of the current user environment
+            required: true
+            type: string
+          - name: token
+            in: header
+            description: the oauth token from the server
+            required: true
+            type: string
+          - name: department_id
+            in: query
+            type: string
+            description: the parent department ID. If the department ID is null, return the top level of departments
+        responses:
+          '200':
+            description: Successful response
+            schema:
+              type: array
+              items:
+               $ref: '#/definitions/department'
+          '403':
+            description: indicate the token or user session has expired
+               
+  /user_kpi_on_departments:
+      get:
+        description:
+          get department in the access of the user
+        parameters:
+          - name: language
+            in: header
+            description: the language code of the current user environment
+            required: true
+            type: string
+          - name: token
+            in: header
+            description: the oauth token from the server
+            required: true
+            type: string
+          - name: department_id
+            in: query
+            description: the start department id, if null, return the top levels of departments of the user access
+            required: true
+            type: string
+        responses:
+          '200':
+            description: ok
+            schema:
+              $ref: '#/definitions/user_kpi_on_departments'
+          '403':
+            description: indicate the token or user session has expired
+                
+  /follow_kpi:
+    post:
+      description: follow a kpi under certain department
+      parameters:
+          - name: language
+            in: header
+            description: the language code of the current user environment
+            required: true
+            type: string
+          - name: token
+            in: header
+            description: the oauth token from the server
+            required: true
+            type: string
+          - name: kpi_id
+            description: the kpi id to follow
+            in: query
+            required: true
+            type: string
+          - name: department_id
+            in: query
+            description: the department to follow
+            required: true
+            type: string
+          - name: lower_boundary
+            in: query
+            description: the lower boundary for notification
+            required: true
+            type: number
+            format: float
+          - name: upper_boundary
+            in: query
+            description: the upper boundary for notification
+            required: true
+            type: number
+            format: float
+          - name: auto_notification
+            in: query
+            description: whether receive auto notification for this following when the kpi is abnormal(exceed the upper and lower boundary's value)
+            required: true
+            type: boolean
+      responses:
+        "200":
+          description: successful
+          schema:
+            $ref: '#/definitions/basic_feedback'
+        '403':
+          description: indicate the token or user session has expired
+            
+  /kpi:
+    get:
+      description: get a kpi with an ID
+      parameters:
+        - name: language
+          in: header
+          description: the language code of the current user environment
+          required: true
+          type: string
+        - name: token
+          in: header
+          description: the oauth token from the server
+          required: true
+          type: string
+        - name: kpi_id
+          in: query
+          required: true
+          type: string
+      responses:
+        '200':
+          description: "successful"
+          schema:
+            $ref: '#/definitions/kpi_settings'
+        '403':
+          description: indicate the token or user session has expired        
+    post:
+      description: create a kpi
+      parameters:
+          - name: language
+            in: header
+            description: the language code of the current user environment
+            required: true
+            type: string
+          - name: token
+            in: header
+            description: the oauth token from the server
+            required: true
+            type: string
+          - name: kpi
+            in: body
+            description: the kpi name to create.
+            required: true
+            schema: 
+              $ref: "#/definitions/kpi_settings" 
+      responses:
+        '200':
+          description: "successful"
+          schema:
+            $ref: '#/definitions/basic_feedback'
+        '403':
+          description: indicate the token or user session has expired
+    put:
+      description: update a kpi
+      parameters:
+          - name: language
+            in: header
+            description: the language code of the current user environment
+            required: true
+            type: string
+          - name: token
+            in: header
+            description: the oauth token from the server
+            required: true
+            type: string
+          - name: kpi
+            in: body
+            description: the kpi name to create.
+            required: true
+            schema: 
+              $ref: "#/definitions/kpi_settings" 
+      responses:
+        '200':
+          description: "successful"
+          schema:
+            $ref: '#/definitions/basic_feedback'
+        '403':
+          description: indicate the token or user session has expired
+
+  /user_group_lists:
+    post:
+      description: create a user group list
+      parameters:
+          - name: language
+            in: header
+            description: the language code of the current user environment
+            required: true
+            type: string
+          - name: token
+            in: header
+            description: the oauth token from the server
+            required: true
+            type: string
+          - name: user_group_list
+            in: body
+            description: the user group list object to create
+            required: true
+            schema:
+             $ref: '#/definitions/user_group_list'
+      responses:
+        '200':
+          description: "successful"
+          schema:
+            $ref: '#/definitions/basic_feedback'
+        '403':
+          description: indicate the token or user session has expired
+    put:
+      description: update a user group list
+      parameters:
+          - name: language
+            in: header
+            description: the language code of the current user environment
+            required: true
+            type: string
+          - name: token
+            in: header
+            description: the oauth token from the server
+            required: true
+            type: string
+          - name: user_group_list
+            in: body
+            description: the user group list object to update
+            required: true
+            schema:
+             $ref: '#/definitions/user_group_list'
+      responses:
+        '200':
+          description: "successful"
+          schema:
+            $ref: '#/definitions/basic_feedback'
+        '403':
+          description: indicate the token or user session has expired
+    get:
+      description: get a user group list
+      parameters:
+          - name: language
+            in: header
+            description: the language code of the current user environment
+            required: true
+            type: string
+          - name: token
+            in: header
+            description: the oauth token from the server
+            required: true
+            type: string
+          - name: user_group_list_name
+            in: query
+            description: the user group list name to get
+            required: true
+            type: string
+          - name: viewable_type
+            in: query
+            description: the viewable type. If can not be null together with user_group_list_name
+            required: true
+            type: string
+            enum:
+              - "partial_allow"
+              - "partial_block"
+      responses:
+        '200':
+          description: "successful"
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/user_group_list'
+        '403':
+          description: indicate the token or user session has expired
+          
+  /full_text_search_users:
+    get:
+      description: get the user list with full text method
+      parameters:
+        - name: language
+          in: header
+          description: the language code of the current user environment
+          required: true
+          type: string
+        - name: token
+          in: header
+          description: the oauth token from the server
+          required: true
+          type: string
+        - name: input_chars
+          in: query
+          type: string
+          description: the characters the user input
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/brief_user_info'
+        '403':
+          description: indicate the token or user session has expired
+            
+  /full_text_search_departments:
+    get:
+      description: get the department list with full text method
+      parameters:
+        - name: language
+          in: header
+          description: the language code of the current user environment
+          required: true
+          type: string
+        - name: token
+          in: header
+          description: the oauth token from the server
+          required: true
+          type: string
+        - name: input_chars
+          in: query
+          type: string
+          description: the characters the user input
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            type: array
+            items:
+             $ref: '#/definitions/department'
+        '403':
+          description: indicate the token or user session has expired
+      
+
+  /full_text_search_kpis:
+    get:
+      description: get the user's followable kpi list with full text method
+      parameters:
+        - name: language
+          in: header
+          description: the language code of the current user environment
+          required: true
+          type: string
+        - name: token
+          in: header
+          description: the oauth token from the server
+          required: true
+          type: string
+        - name: input_chars
+          in: query
+          type: string
+          description: the characters the user input
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            type: array
+            items:
+             $ref: '#/definitions/kpi_on_user'
+        '403':
+          description: indicate the token or user session has expired      
+            
+            
+      
+        
+          
+            
