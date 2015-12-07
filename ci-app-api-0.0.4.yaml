@@ -2,7 +2,7 @@ swagger: '2.0'
 info:
   version: 0.0.4
   title: clearinsight web service api
-host: 112.124.28.10:8001
+host: '112.124.28.10:8001'
 basePath: /api/v2
 definitions:
   user_info:
@@ -478,6 +478,22 @@ definitions:
       user_group_id:
         type: string
         description: the tagged user group
+  return_message:
+    type: object
+    required:
+      - result_code
+      - messages
+    properties:
+      result_code:
+        type: string
+        description: has enum
+        enum:
+          - wrong password or user name
+          - successfully
+      messages:
+        type: array
+        items:
+          type: string
   basic_feedback:
     type: object
     required:
@@ -636,22 +652,22 @@ definitions:
 paths:
   /users/sessions:
     post:
-      description: |
-        User Login for external app invoke
+      description:
+        User Sign In for external app invoke
       parameters:
         - name: email
-          in: formData
+          in: query
           description: user email
           required: true
           type: string
         - name: password
-          in: formData
+          in: query
           description: user password
           required: true
           type: string
         - name: Accept-Language
           in: header
-          description: the language code of the current user environment. zh, en, de are allowed.
+          description: 'the language code of the current user environment. zh, en, de are allowed.'
           required: true
           type: string
       responses:
@@ -659,6 +675,36 @@ paths:
           description: Successful response
           schema:
             $ref: '#/definitions/basic_feedback'
+  /users/registrations:
+    post:
+      description: 
+        User Sign Up Api
+      parameters:
+        - name: email
+          in: query
+          description: user email
+          required: true
+          type: string
+        - name: password
+          in: query
+          description: user password
+          required: true
+          type: string
+        - name: nick_name
+          in: query
+          description: user nick name
+          required: true
+          type: string
+        - name: Accept-Language
+          in: header
+          description: 'the language code of the current user environment. zh, en, de are allowed.'
+          required: true
+          type: string
+      responses:
+        '201':
+          description: Successful response
+          schema:
+            $ref: '#/definitions/return_message'
   /brief_user_infos:
     get:
       description: get user list
