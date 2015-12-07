@@ -572,18 +572,18 @@ definitions:
   department:
     type: object
     properties:
-      department_id:
-        type: string
+      id:
+        type: integer
         description: "the department's id"
-      department_name:
+      name:
         type: string
         description: the department name
-      department_description:
+      description:
         type: string
         description: the department description
-      parent_department:
-        type: string
-        description: 'the parent department object, null if current department is the top department of the user'
+      parent_id:
+        type: integer
+        description: 'the parent department id, null if current department is the top department of the user'
       has_children:
         type: boolean
         description: flag to indicate whether it has chilren department
@@ -650,7 +650,7 @@ definitions:
         type: boolean
         description: indicate whether the user has the authorization to manage the KPI
 paths:
-  /users/sessions:
+  /user_sessions:
     post:
       description:
         User Sign In for external app invoke
@@ -675,7 +675,7 @@ paths:
           description: Successful response
           schema:
             $ref: '#/definitions/basic_feedback'
-  /users/registrations:
+  /user_registrations:
     post:
       description: 
         User Sign Up Api
@@ -705,18 +705,18 @@ paths:
           description: Successful response
           schema:
             $ref: '#/definitions/return_message'
-  /brief_user_infos:
+  /users/brief_info:
     get:
       description: get user list
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
-          description: the oauth token from the server
+          description: the oauth token from the server, type is beare
           required: true
           type: string
       responses:
