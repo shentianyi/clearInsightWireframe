@@ -871,21 +871,21 @@ paths:
     post:
       description: user forget password api
       parameters:
+        - name: email
+          in: body
+          description: user email
+          required: true
+          type: string
         - name: Accept-Language
           in: header
           description: the language code of the current user environment
-          required: true
-          type: string
-        - name: Authorization
-          in: header
-          description: the oauth token from the server
           required: true
           type: string
       responses:
         '201':
           description: Successful response
           schema:
-            $ref: '#/definitions/basic_feedback'
+            $ref: '#/definitions/return_message'
         '403':
           description: indicate the token or user session has expired
   /departments:
