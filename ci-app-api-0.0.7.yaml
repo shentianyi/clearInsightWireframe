@@ -991,7 +991,7 @@ paths:
         - name: id
           in: body
           required: true
-          type: interger
+          type: integer
           description: department id
         - name: emails
           required: true
@@ -1022,7 +1022,7 @@ paths:
         - name: id
           in: body
           required: true
-          type: interger
+          type: integer
           description: department id
         - name: user_id
           required: true
@@ -1178,11 +1178,11 @@ paths:
           type: string
       responses:
         '200':
-          description: successful 
+          description: successful
           schema:
             type: array
             items:
-              $ref: '#/definitions/enum_object'     
+              $ref: '#/definitions/enum_object'
         '403':
           description: indicate the token or user session has expired
   /kpis/calculate_methods:
@@ -1207,7 +1207,7 @@ paths:
             items:
               $ref: '#/definitions/enum_object'
         '403':
-          description: indicate the token or user session has expired      
+          description: indicate the token or user session has expired
   /kpis/timing_frequencies:
     get:
       description: get the list
@@ -1224,14 +1224,13 @@ paths:
           type: string
       responses:
         '200':
-          description: successful 
+          description: successful
           schema:
             type: array
             items:
               $ref: '#/definitions/enum_object'
         '403':
-          description: indicate the token or user session has expired        
-  
+          description: indicate the token or user session has expired
   /user_kpis:
     get:
       description: get all the kpis the user has access.
