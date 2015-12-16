@@ -42,4 +42,5 @@
 7. change /kpi to /kpis
 8. change /ser_group_lists to /user_groups
 9. change /kpi_details to /kpis/details
-
+10. change post /kpis/user_follwed to post /kpis/users/followed;
+11. change post /kpis/user_created to post /kpis/users/created;

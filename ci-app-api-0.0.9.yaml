@@ -1639,7 +1639,7 @@ paths:
               $ref: '#/definitions/followed_kpi'
         '403':
           description: indicate the token or user session has expired
-  /kpis/user_followed:
+  /kpis/users/followed:
     get:
       description: get followed KPI by current user
       parameters:
@@ -1666,7 +1666,7 @@ paths:
               $ref: '#/definitions/kpi_on_user'
         '403':
           description: indicate the token or user session has expired
-  /kpis/user_created:
+  /kpis/users/created:
     get:
       description: get created KPI by current user
       parameters:
