@@ -1325,7 +1325,7 @@ paths:
         '200':
           description: successful
           schema:
-            $ref: '#/definitions/return_message'
+            $ref: '#/definitions/basic_feedback'
         '403':
           description: indicate the token or user session has expired
   /unfollow_kpi:
@@ -1356,7 +1356,7 @@ paths:
         '200':
           description: successful
           schema:
-            $ref: '#/definitions/return_message'
+            $ref: '#/definitions/basic_feedback'
         '403':
           description: indicate the token or user session has expired
   /kpi:
@@ -2317,4 +2317,3 @@ paths:
               $ref: '#/definitions/data_alert'
         '403':
           description: indicate the token or user session has expired
-
