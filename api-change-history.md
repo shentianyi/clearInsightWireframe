@@ -31,3 +31,9 @@
 5. change post /kpis/unfollow api return;
 6. add /kpis/user_created api
 7. change post /kpis/user_followed api return;
+
+*from 0.0.8 to 0.0.9 by Charlot
+1. change /full_text_search_users to /search/full_text/users
+2. change /full_text_search_departments to /search/full_text/departments
+3. change /full_text_search_kpis to /search/full_text/kpis
+4. change /full_text_search_follwed_kpis to /search/full_text/followed_kpis
