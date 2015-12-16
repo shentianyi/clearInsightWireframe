@@ -1,10 +1,22 @@
 swagger: '2.0'
 info:
-  version: 0.0.4
+  version: 0.0.7
   title: clearinsight web service api
 host: '112.124.28.10:8001'
 basePath: /api/v2
 definitions:
+  enum_object:
+    type: object
+    required:
+      - id
+      - name
+    properties:
+      id:
+        type: integer
+        description: the id of the enum item
+      name:
+        type: string
+        description: the name of the enum item
   user_info:
     description: more detailed user info than brief user info
     type: object
@@ -353,7 +365,7 @@ definitions:
       - id
       - email
       - nick_name
-      - department
+      - departments
     properties:
       id:
         type: integer
@@ -365,8 +377,10 @@ definitions:
       nick_name:
         type: string
         description: the nick name of the user
-      department:
-        $ref: '#/definitions/department'
+      departments:
+        type: array
+        items:
+          $ref: '#/definitions/user_on_department'
   user_group_list:
     type: object
     required:
@@ -498,7 +512,6 @@ definitions:
     type: object
     required:
       - result_code
-      - token
       - need_instruction
     properties:
       result_code:
@@ -587,6 +600,15 @@ definitions:
       has_children:
         type: boolean
         description: flag to indicate whether it has chilren department
+  user_on_department:
+    type: object
+    properties:
+      managable:
+        type: boolean
+        description: indicate user manage rigth to the department
+      department:
+        $ref: '#/definitions/department'
+        description: the departments
   department_follow_status:
     type: object
     required:
@@ -652,8 +674,7 @@ definitions:
 paths:
   /user_sessions:
     post:
-      description:
-        User Sign In for external app invoke
+      description: User Sign In for external app invoke
       parameters:
         - name: email
           in: query
@@ -677,8 +698,7 @@ paths:
             $ref: '#/definitions/basic_feedback'
   /user_registrations:
     post:
-      description: 
-        User Sign Up Api
+      description: User Sign Up Api
       parameters:
         - name: email
           in: query
@@ -705,7 +725,7 @@ paths:
           description: Successful response
           schema:
             $ref: '#/definitions/return_message'
-  /users/brief_info:
+  /users/brief_infos:
     get:
       description: get user list
       parameters:
@@ -716,26 +736,36 @@ paths:
           type: string
         - name: Authorization
           in: header
-          description: the oauth token from the server, type is beare
+          description: 'the oauth token from the server, type is beare'
           required: true
           type: string
+        - name: page
+          in: query
+          type: integer
+          description: 'page index of request the list, start from 0'
+        - name: size
+          in: query
+          type: integer
+          description: 'page size of request the list, default is 20'
       responses:
         '200':
           description: Successful response
           schema:
-            $ref: '#/definitions/brief_user_info'
+            type: array
+            items:
+              $ref: '#/definitions/brief_user_info'
         '403':
           description: indicate the token or user session has expired
-  /user_infos:
+  /users/infos:
     get:
       description: get user account settings
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -765,7 +795,7 @@ paths:
           description: user password
           required: true
           type: string
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
@@ -776,25 +806,24 @@ paths:
           schema:
             $ref: '#/definitions/basic_feedback'
     put:
-      description: create user account
+      description: update user account
       parameters:
-        - name: user_info
+        - name: nick_name
           in: body
-          description: user name to register
-          required: true
-          schema:
-            $ref: '#/definitions/user_info'
-        - name: password
-          in: query
-          description: user password
+          description: user nick name
           required: true
           type: string
-        - name: language
+        - name: email
+          in: body
+          description: user email
+          required: true
+          type: string
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -804,16 +833,415 @@ paths:
           description: Successful response
           schema:
             $ref: '#/definitions/basic_feedback'
-  /user_kpis:
-    get:
-      description: get all the kpis the user has access.
+  /users/set_password:
+    post:
+      description: change a user password
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
+          in: header
+          description: the oauth token from the server
+          required: true
+          type: string
+        - name: old_password
+          in: query
+          type: string
+          description: the current password
+        - name: new_password
+          required: true
+          in: query
+          type: string
+          description: new password
+        - name: user_id
+          in: query
+          type: string
+          description: user to change password
+      responses:
+        '201':
+          description: Successful response
+          schema:
+            $ref: '#/definitions/basic_feedback'
+        '403':
+          description: indicate the token or user session has expired
+  /users/forget_password:
+    post:
+      description: user forget password api
+      parameters:
+        - name: email
+          in: body
+          description: user email
+          required: true
+          type: string
+        - name: Accept-Language
+          in: header
+          description: the language code of the current user environment
+          required: true
+          type: string
+      responses:
+        '201':
+          description: Successful response
+          schema:
+            $ref: '#/definitions/return_message'
+        '403':
+          description: indicate the token or user session has expired
+  /departments:
+    post:
+      description: create department
+      parameters:
+        - name: name
+          in: body
+          description: department name
+          required: true
+          type: string
+        - name: description
+          in: body
+          description: department description
+          required: true
+          type: string
+        - name: parent_id
+          in: body
+          description: department parent id
+          required: true
+          type: integer
+        - name: Accept-Language
+          in: header
+          description: the language code of the current user environment
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: the oauth token from the server
+          required: true
+          type: string
+      responses:
+        '201':
+          description: Successful response
+          schema:
+            $ref: '#/definitions/basic_feedback'
+        '403':
+          description: indicate the token or user session has expired
+    put:
+      description: update department
+      parameters:
+        - name: name
+          in: body
+          description: department name
+          required: true
+          type: string
+        - name: description
+          in: body
+          description: department description
+          required: true
+          type: string
+        - name: id
+          in: body
+          description: department id
+          required: true
+          type: integer
+        - name: Accept-Language
+          in: header
+          description: the language code of the current user environment
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: the oauth token from the server
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            $ref: '#/definitions/basic_feedback'
+        '403':
+          description: indicate the token or user session has expired
+    delete:
+      description: deelte department
+      parameters:
+        - name: id
+          in: query
+          description: department id
+          required: true
+          type: integer
+        - name: Accept-Language
+          in: header
+          description: the language code of the current user environment
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: the oauth token from the server
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            $ref: '#/definitions/return_message'
+        '403':
+          description: indicate the token or user session has expired
+  /departments/add_users:
+    post:
+      description: add users to department with user emails
+      parameters:
+        - name: id
+          in: body
+          required: true
+          type: interger
+          description: department id
+        - name: emails
+          required: true
+          in: body
+          type: array
+          description: user emails
+        - name: Accept-Language
+          in: header
+          description: the language code of the current user environment
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: the oauth token from the server
+          required: true
+          type: string
+      responses:
+        '201':
+          description: Successful response
+          schema:
+            $ref: '#/definitions/return_message'
+        '403':
+          description: indicate the token or user session has expired
+  /departments/remove_user:
+    post:
+      description: remove user from the department
+      parameters:
+        - name: id
+          in: body
+          required: true
+          type: interger
+          description: department id
+        - name: user_id
+          required: true
+          in: body
+          type: integer
+          description: user id
+        - name: Accept-Language
+          in: header
+          description: the language code of the current user environment
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: the oauth token from the server
+          required: true
+          type: string
+      responses:
+        '201':
+          description: Successful response
+          schema:
+            $ref: '#/definitions/return_message'
+        '403':
+          description: indicate the token or user session has expired
+  /users/departments:
+    get:
+      description: get all the departments the user has access on one level.
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: the language code of the current user environment
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: the oauth token from the server
+          required: true
+          type: string
+        - name: department_id
+          in: query
+          type: integer
+          description: 'the parent department ID. If the department ID is null, return the top level of departments'
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/user_on_department'
+        '403':
+          description: indicate the token or user session has expired
+  /departments/members:
+    get:
+      description: get all the members of a departmment node
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: the language code of the current user environment
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: the oauth token from the server
+          required: true
+          type: string
+        - name: id
+          in: query
+          type: integer
+          description: department to get the members
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/department_member'
+        '403':
+          description: indicate the token or user session has expired
+  /departments/set_manager:
+    post:
+      description: set a user as department manager
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: the language code of the current user environment
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: the oauth token from the server
+          required: true
+          type: string
+        - name: id
+          in: query
+          type: integer
+          required: true
+          description: department need to set manager
+        - name: user_id
+          in: query
+          type: integer
+          required: true
+          description: manager to be
+      responses:
+        '201':
+          description: Successful response
+          schema:
+            $ref: '#/definitions/return_message'
+        '403':
+          description: indicate the token or user session has expired
+  /departments/remove_manager:
+    post:
+      description: unset a user from department manager
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: the language code of the current user environment
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: the oauth token from the server
+          required: true
+          type: string
+        - name: id
+          in: query
+          type: integer
+          required: true
+          description: department need to set manager
+        - name: user_id
+          in: query
+          type: integer
+          required: true
+          description: manager to be
+      responses:
+        '201':
+          description: Successful response
+          schema:
+            $ref: '#/definitions/return_message'
+        '403':
+          description: indicate the token or user session has expired
+  /kpis/unit_of_measurements:
+    get:
+      description: get the list
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: the language code of the current user environment
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: the oauth token from the server
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful 
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/enum_object'     
+        '403':
+          description: indicate the token or user session has expired
+  /kpis/calculate_methods:
+    get:
+      description: get the list
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: the language code of the current user environment
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: the oauth token from the server
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/enum_object'
+        '403':
+          description: indicate the token or user session has expired      
+  /kpis/timing_frequencies:
+    get:
+      description: get the list
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: the language code of the current user environment
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: the oauth token from the server
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful 
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/enum_object'
+        '403':
+          description: indicate the token or user session has expired        
+  
+  /user_kpis:
+    get:
+      description: get all the kpis the user has access.
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: the language code of the current user environment
+          required: true
+          type: string
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -827,43 +1255,16 @@ paths:
               $ref: '#/definitions/kpi_on_user'
         '403':
           description: indicate the token or user session has expired
-  /user_departments:
-    get:
-      description: get all the departments the user has access on one level.
-      parameters:
-        - name: language
-          in: header
-          description: the language code of the current user environment
-          required: true
-          type: string
-        - name: token
-          in: header
-          description: the oauth token from the server
-          required: true
-          type: string
-        - name: department_id
-          in: query
-          type: string
-          description: 'the parent department ID. If the department ID is null, return the top level of departments'
-      responses:
-        '200':
-          description: Successful response
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/department'
-        '403':
-          description: indicate the token or user session has expired
   /user_kpi_on_departments:
     get:
       description: get department in the access of the user
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -884,12 +1285,12 @@ paths:
     post:
       description: follow a kpi under certain department
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -932,12 +1333,12 @@ paths:
     post:
       description: unfollow a kpi under certain department
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -963,12 +1364,12 @@ paths:
     get:
       description: get a kpi with an ID
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -987,12 +1388,12 @@ paths:
     post:
       description: create a kpi
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1013,12 +1414,12 @@ paths:
     put:
       description: update a kpi
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1040,12 +1441,12 @@ paths:
     post:
       description: create a user group list
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1066,12 +1467,12 @@ paths:
     put:
       description: update a user group list
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1092,12 +1493,12 @@ paths:
     get:
       description: get a user group list
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1128,12 +1529,12 @@ paths:
     get:
       description: get the user list with full text method
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1155,12 +1556,12 @@ paths:
     get:
       description: get the department list with full text method
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1182,12 +1583,12 @@ paths:
     get:
       description: "get the user's followable kpi list with full text method"
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1209,12 +1610,12 @@ paths:
     get:
       description: "get the user's following kpi list with full text method"
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1236,12 +1637,12 @@ paths:
     get:
       description: get followed KPI by current user
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1263,12 +1664,12 @@ paths:
     get:
       description: get kpi performance of a department during a time span with a calculate method
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1322,12 +1723,12 @@ paths:
     get:
       description: get the discussion list or discussion by ID
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1356,12 +1757,12 @@ paths:
     post:
       description: create a discussion
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1383,12 +1784,12 @@ paths:
     get:
       description: get the member list of a discussion
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1409,12 +1810,12 @@ paths:
     post:
       description: update the list of members in a discussion
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1434,12 +1835,12 @@ paths:
     get:
       description: get comments of a discussion
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1460,12 +1861,12 @@ paths:
     post:
       description: add a comment to a discussion
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1486,12 +1887,12 @@ paths:
     get:
       description: get a comment with id
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1511,12 +1912,12 @@ paths:
     get:
       description: make an aggregative analysis
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1574,12 +1975,12 @@ paths:
     get:
       description: get the snapshot by it
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1598,12 +1999,12 @@ paths:
     post:
       description: post a snapshot to a discussion as comment
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1628,12 +2029,12 @@ paths:
     post:
       description: upload a file
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1654,12 +2055,12 @@ paths:
     get:
       description: get task by task id
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1680,12 +2081,12 @@ paths:
     get:
       description: get user tasks
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1707,12 +2108,12 @@ paths:
     post:
       description: further assign a task to a user
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1740,12 +2141,12 @@ paths:
     get:
       description: get task items by task id
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1767,12 +2168,12 @@ paths:
     post:
       description: enter a kpi data
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1797,12 +2198,12 @@ paths:
     get:
       description: get alerts of a user
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1828,12 +2229,12 @@ paths:
     get:
       description: get task alerts of a user
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1859,12 +2260,12 @@ paths:
     get:
       description: get alerts of a user
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1890,12 +2291,12 @@ paths:
     get:
       description: get alerts of a user
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1915,94 +2316,5 @@ paths:
             type: array
             items:
               $ref: '#/definitions/data_alert'
-        '403':
-          description: indicate the token or user session has expired
-  /department_members:
-    get:
-      description: get all the members of a departmment node
-      parameters:
-        - name: language
-          in: header
-          description: the language code of the current user environment
-          required: true
-          type: string
-        - name: token
-          in: header
-          description: the oauth token from the server
-          required: true
-          type: string
-        - name: department_id
-          in: query
-          type: string
-          description: department to get the members
-      responses:
-        '200':
-          description: Successful response
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/department_member'
-        '403':
-          description: indicate the token or user session has expired
-  /set_department_manager:
-    post:
-      description: set a user as department manager
-      parameters:
-        - name: language
-          in: header
-          description: the language code of the current user environment
-          required: true
-          type: string
-        - name: token
-          in: header
-          description: the oauth token from the server
-          required: true
-          type: string
-        - name: department_id
-          in: query
-          type: string
-          description: department need to set manager
-        - name: user_id
-          in: query
-          type: string
-          description: manager to be
-      responses:
-        '200':
-          description: Successful response
-          schema:
-            $ref: '#/definitions/basic_feedback'
-        '403':
-          description: indicate the token or user session has expired
-  /set_passport:
-    post:
-      description: change a user password
-      parameters:
-        - name: language
-          in: header
-          description: the language code of the current user environment
-          required: true
-          type: string
-        - name: token
-          in: header
-          description: the oauth token from the server
-          required: true
-          type: string
-        - name: old_password
-          in: query
-          type: string
-          description: the current password
-        - name: new_password
-          in: query
-          type: string
-          description: new password
-        - name: user_id
-          in: query
-          type: string
-          description: user to change password
-      responses:
-        '200':
-          description: Successful response
-          schema:
-            $ref: '#/definitions/basic_feedback'
         '403':
           description: indicate the token or user session has expired

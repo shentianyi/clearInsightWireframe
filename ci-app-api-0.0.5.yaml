@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: 0.0.4
+  version: 0.0.5
   title: clearinsight web service api
 host: '112.124.28.10:8001'
 basePath: /api/v2
@@ -652,8 +652,7 @@ definitions:
 paths:
   /user_sessions:
     post:
-      description:
-        User Sign In for external app invoke
+      description: User Sign In for external app invoke
       parameters:
         - name: email
           in: query
@@ -677,8 +676,7 @@ paths:
             $ref: '#/definitions/basic_feedback'
   /user_registrations:
     post:
-      description: 
-        User Sign Up Api
+      description: User Sign Up Api
       parameters:
         - name: email
           in: query
@@ -716,7 +714,7 @@ paths:
           type: string
         - name: Authorization
           in: header
-          description: the oauth token from the server, type is beare
+          description: 'the oauth token from the server, type is beare'
           required: true
           type: string
       responses:
@@ -730,12 +728,12 @@ paths:
     get:
       description: get user account settings
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -765,7 +763,7 @@ paths:
           description: user password
           required: true
           type: string
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
@@ -789,12 +787,12 @@ paths:
           description: user password
           required: true
           type: string
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -808,12 +806,12 @@ paths:
     get:
       description: get all the kpis the user has access.
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -831,12 +829,12 @@ paths:
     get:
       description: get all the departments the user has access on one level.
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -858,12 +856,12 @@ paths:
     get:
       description: get department in the access of the user
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -884,12 +882,12 @@ paths:
     post:
       description: follow a kpi under certain department
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -932,12 +930,12 @@ paths:
     post:
       description: unfollow a kpi under certain department
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -963,12 +961,12 @@ paths:
     get:
       description: get a kpi with an ID
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -987,12 +985,12 @@ paths:
     post:
       description: create a kpi
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1013,12 +1011,12 @@ paths:
     put:
       description: update a kpi
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1040,12 +1038,12 @@ paths:
     post:
       description: create a user group list
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1066,12 +1064,12 @@ paths:
     put:
       description: update a user group list
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1092,12 +1090,12 @@ paths:
     get:
       description: get a user group list
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1128,12 +1126,12 @@ paths:
     get:
       description: get the user list with full text method
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1155,12 +1153,12 @@ paths:
     get:
       description: get the department list with full text method
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1182,12 +1180,12 @@ paths:
     get:
       description: "get the user's followable kpi list with full text method"
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1209,12 +1207,12 @@ paths:
     get:
       description: "get the user's following kpi list with full text method"
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1236,12 +1234,12 @@ paths:
     get:
       description: get followed KPI by current user
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1263,12 +1261,12 @@ paths:
     get:
       description: get kpi performance of a department during a time span with a calculate method
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1322,12 +1320,12 @@ paths:
     get:
       description: get the discussion list or discussion by ID
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1356,12 +1354,12 @@ paths:
     post:
       description: create a discussion
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1383,12 +1381,12 @@ paths:
     get:
       description: get the member list of a discussion
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1409,12 +1407,12 @@ paths:
     post:
       description: update the list of members in a discussion
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1434,12 +1432,12 @@ paths:
     get:
       description: get comments of a discussion
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1460,12 +1458,12 @@ paths:
     post:
       description: add a comment to a discussion
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1486,12 +1484,12 @@ paths:
     get:
       description: get a comment with id
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1511,12 +1509,12 @@ paths:
     get:
       description: make an aggregative analysis
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1574,12 +1572,12 @@ paths:
     get:
       description: get the snapshot by it
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1598,12 +1596,12 @@ paths:
     post:
       description: post a snapshot to a discussion as comment
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1628,12 +1626,12 @@ paths:
     post:
       description: upload a file
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1654,12 +1652,12 @@ paths:
     get:
       description: get task by task id
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1680,12 +1678,12 @@ paths:
     get:
       description: get user tasks
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1707,12 +1705,12 @@ paths:
     post:
       description: further assign a task to a user
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1740,12 +1738,12 @@ paths:
     get:
       description: get task items by task id
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1767,12 +1765,12 @@ paths:
     post:
       description: enter a kpi data
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1797,12 +1795,12 @@ paths:
     get:
       description: get alerts of a user
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1828,12 +1826,12 @@ paths:
     get:
       description: get task alerts of a user
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1859,12 +1857,12 @@ paths:
     get:
       description: get alerts of a user
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1890,12 +1888,12 @@ paths:
     get:
       description: get alerts of a user
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1921,12 +1919,12 @@ paths:
     get:
       description: get all the members of a departmment node
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1948,12 +1946,12 @@ paths:
     post:
       description: set a user as department manager
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
@@ -1977,12 +1975,12 @@ paths:
     post:
       description: change a user password
       parameters:
-        - name: language
+        - name: Accept-Language
           in: header
           description: the language code of the current user environment
           required: true
           type: string
-        - name: token
+        - name: Authorization
           in: header
           description: the oauth token from the server
           required: true
