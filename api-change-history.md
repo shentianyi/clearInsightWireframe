@@ -23,7 +23,7 @@
 3. add /kpis/calculate_methods api
 4. add /kpis/timing_frequencies api
 
-*from 0.0.6 to 0.0.7 by lzding
+*from 0.0.7 to 0.0.8 by lzding
 1. change post /follow_kpi to  post /kpis/follow;
 2. change post /unfollow_kpi to  post /kpis/unfollow;
 3. change post /user_followed_kpis to  post /kpis/user_followed;
