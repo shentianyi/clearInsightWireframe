@@ -17,7 +17,7 @@
 12. add post /departments/remove_manager to remove department manager
 
 
-*from 0.0.6 to 0.0.7 by Charlot
+*from 0.0.7 to 0.0.8 by Charlot
 1. add /users/forget_password api
 2. add /kpis/unit_of_measurements api
 3. add /kpis/calculate_methods api
@@ -27,5 +27,5 @@
 1. change post /follow_kpi to  post /kpis/follow;
 2. change post /unfollow_kpi to  post /kpis/unfollow;
 3. change post /user_followed_kpis to  post /kpis/user_followed;
-1. change post /kpis/follow api return;
-2. change post /kpis/unfollow api return;
+4. change post /kpis/follow api return;
+5. change post /kpis/unfollow api return;
