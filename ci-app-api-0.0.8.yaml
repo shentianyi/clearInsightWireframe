@@ -340,7 +340,6 @@ definitions:
       - lower_boundary
       - upper_boundary
       - current_value
-      - auto_notification
     properties:
       user:
         $ref: '#/definitions/brief_user_info'
@@ -357,8 +356,16 @@ definitions:
       current_value:
         type: number
         format: float
-      auto_notification:
-        type: boolean
+  created_kpi:
+    type: object
+    required:
+      - user
+      - kpi
+    properties:
+      user:
+        $ref: '#/definitions/brief_user_info'
+      kpi:
+        $ref: '#/definitions/kpi'
   brief_user_info:
     type: object
     required:
@@ -1280,7 +1287,7 @@ paths:
             $ref: '#/definitions/user_kpi_on_departments'
         '403':
           description: indicate the token or user session has expired
-  /follow_kpi:
+  /kpis/follow:
     post:
       description: follow a kpi under certain department
       parameters:
@@ -1328,7 +1335,7 @@ paths:
             $ref: '#/definitions/return_message'
         '403':
           description: indicate the token or user session has expired
-  /unfollow_kpi:
+  /kpis/unfollow:
     post:
       description: unfollow a kpi under certain department
       parameters:
@@ -1632,7 +1639,7 @@ paths:
               $ref: '#/definitions/followed_kpi'
         '403':
           description: indicate the token or user session has expired
-  /user_followed_kpis:
+  /kpis/user_followed:
     get:
       description: get followed KPI by current user
       parameters:
@@ -1657,6 +1664,33 @@ paths:
             type: array
             items:
               $ref: '#/definitions/followed_kpi'
+        '403':
+          description: indicate the token or user session has expired
+  /kpis/user_created:
+    get:
+      description: get created KPI by current user
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: the language code of the current user environment
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: the oauth token from the server
+          required: true
+          type: string
+        - name: user
+          in: query
+          description: the user of the created kpi
+          type: string
+      responses:
+        '200':
+          description: successful
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/created_kpi'
         '403':
           description: indicate the token or user session has expired
   /kpi_details:
