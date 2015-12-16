@@ -1238,7 +1238,7 @@ paths:
               $ref: '#/definitions/enum_object'
         '403':
           description: indicate the token or user session has expired
-  /user_kpis:
+  /kpis/users/accesses:
     get:
       description: get all the kpis the user has access.
       parameters:
@@ -1261,7 +1261,7 @@ paths:
               $ref: '#/definitions/kpi_on_user'
         '403':
           description: indicate the token or user session has expired
-  /user_kpi_on_departments:
+  /kpis/departments:
     get:
       description: get department in the access of the user
       parameters:
@@ -1366,7 +1366,7 @@ paths:
             $ref: '#/definitions/return_message'
         '403':
           description: indicate the token or user session has expired
-  /kpi:
+  /kpis:
     get:
       description: get a kpi with an ID
       parameters:
@@ -1663,7 +1663,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/followed_kpi'
+              $ref: '#/definitions/kpi_on_user'
         '403':
           description: indicate the token or user session has expired
   /kpis/user_created:
@@ -1690,10 +1690,10 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/created_kpi'
+              $ref: '#/definitions/kpi_on_user'
         '403':
           description: indicate the token or user session has expired
-  /kpi_details:
+  /kpis/details:
     get:
       description: get kpi performance of a department during a time span with a calculate method
       parameters:
