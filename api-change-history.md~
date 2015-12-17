@@ -29,5 +29,3 @@
 3. change post /user_followed_kpis to  post /kpis/user_followed;
 4. change post /kpis/follow api return;
 5. change post /kpis/unfollow api return;
-6. add /kpis/user_created api
-7. change post /kpis/user_followed api return;
