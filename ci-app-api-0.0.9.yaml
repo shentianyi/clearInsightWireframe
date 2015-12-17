@@ -417,11 +417,15 @@ definitions:
   assignment:
     type: object
     required:
+      - assignment_id
       - user
       - department_id
       - time
       - frequency
     properties:
+      assignment_id:
+        type: string
+        description: assignment id
       user:
         type: string
         format: email
