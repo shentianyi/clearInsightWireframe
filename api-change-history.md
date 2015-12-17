@@ -45,3 +45,4 @@
 10. change post /kpis/user_follwed to post /kpis/users/followed;
 11. change post /kpis/user_created to post /kpis/users/created;
 12. add assignment_id to object assignment
+13. add members to department object

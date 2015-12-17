@@ -611,6 +611,9 @@ definitions:
       has_children:
         type: boolean
         description: flag to indicate whether it has chilren department
+      members:
+        type: array
+        description: user nickname array
   user_on_department:
     type: object
     properties:
