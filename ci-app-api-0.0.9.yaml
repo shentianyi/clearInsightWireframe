@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: 0.0.8
+  version: 0.0.9
   title: clearinsight web service api
 host: '112.124.28.10:8001'
 basePath: /api/v2
