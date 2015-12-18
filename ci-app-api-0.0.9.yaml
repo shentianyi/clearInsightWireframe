@@ -388,13 +388,17 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/user_on_department'
-  user_group_list:
+  user_groups:
     type: object
     required:
-      - list_name
+      - id
+      - name
       - users
     properties:
-      list_name:
+      id:
+        type: integer
+        description: the unique user group 
+      name:
         type: string
         description: the unique list name
       users:
@@ -402,6 +406,34 @@ definitions:
         type: array
         items:
           type: string
+  brief_user_group_info:
+    type: object
+    required:
+      - id
+      - name
+      - user_id
+    properties:
+      id:
+        type: integer
+        description: the unique user group 
+      name:
+        type: string
+        description: the unique list name
+      user_id:
+        type: string
+        description: user group creator id
+  user_group_on_kpi:
+    type: object
+    required:
+      - selected
+      - user_group
+    properties:
+      selected:
+        type: boolean
+        description: weather the group is selected for the kpi
+      user_group:
+        $ref: '#/definitions/brief_user_group_info'
+        description: user group
   kpi_settings:
     type: object
     required:
@@ -611,9 +643,6 @@ definitions:
       has_children:
         type: boolean
         description: flag to indicate whether it has chilren department
-      members:
-        type: array
-        description: user nickname array
   user_on_department:
     type: object
     properties:
@@ -1450,7 +1479,7 @@ paths:
             $ref: '#/definitions/basic_feedback'
         '403':
           description: indicate the token or user session has expired
-  /user_group_lists:
+  /user_groups:
     post:
       description: create a user group list
       parameters:
@@ -1469,7 +1498,7 @@ paths:
           description: the user group list object to create
           required: true
           schema:
-            $ref: '#/definitions/user_group_list'
+            $ref: '#/definitions/user_groups'
       responses:
         '200':
           description: successful
@@ -1490,12 +1519,12 @@ paths:
           description: the oauth token from the server
           required: true
           type: string
-        - name: user_group_list
+        - name: user_groups
           in: body
           description: the user group list object to update
           required: true
           schema:
-            $ref: '#/definitions/user_group_list'
+            $ref: '#/definitions/user_groups'
       responses:
         '200':
           description: successful
@@ -1516,28 +1545,48 @@ paths:
           description: the oauth token from the server
           required: true
           type: string
-        - name: user_group_list_name
+        - name: id
           in: query
-          description: the user group list name to get
+          description: the user group id
           required: true
           type: string
-        - name: viewable_type
-          in: query
-          description: the viewable type. If can not be null together with user_group_list_name
-          required: true
-          type: string
-          enum:
-            - partial_allow
-            - partial_block
       responses:
         '200':
           description: successful
           schema:
             type: array
             items:
-              $ref: '#/definitions/user_group_list'
+              $ref: '#/definitions/user_groups'
         '403':
           description: indicate the token or user session has expired
+  /user_groups/for_kpis:
+    get:
+      description: get the user list with full text method
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: the language code of the current user environment
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: the oauth token from the server
+          required: true
+          type: string
+        - name: kpi_id
+          in: query
+          description: kpi id
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/user_group_on_kpi'
+        '403':
+          description: indicate the token or user session has expired        
   /search/full_text/users:
     get:
       description: get the user list with full text method

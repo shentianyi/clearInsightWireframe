@@ -46,3 +46,6 @@
 11. change post /kpis/user_created to post /kpis/users/created;
 12. add assignment_id to object assignment
 13. add members to department object
+14. add get /user_groups/for_kpis api
+15. change /user_group_list to /user_groups
+16. change /user_groups return
