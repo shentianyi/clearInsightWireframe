@@ -55,3 +55,5 @@
 1. remove params user_id from /kpis/users/followed
 2. remove params user_id from /kpis/users/created
 3. add pagination  to /kpis/users/accesses & /kpis/users/followed & /kpis/users/created
+4. add /kpis/assigns api;
+5. add /kpis/properties api;

@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: 0.0.10
+  version: 0.0.9
   title: clearinsight web service api
 host: '112.124.28.10:8001'
 basePath: /api/v2
@@ -397,7 +397,7 @@ definitions:
     properties:
       id:
         type: integer
-        description: the unique user group
+        description: the unique user group 
       name:
         type: string
         description: the unique list name
@@ -415,7 +415,7 @@ definitions:
     properties:
       id:
         type: integer
-        description: the unique user group
+        description: the unique user group 
       name:
         type: string
         description: the unique list name
@@ -451,7 +451,7 @@ definitions:
           - week
           - month
           - quater
-          - year
+          - year 
   brief_user_group_info:
     type: object
     required:
@@ -461,7 +461,7 @@ definitions:
     properties:
       id:
         type: integer
-        description: the unique user group
+        description: the unique user group 
       name:
         type: string
         description: the unique list name
@@ -1334,79 +1334,9 @@ paths:
           description: the oauth token from the server
           required: true
           type: string
-        - name: page
-          in: query
-          type: integer
-          description: 'page index of request the list, start from 0'
-        - name: size
-          in: query
-          type: integer
-          description: 'page size of request the list, default is 20'
       responses:
         '200':
           description: Successful response
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/kpi_on_user'
-        '403':
-          description: indicate the token or user session has expired
-  /kpis/users/followed:
-    get:
-      description: get followed KPI by current user
-      parameters:
-        - name: Accept-Language
-          in: header
-          description: the language code of the current user environment
-          required: true
-          type: string
-        - name: Authorization
-          in: header
-          description: the oauth token from the server
-          required: true
-          type: string
-        - name: page
-          in: query
-          type: integer
-          description: 'page index of request the list, start from 0'
-        - name: size
-          in: query
-          type: integer
-          description: 'page size of request the list, default is 20'
-      responses:
-        '200':
-          description: successful
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/kpi_on_user'
-        '403':
-          description: indicate the token or user session has expired
-  /kpis/users/created:
-    get:
-      description: get created KPI by current user
-      parameters:
-        - name: Accept-Language
-          in: header
-          description: the language code of the current user environment
-          required: true
-          type: string
-        - name: Authorization
-          in: header
-          description: the oauth token from the server
-          required: true
-          type: string
-        - name: page
-          in: query
-          type: integer
-          description: 'page index of request the list, start from 0'
-        - name: size
-          in: query
-          type: integer
-          description: 'page size of request the list, default is 20'
-      responses:
-        '200':
-          description: successful
           schema:
             type: array
             items:
@@ -1755,7 +1685,7 @@ paths:
         '200':
           description: Successful response
           schema:
-            $ref: '#/definitions/basic_feedback'
+              $ref: '#/definitions/basic_feedback'
         '403':
           description: indicate the token or user session has expired
     delete:
@@ -1780,7 +1710,7 @@ paths:
         '200':
           description: Successful response
           schema:
-            $ref: '#/definitions/basic_feedback'
+              $ref: '#/definitions/basic_feedback'
         '403':
           description: indicate the token or user session has expired
   /user_groups:
@@ -1890,7 +1820,7 @@ paths:
             items:
               $ref: '#/definitions/user_group_on_kpi'
         '403':
-          description: indicate the token or user session has expired
+          description: indicate the token or user session has expired        
   /search/full_text/users:
     get:
       description: get the user list with full text method
@@ -1997,6 +1927,60 @@ paths:
             type: array
             items:
               $ref: '#/definitions/followed_kpi'
+        '403':
+          description: indicate the token or user session has expired
+  /kpis/users/followed:
+    get:
+      description: get followed KPI by current user
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: the language code of the current user environment
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: the oauth token from the server
+          required: true
+          type: string
+        - name: user
+          in: query
+          description: the user of the followed kpi
+          type: string
+      responses:
+        '200':
+          description: successful
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/kpi_on_user'
+        '403':
+          description: indicate the token or user session has expired
+  /kpis/users/created:
+    get:
+      description: get created KPI by current user
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: the language code of the current user environment
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: the oauth token from the server
+          required: true
+          type: string
+        - name: user
+          in: query
+          description: the user of the created kpi
+          type: string
+      responses:
+        '200':
+          description: successful
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/kpi_on_user'
         '403':
           description: indicate the token or user session has expired
   /kpis/details:
