@@ -49,3 +49,9 @@
 14. add get /user_groups/for_kpis api
 15. change /user_group_list to /user_groups
 16. change /user_groups return
+
+
+*from 0.0.9 to 0.0.10 by Charlot
+1. remove params user_id from /kpis/users/followed
+2. remove params user_id from /kpis/users/created
+3. add pagination  to /kpis/users/accesses & /kpis/users/followed & /kpis/users/created
