@@ -1996,7 +1996,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/followed_kpi'
+              $ref: '#/definitions/kpi_on_user'
         '403':
           description: indicate the token or user session has expired
   /kpis/details:
