@@ -868,7 +868,7 @@ paths:
           '201':
             description: Successful response
             schema:
-              $ref: '#/definitions/return_message'
+              $ref: '#/definitions/brief_user_info'
           '403':
             description: indicate the token or user session has expired
   /users/infos:
