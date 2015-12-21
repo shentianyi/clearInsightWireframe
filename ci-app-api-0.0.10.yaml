@@ -847,7 +847,7 @@ paths:
           description: indicate the token or user session has expired
   /users/signuped:
       post:
-        description: User Sign In for external app invoke
+        description: Check user signuped
         parameters:
           - name: email
             in: query
