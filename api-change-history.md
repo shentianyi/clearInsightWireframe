@@ -57,3 +57,4 @@
 3. add pagination  to /kpis/users/accesses & /kpis/users/followed & /kpis/users/created
 4. add /kpis/assigns api;
 5. add /kpis/properties api;
+6. add get /kpis/users/followed_details to get show on my kpi page
