@@ -845,7 +845,34 @@ paths:
               $ref: '#/definitions/brief_user_info'
         '403':
           description: indicate the token or user session has expired
-  /users/infos:
+  /users/signuped:
+    post:
+      description: User Sign In for external app invoke
+      parameters:
+        - name: email
+          in: query
+          description: user email
+          required: true
+          type: string
+        - name: Accept-Language
+          in: header
+          description: 'the language code of the current user environment. zh, en, de are allowed.'
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: the oauth token from the server
+          required: true
+          type: string
+      responses:
+        '201':
+          description: Successful response
+          schema:
+            $ref: '#/definitions/return_message'
+        '403':
+          description: indicate the token or user session has expired
+ 
+ /users/infos:
     get:
       description: get user account settings
       parameters:
