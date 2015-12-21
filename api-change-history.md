@@ -49,3 +49,7 @@
 14. add get /user_groups/for_kpis api
 15. change /user_group_list to /user_groups
 16. change /user_groups return
+
+*from 0.0.9 to 0.0.10 by lzding
+1. add /kpis/assigns api;
+2. add /kpis/properties api;
