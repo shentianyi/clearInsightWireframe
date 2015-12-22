@@ -57,4 +57,10 @@
 3. add pagination  to /kpis/users/accesses & /kpis/users/followed & /kpis/users/created
 4. add /kpis/assigns api;
 5. add /kpis/properties api;
-6. add get /kpis/users/followed_details to get show on my kpi page
+6. add get /kpis/users/followed_details to get show on my kpi page;
+7. change get /discussions params discussion_id requires to true;
+8. change post /discussions return value;
+9. change /discussion_members to /discussions/members api;
+10. change /discussion_comments to /discussions/comments api;
+11. add get /discussions/list api;
+12. add get /discussions/for_users api;

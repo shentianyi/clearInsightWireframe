@@ -846,31 +846,31 @@ paths:
         '403':
           description: indicate the token or user session has expired
   /users/signuped:
-      post:
-        description: Check user signuped
-        parameters:
-          - name: email
-            in: query
-            description: user email
-            required: true
-            type: string
-          - name: Accept-Language
-            in: header
-            description: 'the language code of the current user environment. zh, en, de are allowed.'
-            required: true
-            type: string
-          - name: Authorization
-            in: header
-            description: the oauth token from the server
-            required: true
-            type: string
-        responses:
-          '201':
-            description: Successful response
-            schema:
-              $ref: '#/definitions/brief_user_info'
-          '403':
-            description: indicate the token or user session has expired
+    post:
+      description: Check user signuped
+      parameters:
+        - name: email
+          in: query
+          description: user email
+          required: true
+          type: string
+        - name: Accept-Language
+          in: header
+          description: 'the language code of the current user environment. zh, en, de are allowed.'
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: the oauth token from the server
+          required: true
+          type: string
+      responses:
+        '201':
+          description: Successful response
+          schema:
+            $ref: '#/definitions/brief_user_info'
+        '403':
+          description: indicate the token or user session has expired
   /users/infos:
     get:
       description: get user account settings
@@ -1818,7 +1818,6 @@ paths:
     delete:
       description: delete the kpi assigned record
       parameters:
-
         - name: assignment_id
           in: body
           type: integer
@@ -2108,7 +2107,7 @@ paths:
           description: indicate the token or user session has expired
   /discussions:
     get:
-      description: get the discussion list or discussion by ID
+      description: get the discussion by ID
       parameters:
         - name: Accept-Language
           in: header
@@ -2130,8 +2129,9 @@ paths:
           description: the related department ID
         - name: discussion_id
           in: query
+          required: true
           type: string
-          description: 'the discussion id. if not null, only return the single discussion or empty array. If null, return all the list'
+          description: 'the discussion id'
       responses:
         '200':
           description: Successful response
@@ -2162,12 +2162,72 @@ paths:
         '200':
           description: Successful response
           schema:
-            type: array
-            items:
-              $ref: '#/definitions/basic_feedback'
+            $ref: '#/definitions/basic_feedback'
         '403':
           description: indicate the token or user session has expired
-  /discussion_members:
+  /discussions/list:
+    get:
+      description: get the discussion list
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: the language code of the current user environment
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: the oauth token from the server
+          required: true
+          type: string
+        - name: page
+          in: query
+          type: integer
+          description: 'page index of request the list, start from 0'
+        - name: size
+          in: query
+          type: integer
+          description: 'page size of request the list, default is 20'
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/discussion'
+        '403':
+          description: indicate the token or user session has expired
+  /discussions/for_users:
+    get:
+      description: get the discussion list by current user
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: the language code of the current user environment
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: the oauth token from the server
+          required: true
+          type: string
+        - name: page
+          in: query
+          type: integer
+          description: 'page index of request the list, start from 0'
+        - name: size
+          in: query
+          type: integer
+          description: 'page size of request the list, default is 20'
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/discussion'
+        '403':
+          description: indicate the token or user session has expired
+  /discussions/members:
     get:
       description: get the member list of a discussion
       parameters:
@@ -2218,7 +2278,7 @@ paths:
             $ref: '#/definitions/basic_feedback'
         '403':
           description: indicate the token or user session has expired
-  /discussion_comments:
+  /discussion/comments:
     get:
       description: get comments of a discussion
       parameters:
