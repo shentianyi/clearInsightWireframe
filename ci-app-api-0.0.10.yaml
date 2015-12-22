@@ -2119,14 +2119,6 @@ paths:
           description: the oauth token from the server
           required: true
           type: string
-        - name: kpi_id
-          in: query
-          type: string
-          description: the related KPI ID
-        - name: department_id
-          in: query
-          type: string
-          description: the related department ID
         - name: discussion_id
           in: query
           required: true
@@ -2136,9 +2128,7 @@ paths:
         '200':
           description: Successful response
           schema:
-            type: array
-            items:
-              $ref: '#/definitions/discussion'
+            $ref: '#/definitions/discussion'
         '403':
           description: indicate the token or user session has expired
     post:
