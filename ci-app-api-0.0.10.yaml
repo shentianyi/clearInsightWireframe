@@ -458,6 +458,7 @@ definitions:
       - id
       - name
       - user_id
+      - members
     properties:
       id:
         type: integer
@@ -468,6 +469,11 @@ definitions:
       user_id:
         type: string
         description: user group creator id
+      members:
+        description: the user_names in the list
+        type: array
+        items:
+          type: string
   user_group_on_kpi:
     type: object
     required:

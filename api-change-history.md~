@@ -63,3 +63,4 @@
 9. change /discussion_members to /discussions/members api;
 10. change /discussion_comments to /discussions/comments api;
 11. add get /discussions/list api;
+12. add get /discussions/for_users api;
