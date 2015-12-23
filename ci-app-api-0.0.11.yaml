@@ -100,7 +100,6 @@ definitions:
         $ref: '#/definitions/kpi'
       department:
         $ref: '#/definitions/department'
-      
   task:
     type: object
     properties:
@@ -219,19 +218,16 @@ definitions:
       removeable:
         type: boolean
         description: can remove the member
-      inviteable:
-        type: boolean
-        description: can invite the member
   discussion_members:
     type: object
     properties:
-      discussion_id:
-        type: string
+      id:
+        type: integer
         description: discussion id
       members:
         type: array
         items:
-          type: string
+          type: integer
         description: array of user id of the members
   data_input:
     type: object
@@ -239,7 +235,7 @@ definitions:
       kpi_id:
         type: integer
       department_id:
-        type: string
+        type: integer
       data:
         type: object
         item:
@@ -482,6 +478,7 @@ definitions:
       - department_id
       - time
       - frequency
+      - auto_notification
     properties:
       assignment_id:
         type: string
@@ -504,6 +501,8 @@ definitions:
           - month
           - quater
           - year
+      auto_notification:
+        type: boolean
   brief_user_group_info:
     type: object
     required:
@@ -558,6 +557,7 @@ definitions:
       - department_id
       - time
       - frequency
+      - auto_notification
     properties:
       assignment_id:
         type: string
@@ -582,6 +582,8 @@ definitions:
           - month
           - quater
           - year
+      auto_notification:
+        type: boolean
   attribute_value:
     properties:
       id:
@@ -765,9 +767,17 @@ definitions:
   department_follow_status:
     type: object
     required:
+      - followed
       - department
       - follow_flag
+      - follow_value
     properties:
+      followed:
+        type: boolean
+        description: indicate weather follow the department+kpi
+      department:
+        $ref: '#/definitions/department'
+        description: the departments 
       follow_flag:
         type: string
         description: indicate the follow status of the user to the kpi
@@ -776,9 +786,9 @@ definitions:
           - PARTLY
           - ALL
           - NA
-      department:
-        $ref: '#/definitions/department'
-        description: the departments
+      follow_flag_value:
+        type: integer
+        description: follow flag value
   user_kpi_on_departments:
     type: object
     required:
@@ -2304,6 +2314,34 @@ paths:
               $ref: '#/definitions/discussion'
         '403':
           description: indicate the token or user session has expired
+  /discussions/members/as_select:
+    get:
+      description: get the member list of a discussion
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: the language code of the current user environment
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: the oauth token from the server
+          required: true
+          type: string
+        - name: id
+          in: query
+          required: true
+          description: the discussion id
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/brief_user_info'
+        '403':
+          description: indicate the token or user session has expired
   /discussions/members:
     get:
       description: get the member list of a discussion
@@ -2345,11 +2383,16 @@ paths:
           description: the oauth token from the server
           required: true
           type: string
-        - name: discussion_members
+        - name: id
           in: body
+          description: discussion id
           required: true
-          schema:
-            $ref: '#/definitions/discussion_members'
+          type: integer
+        - name: user_id
+          in: body
+          description: member id
+          required: true
+          type: integer
       responses:
         '200':
           description: Successful response
@@ -2677,10 +2720,10 @@ paths:
           required: true
           type: string
         - name: task_item_id
-          in: query
+          in: body
           required: false
-          description: the task item id to receive the data in case the user enter the data via a task. could be null if it is a manual input
-          type: string
+          description: the task item id to receive the data in case the user enter the data via a task. could be null if it is a manual input, and it should not post to server
+          type: integer
         - name: data
           in: body
           schema:
