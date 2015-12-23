@@ -66,3 +66,10 @@
 12. add get /discussions/for_users api;
 13. change get /user_groups/for_kpis api return value;
 14. change get /kpis/users/followed_details api return value;
+
+
+*from 0.0.10 to 0.0.11 by Charlot
+1. add get /tasks/entries/list for get user task list
+2. remove post /tasks/user_tasks which use to further assign kpi
+3. change /task_items to /tasks/entries/items
+4. change post /input_data to post /entries
