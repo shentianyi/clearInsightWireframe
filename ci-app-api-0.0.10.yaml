@@ -185,6 +185,20 @@ definitions:
         enum:
           - open
           - closed
+  users_on_discussion:
+    type: object
+    properties:
+      member_id:
+        type: integer
+        description: the discussion member record id
+      user:
+        $ref: '#/definitions/brief_user_info'
+      removeable:
+        type: boolean
+        description: can remove the member
+      inviteable:
+        type: boolean
+        description: can invite the member
   discussion_members:
     type: object
     properties:
@@ -2140,7 +2154,7 @@ paths:
           description: the oauth token from the server
           required: true
           type: string
-        - name: discussion_id
+        - name: id
           in: query
           required: true
           type: string
@@ -2199,9 +2213,9 @@ paths:
             $ref: '#/definitions/basic_feedback'
         '403':
           description: indicate the token or user session has expired
-  /discussions/list:
+  /discussions/users/accesses:
     get:
-      description: get the discussion list
+      description: get the all discussions list
       parameters:
         - name: Accept-Language
           in: header
@@ -2230,9 +2244,9 @@ paths:
               $ref: '#/definitions/discussion'
         '403':
           description: indicate the token or user session has expired
-  /discussions/for_users:
+  /discussions/users/created:
     get:
-      description: get the discussion list by current user
+      description: get the discussions list by current user
       parameters:
         - name: Accept-Language
           in: header
@@ -2275,8 +2289,9 @@ paths:
           description: the oauth token from the server
           required: true
           type: string
-        - name: discussion_id
+        - name: id
           in: query
+          required: true
           description: the discussion id
           type: string
       responses:
@@ -2285,7 +2300,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/brief_user_info'
+              $ref: '#/definitions/users_on_discussion'
         '403':
           description: indicate the token or user session has expired
     post:
@@ -2303,6 +2318,7 @@ paths:
           type: string
         - name: discussion_members
           in: body
+          required: true
           schema:
             $ref: '#/definitions/discussion_members'
       responses:
