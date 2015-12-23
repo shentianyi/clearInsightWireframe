@@ -667,6 +667,8 @@ definitions:
       - created_on
       - target_max
       - target_min
+      - target_max_text
+      - target_min_text
       - uom
       - calculate_method
       - viewable
@@ -693,6 +695,10 @@ definitions:
         type: number
         format: float
         description: the default min target
+      target_max_text:
+        type: string
+      target_min_text:
+        type: string
       uom:
         type: string
         description: the unit of measurement code
