@@ -176,7 +176,7 @@ definitions:
       created_on:
         type: string
         description: the creation date of the discussion under UTC format
-      closed_on:
+      closed_at:
         type: string
         description: the close date of the discussion under UTC format
       status:
@@ -340,6 +340,11 @@ definitions:
       - lower_boundary
       - upper_boundary
       - current_value
+      - lower_boundary_text
+      - upper_boundary_text
+      - current_value_text
+      - over_lower_boundary
+      - over_upper_boundary
     properties:
       user:
         $ref: '#/definitions/brief_user_info'
@@ -356,6 +361,16 @@ definitions:
       current_value:
         type: number
         format: float
+      lower_boundary_text:
+        type: string
+      upper_boundary_text:
+        type: string
+      current_value_text:
+        type: string
+      over_lower_boundary:
+        type: boolean
+      over_upper_boundary:
+        type: boolean
   created_kpi:
     type: object
     required:
@@ -415,10 +430,10 @@ definitions:
     properties:
       id:
         type: integer
-        description: the unique user group
+        description: the unique kpi property
       name:
         type: string
-        description: the unique list name
+        description: the kpi property name
       type:
         type: string
         description: kpi property type
@@ -458,6 +473,7 @@ definitions:
       - id
       - name
       - user_id
+      - members
     properties:
       id:
         type: integer
@@ -468,6 +484,11 @@ definitions:
       user_id:
         type: string
         description: user group creator id
+      members:
+        description: the user_names in the list
+        type: array
+        items:
+          type: string
   user_group_on_kpi:
     type: object
     required:
@@ -846,31 +867,31 @@ paths:
         '403':
           description: indicate the token or user session has expired
   /users/signuped:
-      post:
-        description: Check user signuped
-        parameters:
-          - name: email
-            in: query
-            description: user email
-            required: true
-            type: string
-          - name: Accept-Language
-            in: header
-            description: 'the language code of the current user environment. zh, en, de are allowed.'
-            required: true
-            type: string
-          - name: Authorization
-            in: header
-            description: the oauth token from the server
-            required: true
-            type: string
-        responses:
-          '201':
-            description: Successful response
-            schema:
-              $ref: '#/definitions/brief_user_info'
-          '403':
-            description: indicate the token or user session has expired
+    post:
+      description: Check user signuped
+      parameters:
+        - name: email
+          in: query
+          description: user email
+          required: true
+          type: string
+        - name: Accept-Language
+          in: header
+          description: 'the language code of the current user environment. zh, en, de are allowed.'
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: the oauth token from the server
+          required: true
+          type: string
+      responses:
+        '201':
+          description: Successful response
+          schema:
+            $ref: '#/definitions/brief_user_info'
+        '403':
+          description: indicate the token or user session has expired
   /users/infos:
     get:
       description: get user account settings
@@ -1818,16 +1839,6 @@ paths:
     delete:
       description: delete the kpi assigned record
       parameters:
-        - name: Accept-Language
-          in: header
-          description: the language code of the current user environment
-          required: true
-          type: string
-        - name: Authorization
-          in: header
-          description: the oauth token from the server
-          required: true
-          type: string
         - name: assignment_id
           in: body
           type: integer
@@ -2117,7 +2128,7 @@ paths:
           description: indicate the token or user session has expired
   /discussions:
     get:
-      description: get the discussion list or discussion by ID
+      description: get the discussion by ID
       parameters:
         - name: Accept-Language
           in: header
@@ -2129,25 +2140,16 @@ paths:
           description: the oauth token from the server
           required: true
           type: string
-        - name: kpi_id
-          in: query
-          type: string
-          description: the related KPI ID
-        - name: department_id
-          in: query
-          type: string
-          description: the related department ID
         - name: discussion_id
           in: query
+          required: true
           type: string
-          description: 'the discussion id. if not null, only return the single discussion or empty array. If null, return all the list'
+          description: 'the discussion id'
       responses:
         '200':
           description: Successful response
           schema:
-            type: array
-            items:
-              $ref: '#/definitions/discussion'
+            $ref: '#/definitions/discussion'
         '403':
           description: indicate the token or user session has expired
     post:
@@ -2163,20 +2165,103 @@ paths:
           description: the oauth token from the server
           required: true
           type: string
-        - name: discussion
+        - name: title
           in: body
+          type: string
+          description: the discussion title
+          required: true
+        - name: kpi_id
+          in: body
+          type: string
+          description: the kpi id
+          required: true
+        - name: department_id
+          in: body
+          type: string
+          description: the department id
+          required: true
+        - name: members
+          in: body
+          required: true
+          type: array
+          items:
+            type: string
+            description: array of user id of the members
+        - name: description
+          in: body
+          type: string
+          description: the discussion first post description
+          required: true
+      responses:
+        '200':
+          description: Successful response
           schema:
-            $ref: '#/definitions/discussion'
+            $ref: '#/definitions/basic_feedback'
+        '403':
+          description: indicate the token or user session has expired
+  /discussions/list:
+    get:
+      description: get the discussion list
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: the language code of the current user environment
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: the oauth token from the server
+          required: true
+          type: string
+        - name: page
+          in: query
+          type: integer
+          description: 'page index of request the list, start from 0'
+        - name: size
+          in: query
+          type: integer
+          description: 'page size of request the list, default is 20'
       responses:
         '200':
           description: Successful response
           schema:
             type: array
             items:
-              $ref: '#/definitions/basic_feedback'
+              $ref: '#/definitions/discussion'
         '403':
           description: indicate the token or user session has expired
-  /discussion_members:
+  /discussions/for_users:
+    get:
+      description: get the discussion list by current user
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: the language code of the current user environment
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: the oauth token from the server
+          required: true
+          type: string
+        - name: page
+          in: query
+          type: integer
+          description: 'page index of request the list, start from 0'
+        - name: size
+          in: query
+          type: integer
+          description: 'page size of request the list, default is 20'
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/discussion'
+        '403':
+          description: indicate the token or user session has expired
+  /discussions/members:
     get:
       description: get the member list of a discussion
       parameters:
@@ -2227,7 +2312,7 @@ paths:
             $ref: '#/definitions/basic_feedback'
         '403':
           description: indicate the token or user session has expired
-  /discussion_comments:
+  /discussion/comments:
     get:
       description: get comments of a discussion
       parameters:
