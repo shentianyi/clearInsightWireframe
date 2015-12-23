@@ -65,3 +65,4 @@
 11. add get /discussions/list api;
 12. add get /discussions/for_users api;
 13. change get /user_groups/for_kpis api return value;
+14. change get /kpis/users/followed_details api return value;
