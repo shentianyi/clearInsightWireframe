@@ -76,4 +76,9 @@
 5. add get /kpis/follows to show on 3.2, and result is same with3.1, so data from 3.1 can use on 3.2
 6. add field follow_id  and last_updated_at to object followed_kpi
 7. add get /alerts/kpi_follows/latest show on 3.2
+8. change /discussions api return value
+9. change /discussions/comments api params;
+10. change /discussions/comments api return value;
+11. change get /discussions/list to /discussions/users/accesses api;
+12. change get /discussions/for_users to /discussions/users/created api;
 

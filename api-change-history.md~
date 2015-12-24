@@ -65,3 +65,20 @@
 11. add get /discussions/list api;
 12. add get /discussions/for_users api;
 13. change get /user_groups/for_kpis api return value;
+14. change get /kpis/users/followed_details api return value;
+
+
+*from 0.0.10 to 0.0.11 by Charlot
+1. add get /tasks/entries/list for get user task list
+2. remove post /tasks/user_tasks which use to further assign kpi
+3. change /task_items to /tasks/entries/items
+4. change post /input_data to post /entries
+5. add get /kpis/follows to show on 3.2, and result is same with3.1, so data from 3.1 can use on 3.2
+6. add field follow_id  and last_updated_at to object followed_kpi
+7. add get /alerts/kpi_follows/latest show on 3.2
+8. change /discussions api return value
+9. change /discussions/members to /stories/members api;
+10. change /discussions/comments to /stories/comments api;
+11. change get /discussions/list to /stories/users/accesses api;
+12. change get /discussions/for_users to /stories/users/created api;
+

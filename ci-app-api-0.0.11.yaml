@@ -33,10 +33,10 @@ definitions:
         description: is manager of the current department
   alert_handle_type:
     type: object
-    description: the alert message handle type, if auto_read, server will mark readed auto, if manual_read, user should mark read on ui
+    description: 'the alert message handle type, if auto_read, server will mark readed auto, if manual_read, user should mark read on ui'
     enum:
-     - auto_read
-     - manual_read
+      - auto_read
+      - manual_read
   alert_head:
     type: object
     properties:
@@ -183,10 +183,10 @@ definitions:
       id:
         type: string
         description: the id of the comment
-      text:
+      content:
         type: string
         description: the text comment
-      evidences:
+      attachments:
         description: 'the collection of evidence url (picture, video, snapshot)'
         type: array
         items:
@@ -194,7 +194,7 @@ definitions:
       creator:
         description: the creator of the comment
         type: string
-      created_on:
+      created_at:
         description: the create date on UTC format
         type: string
         format: date-time
@@ -2030,7 +2030,7 @@ paths:
         '200':
           description: Successful response
           schema:
-            $ref: '#/definitions/basic_feedback'
+            $ref: '#/definitions/return_message'
         '403':
           description: indicate the token or user session has expired
   /user_groups:
@@ -2529,7 +2529,27 @@ paths:
             $ref: '#/definitions/basic_feedback'
         '403':
           description: indicate the token or user session has expired
-  /discussion/comments:
+    delete:
+      description: remove the discussion member
+      parameters:
+        - name: id
+          in: body
+          type: integer
+          description: the discussion id
+          required: true
+        - name: member_id
+          in: body
+          type: integer
+          description: the member id
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            $ref: '#/definitions/return_message'
+        '403':
+          description: indicate the token or user session has expired
+  /discussions/comments:
     get:
       description: get comments of a discussion
       parameters:
@@ -2543,7 +2563,7 @@ paths:
           description: the oauth token from the server
           required: true
           type: string
-        - name: discussion_id
+        - name: id
           in: query
           description: the discussion id of the comments
           type: string
@@ -2569,11 +2589,17 @@ paths:
           description: the oauth token from the server
           required: true
           type: string
-        - name: discussion_comment
+        - name: id
+          in: body
+          description: the discussion id
+          type: integer
+          required: true
+        - name: comment
           in: body
           description: the discussion to add the comment
+          required: true
           schema:
-            $ref: '#/definitions/discussion_comments'
+            $ref: '#/definitions/comment'
       responses:
         '201':
           description: Successful response
