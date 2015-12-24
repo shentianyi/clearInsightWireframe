@@ -2251,7 +2251,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/kpi_on_user'
+              $ref: '#/definitions/followed_kpi'
         '403':
           description: indicate the token or user session has expired
   /kpis/details:
@@ -2706,7 +2706,7 @@ paths:
           schema:
             $ref: '#/definitions/kpi_aggregative_details'
         '403':
-          description: indicate the token or user session has expired        
+          description: indicate the token or user session has expired
   /entires/aggregate:
     get:
       description: make an aggregative analysis
