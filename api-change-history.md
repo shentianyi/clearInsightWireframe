@@ -81,4 +81,4 @@
 10. change /discussions/comments api return value;
 11. change get /discussions/list to /discussions/users/accesses api;
 12. change get /discussions/for_users to /discussions/users/created api;
-
+13. add attribute_values to object attribute, it can be used in aggreate select

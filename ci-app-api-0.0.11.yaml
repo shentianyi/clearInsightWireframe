@@ -652,9 +652,10 @@ definitions:
       - attribute_id
       - attribute_name
       - attribute_type
+      - attribute_values
     properties:
       attribute_id:
-        type: string
+        type: integer
         description: the attribute ID
       attribute_name:
         type: string
@@ -666,14 +667,18 @@ definitions:
           - text
           - number
           - location
+      attribute_values:
+        type: array
+        description: the attribute values
   attributes_selection:
     type: object
     required:
-      - attribute
+      - attribute_id
       - values
     properties:
-      attribute:
-        $ref: '#/definitions/attribute'
+      attribute_id:
+        type: integer
+        description: the attribute ID
       values:
         type: array
         description: the selected attributes values
@@ -2632,7 +2637,7 @@ paths:
             $ref: '#/definitions/comment'
         '403':
           description: indicate the token or user session has expired
-  /aggregative_analysis:
+  /entires/aggregate:
     get:
       description: make an aggregative analysis
       parameters:
@@ -2649,14 +2654,17 @@ paths:
         - name: kpi_id
           in: query
           type: string
+          required: true
           description: the kpi id
         - name: department_id
           in: query
           type: string
+          required: true
           description: the department id
         - name: frequency
           in: query
           type: string
+          required: true
           description: the frequency of time span
           enum:
             - hour
@@ -2668,22 +2676,26 @@ paths:
         - name: calculate_method
           in: query
           type: string
+          required: true
           description: the calculate method to summerize the data
           enum:
             - average
             - accumulate
         - name: from_time
           in: query
-          type: string
-          description: the start point of the time span
+          type: datetime
+          required: true
+          description: 'the start point of the time span, utc'
           format: date-time
         - name: end_time
           in: query
-          type: string
-          description: the end point of the time span
+          type: datetime
+          required: true
+          description: 'the end point of the time span, utc'
           format: date-time
         - name: attributes
-          in: body
+          in: query
+          description: donot need pass attribute_values to server
           schema:
             type: array
             items:
