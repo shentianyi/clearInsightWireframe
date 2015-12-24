@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: 0.0.10
+  version: 0.0.11
   title: clearinsight web service api
 host: '112.124.28.10:8001'
 basePath: /api/v2
@@ -34,9 +34,9 @@ definitions:
   alert_handle_type:
     type: object
     description: the alert message handle type, if auto_read, server will mark readed auto, if manual_read, user should mark read on ui
-      enum:
-        - auto_read
-        - manual_read
+    enum:
+     - auto_read
+     - manual_read
   alert_head:
     type: object
     properties:
@@ -440,9 +440,9 @@ definitions:
     required:
       - message
     properties:
-         message:
-           type: string
-           description: notify message body
+      message:
+        type: string
+        description: notify message body
   followed_kpi_notify:
     type: object
     required:
@@ -452,13 +452,12 @@ definitions:
     properties:
       result_code:
         type: interger
-        description: 0 for no notify, 1 for has notify
+        description: '0 for no notify, 1 for has notify'
       messages:
         types: Array
-        description: get notify result messages, like fail or success
+        description: 'get notify result messages, like fail or success'
       notify:
         $ref: '#/definitions/notify'
-
   created_kpi:
     type: object
     required:
@@ -832,7 +831,7 @@ definitions:
         description: indicate weather follow the department+kpi
       department:
         $ref: '#/definitions/department'
-        description: the departments 
+        description: the departments
       follow_flag:
         type: string
         description: indicate the follow status of the user to the kpi
@@ -1599,7 +1598,7 @@ paths:
               $ref: '#/definitions/followed_kpi'
         '403':
           description: indicate the token or user session has expired
-  /kpis/users/followed_detail_info
+  /kpis/users/followed_detail_info:
     get:
       description: get followed KPI details by current user
       parameters:
@@ -1621,10 +1620,10 @@ paths:
         '200':
           description: successful
           schema:
-              $ref: '#/definitions/followed_kpi'
+            $ref: '#/definitions/followed_kpi'
         '403':
           description: indicate the token or user session has expired
-  /kpis/follows
+  /kpis/follows:
     get:
       description: get followed KPI details by current user
       parameters:
@@ -1646,10 +1645,10 @@ paths:
         '200':
           description: successful
           schema:
-              $ref: '#/definitions/followed_kpi'
+            $ref: '#/definitions/followed_kpi'
         '403':
           description: indicate the token or user session has expired
-  /alerts/kpi_follows/last
+  /alerts/kpi_follows/last:
     get:
       description: get followed kpi notify
       parameters:
@@ -1671,10 +1670,9 @@ paths:
         '200':
           description: successful
           schema:
-              $ref: '#/definitions/kpi_follow_alert'
+            $ref: '#/definitions/kpi_follow_alert'
         '403':
           description: indicate the token or user session has expired
-
   /kpis/departments:
     get:
       description: get department in the access of the user
@@ -2853,7 +2851,7 @@ paths:
         - name: task_item_id
           in: body
           required: false
-          description: the task item id to receive the data in case the user enter the data via a task. could be null if it is a manual input, and it should not post to server
+          description: 'the task item id to receive the data in case the user enter the data via a task. could be null if it is a manual input, and it should not post to server'
           type: integer
         - name: data
           in: body
