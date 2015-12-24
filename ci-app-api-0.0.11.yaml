@@ -31,15 +31,22 @@ definitions:
       is_manager:
         type: boolean
         description: is manager of the current department
+  alert_handle_type:
+    type: object
+    description: the alert message handle type, if auto_read, server will mark readed auto, if manual_read, user should mark read on ui
+      enum:
+        - auto_read
+        - manual_read
   alert_head:
     type: object
     properties:
       alert_id:
-        type: string
+        type: integer
       alert_text:
         type: string
-      created_on:
-        type: string
+      created_at:
+        type: date
+        description: utc time
       sender:
         type: string
   task_alert:
@@ -51,11 +58,15 @@ definitions:
         type: string
       task_id:
         type: string
+      handle_type:
+        $ref: '#/definitions/alert_handle_type'
   system_alert:
     type: object
     properties:
       head:
         $ref: '#/definitions/alert_head'
+      handle_type:
+        $ref: '#/definitions/alert_handle_type'
   data_alert:
     type: object
     properties:
@@ -65,6 +76,17 @@ definitions:
         type: string
       department_id:
         type: string
+      handle_type:
+        $ref: '#/definitions/alert_handle_type'
+  kpi_follow_alert:
+    type: object
+    properties:
+      head:
+        $ref: '#/definitions/alert_head'
+      follow_id:
+        type: integer
+      handle_type:
+        $ref: '#/definitions/alert_handle_type'
   unread_alert:
     type: object
     properties:
@@ -75,6 +97,7 @@ definitions:
           - task
           - data
           - system
+          - kpi_follow
       count:
         type: number
         description: unread count
@@ -367,6 +390,8 @@ definitions:
   followed_kpi:
     type: object
     required:
+      - follow_id
+      - last_updated_at
       - user
       - kpi
       - department
@@ -379,6 +404,12 @@ definitions:
       - over_lower_boundary
       - over_upper_boundary
     properties:
+      follow_id:
+        type: integer
+        description: user follow kpi id
+      last_updated_at:
+        type: date
+        description: last updated at utc date time
       user:
         $ref: '#/definitions/brief_user_info'
       kpi:
@@ -404,6 +435,30 @@ definitions:
         type: boolean
       over_upper_boundary:
         type: boolean
+  notify:
+    type: object
+    required:
+      - message
+    properties:
+         message:
+           type: string
+           description: notify message body
+  followed_kpi_notify:
+    type: object
+    required:
+      - result_code
+      - messages
+      - notify
+    properties:
+      result_code:
+        type: interger
+        description: 0 for no notify, 1 for has notify
+      messages:
+        types: Array
+        description: get notify result messages, like fail or success
+      notify:
+        $ref: '#/definitions/notify'
+
   created_kpi:
     type: object
     required:
@@ -990,7 +1045,7 @@ paths:
           required: true
           type: string
       responses:
-        '200':
+        '201':
           description: Successful response
           schema:
             $ref: '#/definitions/basic_feedback'
@@ -1482,37 +1537,6 @@ paths:
               $ref: '#/definitions/kpi_on_user'
         '403':
           description: indicate the token or user session has expired
-  /kpis/users/followed_details:
-    get:
-      description: get followed KPI details by current user
-      parameters:
-        - name: Accept-Language
-          in: header
-          description: the language code of the current user environment
-          required: true
-          type: string
-        - name: Authorization
-          in: header
-          description: the oauth token from the server
-          required: true
-          type: string
-        - name: page
-          in: query
-          type: integer
-          description: 'page index of request the list, start from 0'
-        - name: size
-          in: query
-          type: integer
-          description: 'page size of request the list, default is 20'
-      responses:
-        '200':
-          description: successful
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/followed_kpi'
-        '403':
-          description: indicate the token or user session has expired
   /kpis/users/created:
     get:
       description: get created KPI by current user
@@ -1544,6 +1568,113 @@ paths:
               $ref: '#/definitions/kpi_on_user'
         '403':
           description: indicate the token or user session has expired
+  /kpis/users/followed_details:
+    get:
+      description: get followed KPI details by current user
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: the language code of the current user environment
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: the oauth token from the server
+          required: true
+          type: string
+        - name: page
+          in: query
+          type: integer
+          description: 'page index of request the list, start from 0'
+        - name: size
+          in: query
+          type: integer
+          description: 'page size of request the list, default is 20'
+      responses:
+        '200':
+          description: successful
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/followed_kpi'
+        '403':
+          description: indicate the token or user session has expired
+  /kpis/users/followed_detail_info
+    get:
+      description: get followed KPI details by current user
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: the language code of the current user environment
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: the oauth token from the server
+          required: true
+          type: string
+        - name: follow_id
+          in: query
+          type: integer
+          description: user follow kpi id
+      responses:
+        '200':
+          description: successful
+          schema:
+              $ref: '#/definitions/followed_kpi'
+        '403':
+          description: indicate the token or user session has expired
+  /kpis/follows
+    get:
+      description: get followed KPI details by current user
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: the language code of the current user environment
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: the oauth token from the server
+          required: true
+          type: string
+        - name: id
+          in: query
+          type: integer
+          description: user follow id
+      responses:
+        '200':
+          description: successful
+          schema:
+              $ref: '#/definitions/followed_kpi'
+        '403':
+          description: indicate the token or user session has expired
+  /alerts/kpi_follows/last
+    get:
+      description: get followed kpi notify
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: the language code of the current user environment
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: the oauth token from the server
+          required: true
+          type: string
+        - name: id
+          in: query
+          type: integer
+          description: user follow id
+      responses:
+        '200':
+          description: successful
+          schema:
+              $ref: '#/definitions/kpi_follow_alert'
+        '403':
+          description: indicate the token or user session has expired
+
   /kpis/departments:
     get:
       description: get department in the access of the user
@@ -1612,7 +1743,7 @@ paths:
           required: true
           type: boolean
       responses:
-        '200':
+        '201':
           description: successful
           schema:
             $ref: '#/definitions/return_message'
@@ -1643,7 +1774,7 @@ paths:
           required: true
           type: string
       responses:
-        '200':
+        '201':
           description: successful
           schema:
             $ref: '#/definitions/return_message'
@@ -1694,7 +1825,7 @@ paths:
           schema:
             $ref: '#/definitions/kpi_settings'
       responses:
-        '200':
+        '201':
           description: successful
           schema:
             $ref: '#/definitions/basic_feedback'
@@ -1783,7 +1914,7 @@ paths:
           description: the property type
           required: true
       responses:
-        '200':
+        '201':
           description: successful
           schema:
             $ref: '#/definitions/basic_feedback'
@@ -1883,7 +2014,7 @@ paths:
           items:
             $ref: '#/definitions/assignment'
       responses:
-        '200':
+        '201':
           description: Successful response
           schema:
             $ref: '#/definitions/basic_feedback'
@@ -1925,7 +2056,7 @@ paths:
           schema:
             $ref: '#/definitions/user_groups'
       responses:
-        '200':
+        '201':
           description: successful
           schema:
             $ref: '#/definitions/basic_feedback'
@@ -2246,7 +2377,7 @@ paths:
           description: the discussion first post description
           required: true
       responses:
-        '200':
+        '201':
           description: Successful response
           schema:
             $ref: '#/definitions/basic_feedback'
@@ -2394,7 +2525,7 @@ paths:
           required: true
           type: integer
       responses:
-        '200':
+        '201':
           description: Successful response
           schema:
             $ref: '#/definitions/basic_feedback'
@@ -2446,7 +2577,7 @@ paths:
           schema:
             $ref: '#/definitions/discussion_comments'
       responses:
-        '200':
+        '201':
           description: Successful response
           schema:
             $ref: '#/definitions/basic_feedback'
@@ -2588,7 +2719,7 @@ paths:
           type: string
           description: the discussion to add in
       responses:
-        '200':
+        '201':
           description: Successful response
           schema:
             $ref: '#/definitions/basic_feedback'
@@ -2613,7 +2744,7 @@ paths:
           description: the file to upload.
           type: string
       responses:
-        '200':
+        '201':
           description: Successful response
           schema:
             $ref: '#/definitions/basic_feedback'
@@ -2729,7 +2860,7 @@ paths:
           schema:
             $ref: '#/definitions/data_input'
       responses:
-        '200':
+        '201':
           description: Successful response
           schema:
             $ref: '#/definitions/basic_feedback'

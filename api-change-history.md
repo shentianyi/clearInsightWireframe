@@ -73,3 +73,7 @@
 2. remove post /tasks/user_tasks which use to further assign kpi
 3. change /task_items to /tasks/entries/items
 4. change post /input_data to post /entries
+5. add get /kpis/follows to show on 3.2, and result is same with3.1, so data from 3.1 can use on 3.2
+6. add field follow_id  and last_updated_at to object followed_kpi
+7. add get /alerts/kpi_follows/latest show on 3.2
+
