@@ -406,6 +406,52 @@ definitions:
         type: array
         items:
           type: string
+  brief_kpi_properties_info:
+    type: object
+    required:
+      - id
+      - name
+      - type
+    properties:
+      id:
+        type: integer
+        description: the unique user group 
+      name:
+        type: string
+        description: the unique list name
+      type:
+        type: string
+        description: kpi property type
+  brief_kpi_assigned_list:
+    type: object
+    required:
+      - assignment_id
+      - user
+      - department_id
+      - time
+      - frequency
+    properties:
+      assignment_id:
+        type: string
+        description: assignment id
+      user:
+        $ref: '#/definitions/brief_user_info'
+      department_id:
+        type: string
+        description: the department id to assign
+      time:
+        type: string
+        description: the time string to remind the user to finish the task
+      frequency:
+        type: string
+        description: the frequency to input the KPI
+        enum:
+          - hour
+          - day
+          - week
+          - month
+          - quater
+          - year 
   brief_user_group_info:
     type: object
     required:
@@ -528,8 +574,8 @@ definitions:
         type: string
         description: the viewable type
         enum:
-          - private
           - public
+          - private
           - partial_allow
           - partial_block
       user_group_id:
@@ -1477,6 +1523,194 @@ paths:
           description: successful
           schema:
             $ref: '#/definitions/basic_feedback'
+        '403':
+          description: indicate the token or user session has expired
+  /kpis/properties:
+    get:
+      description: get the kpi properties list
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: the language code of the current user environment
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: the oauth token from the server
+          required: true
+          type: string
+        - name: kpi_id
+          in: body
+          type: integer
+          description: the kpi id
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/brief_kpi_properties_info'
+        '403':
+          description: indicate the token or user session has expired
+    post:
+      description: add the kpi properties
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: the language code of the current user environment
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: the oauth token from the server
+          required: true
+          type: string
+        - name: kpi_id
+          in: body
+          type: integer
+          description: the kpi id
+          required: true
+        - name: name
+          in: body
+          type: string
+          description: the property name
+          required: true
+        - name: type
+          in: body
+          type: string
+          description: the property type
+          required: true
+      responses:
+        '200':
+          description: successful
+          schema:
+            $ref: '#/definitions/basic_feedback'
+        '403':
+          description: indicate the token or user session has expired
+    put:
+      description: update the kpi properties
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: the language code of the current user environment
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: the oauth token from the server
+          required: true
+          type: string
+        - name: kpi_id
+          in: query
+          type: integer
+          description: the kpi id
+          required: true
+        - name: property_id
+          in: body
+          type: integer
+          description: the property id
+          required: true
+        - name: name
+          in: body
+          type: string
+          description: the property name
+          required: true
+        - name: type
+          in: body
+          type: string
+          description: the property type
+          required: true
+      responses:
+        '200':
+          description: successful
+          schema:
+            $ref: '#/definitions/basic_feedback'
+        '403':
+          description: indicate the token or user session has expired
+  /kpis/assigns:
+    get:
+      description: get the kpi assigned list
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: the language code of the current user environment
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: the oauth token from the server
+          required: true
+          type: string
+        - name: kpi_id
+          in: query
+          type: integer
+          description: the kpi id
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/brief_kpi_assigned_list'
+        '403':
+          description: indicate the token or user session has expired
+    post:
+      description: get the kpi assigned list
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: the language code of the current user environment
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: the oauth token from the server
+          required: true
+          type: string
+        - name: kpi_id
+          in: body
+          type: integer
+          description: the kpi id
+          required: true
+        - name: assigns
+          in: body
+          description: the add assigns detail
+          required: true
+          type: array
+          items:
+            $ref: '#/definitions/assignment'
+      responses:
+        '200':
+          description: Successful response
+          schema:
+              $ref: '#/definitions/basic_feedback'
+        '403':
+          description: indicate the token or user session has expired
+    delete:
+      description: delete the kpi assigned record
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: the language code of the current user environment
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: the oauth token from the server
+          required: true
+          type: string
+        - name: assignment_id
+          in: body
+          type: integer
+          description: the assigned id
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          schema:
+              $ref: '#/definitions/basic_feedback'
         '403':
           description: indicate the token or user session has expired
   /user_groups:

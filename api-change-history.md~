@@ -29,3 +29,39 @@
 3. change post /user_followed_kpis to  post /kpis/user_followed;
 4. change post /kpis/follow api return;
 5. change post /kpis/unfollow api return;
+6. add /kpis/user_created api
+7. change post /kpis/user_followed api return;
+
+*from 0.0.8 to 0.0.9 by Charlot
+1. change /full_text_search_users to /search/full_text/users
+2. change /full_text_search_departments to /search/full_text/departments
+3. change /full_text_search_kpis to /search/full_text/kpis
+4. change /full_text_search_follwed_kpis to /search/full_text/followed_kpis
+5. change /user_kpis to /kpis/users/accesses
+6. change /user_kpi_on_departments to /kpis/departments
+7. change /kpi to /kpis
+8. change /ser_group_lists to /user_groups
+9. change /kpi_details to /kpis/details
+10. change post /kpis/user_follwed to post /kpis/users/followed;
+11. change post /kpis/user_created to post /kpis/users/created;
+12. add assignment_id to object assignment
+13. add members to department object
+14. add get /user_groups/for_kpis api
+15. change /user_group_list to /user_groups
+16. change /user_groups return
+
+
+*from 0.0.9 to 0.0.10 by Charlot
+1. remove params user_id from /kpis/users/followed
+2. remove params user_id from /kpis/users/created
+3. add pagination  to /kpis/users/accesses & /kpis/users/followed & /kpis/users/created
+4. add /kpis/assigns api;
+5. add /kpis/properties api;
+6. add get /kpis/users/followed_details to get show on my kpi page;
+7. change get /discussions params discussion_id requires to true;
+8. change post /discussions return value;
+9. change /discussion_members to /discussions/members api;
+10. change /discussion_comments to /discussions/comments api;
+11. add get /discussions/list api;
+12. add get /discussions/for_users api;
+13. change get /user_groups/for_kpis api return value;
