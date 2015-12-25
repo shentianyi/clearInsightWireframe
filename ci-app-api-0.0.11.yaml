@@ -348,6 +348,9 @@ definitions:
         description: sorted by time
         items:
           $ref: '#/definitions/data_entry'
+  chart_data:
+    type: hash
+    key: utc date string
   kpi_aggregative_details:
     type: object
     properties:
@@ -2637,7 +2640,38 @@ paths:
             $ref: '#/definitions/comment'
         '403':
           description: indicate the token or user session has expired
-  /entires/chart_data:
+  /entries:
+    post:
+      description: enter a kpi data
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: the language code of the current user environment
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: the oauth token from the server
+          required: true
+          type: string
+        - name: task_item_id
+          in: body
+          required: false
+          description: 'the task item id to receive the data in case the user enter the data via a task. could be null if it is a manual input, and it should not post to server'
+          type: integer
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/data_input'
+      responses:
+        '201':
+          description: Successful response
+          schema:
+            $ref: '#/definitions/basic_feedback'
+        '403':
+          description: indicate the token or user session has expired        
+  /entries/chart_data:
     get:
       description: get chart data
       parameters:
@@ -2651,19 +2685,23 @@ paths:
           description: the oauth token from the server
           required: true
           type: string
+        - name: follow_id
+          in: query
+          type: integer
+          description: the follow id, if kpi id or department id is blank it is requried 
         - name: kpi_id
           in: query
-          type: string
-          required: true
-          description: the kpi id
+          type: integer
+          required: false
+          description: the kpi id, if follow id is blank it is required
         - name: department_id
           in: query
-          type: string
-          required: true
-          description: the department id
+          type: integer
+          required: false
+          description: the department id, if follow id is blank it is required
         - name: frequency
           in: query
-          type: string
+          type: integer
           required: true
           description: the frequency of time span
           enum:
@@ -2675,7 +2713,7 @@ paths:
             - year
         - name: calculate_method
           in: query
-          type: string
+          type: integer
           required: true
           description: the calculate method to summerize the data
           enum:
@@ -2704,10 +2742,10 @@ paths:
         '200':
           description: Successful response
           schema:
-            $ref: '#/definitions/kpi_aggregative_details'
+            $ref: '#/definitions/chart_data'
         '403':
           description: indicate the token or user session has expired
-  /entires/aggregate:
+  /entries/chart_aggregate_data:
     get:
       description: make an aggregative analysis
       parameters:
@@ -2721,19 +2759,23 @@ paths:
           description: the oauth token from the server
           required: true
           type: string
+        - name: follow_id
+          in: query
+          type: integer
+          description: the follow id, if kpi id or department id is blank it is requried 
         - name: kpi_id
           in: query
-          type: string
-          required: true
-          description: the kpi id
+          type: integer
+          required: false
+          description: the kpi id, if follow id is blank it is required
         - name: department_id
           in: query
-          type: string
-          required: true
-          description: the department id
+          type: integer
+          required: false
+          description: the department id, if follow id is blank it is required
         - name: frequency
           in: query
-          type: string
+          type: integer
           required: true
           description: the frequency of time span
           enum:
@@ -2745,7 +2787,7 @@ paths:
             - year
         - name: calculate_method
           in: query
-          type: string
+          type: integer
           required: true
           description: the calculate method to summerize the data
           enum:
@@ -2940,36 +2982,6 @@ paths:
             type: array
             items:
               $ref: '#/definitions/task_item'
-        '403':
-          description: indicate the token or user session has expired
-  /entries:
-    post:
-      description: enter a kpi data
-      parameters:
-        - name: Accept-Language
-          in: header
-          description: the language code of the current user environment
-          required: true
-          type: string
-        - name: Authorization
-          in: header
-          description: the oauth token from the server
-          required: true
-          type: string
-        - name: task_item_id
-          in: body
-          required: false
-          description: 'the task item id to receive the data in case the user enter the data via a task. could be null if it is a manual input, and it should not post to server'
-          type: integer
-        - name: data
-          in: body
-          schema:
-            $ref: '#/definitions/data_input'
-      responses:
-        '201':
-          description: Successful response
-          schema:
-            $ref: '#/definitions/basic_feedback'
         '403':
           description: indicate the token or user session has expired
   /user_alert_count:
