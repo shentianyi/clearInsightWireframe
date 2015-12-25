@@ -218,7 +218,7 @@ definitions:
       creator:
         type: string
         description: the nick name of the creator
-      created_on:
+      created_at:
         type: string
         description: the creation date of the discussion under UTC format
       closed_at:
@@ -227,6 +227,9 @@ definitions:
       status:
         type: string
         description: the status of the discussion
+      status_value:
+        type: string
+        description: the status value of the discussion
         enum:
           - open
           - closed
@@ -832,7 +835,7 @@ definitions:
       - followed
       - department
       - follow_flag
-      - follow_value
+      - follow_flag_value
     properties:
       followed:
         type: boolean
@@ -874,7 +877,9 @@ definitions:
     required:
       - user
       - kpi
+      - department
       - follow_flag
+      - follow_flag_value
     properties:
       user:
         $ref: '#/definitions/brief_user_info'
@@ -882,8 +887,14 @@ definitions:
       kpi:
         $ref: '#/definitions/kpi'
         description: the kpi desc
+      department:
+        $ref: '#/definitions/department'
+        description: the departments
       follow_flag:
         type: string
+        description: indicate the follow status of the user to the kpi, string to display
+      follow_flag_value:
+        type: integer
         description: indicate the follow status of the user to the kpi
         enum:
           - NONE
@@ -1656,7 +1667,7 @@ paths:
             $ref: '#/definitions/followed_kpi'
         '403':
           description: indicate the token or user session has expired
-  /alerts/kpi_follows/last:
+  /alerts/kpi_follows/latest:
     get:
       description: get followed kpi notify
       parameters:
@@ -2377,10 +2388,10 @@ paths:
           items:
             type: string
             description: array of user id of the members
-        - name: description
+        - name: content
           in: body
           type: string
-          description: the discussion first post description
+          description: the discussion content
           required: true
       responses:
         '201':
@@ -2403,6 +2414,11 @@ paths:
           description: the oauth token from the server
           required: true
           type: string
+        - name: id
+          in: query
+          required: true
+          type: integer
+          description: 'the kpi id'
         - name: page
           in: query
           type: integer
@@ -2434,6 +2450,11 @@ paths:
           description: the oauth token from the server
           required: true
           type: string
+        - name: id
+          in: query
+          required: true
+          type: integer
+          description: 'the kpi id'
         - name: page
           in: query
           type: integer
@@ -2670,7 +2691,7 @@ paths:
           schema:
             $ref: '#/definitions/basic_feedback'
         '403':
-          description: indicate the token or user session has expired        
+          description: indicate the token or user session has expired
   /entries/chart_data:
     get:
       description: get chart data
@@ -2688,17 +2709,17 @@ paths:
         - name: follow_id
           in: query
           type: integer
-          description: the follow id, if kpi id or department id is blank it is requried 
+          description: 'the follow id, if kpi id or department id is blank it is requried'
         - name: kpi_id
           in: query
           type: integer
           required: false
-          description: the kpi id, if follow id is blank it is required
+          description: 'the kpi id, if follow id is blank it is required'
         - name: department_id
           in: query
           type: integer
           required: false
-          description: the department id, if follow id is blank it is required
+          description: 'the department id, if follow id is blank it is required'
         - name: frequency
           in: query
           type: integer
@@ -2762,17 +2783,17 @@ paths:
         - name: follow_id
           in: query
           type: integer
-          description: the follow id, if kpi id or department id is blank it is requried 
+          description: 'the follow id, if kpi id or department id is blank it is requried'
         - name: kpi_id
           in: query
           type: integer
           required: false
-          description: the kpi id, if follow id is blank it is required
+          description: 'the kpi id, if follow id is blank it is required'
         - name: department_id
           in: query
           type: integer
           required: false
-          description: the department id, if follow id is blank it is required
+          description: 'the department id, if follow id is blank it is required'
         - name: frequency
           in: query
           type: integer
