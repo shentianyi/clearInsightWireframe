@@ -352,8 +352,27 @@ definitions:
         items:
           $ref: '#/definitions/data_entry'
   chart_data:
-    type: hash
-    key: utc date string
+    type: object
+    properties:
+        date_time:
+          type: dateTime
+          description: utc date
+        value:
+          type: number
+        value_text:
+          type: string
+        upper_boundary:
+          type: number
+        lower_boundary:
+          type: number
+        upper_boundary_text:
+          type: string
+        lower_boundary_text:
+          type: string
+        over_upper_boundary:
+          type: boolean
+        over_lower_boundary:
+          type: boolean        
   kpi_aggregative_details:
     type: object
     properties:
@@ -892,7 +911,7 @@ definitions:
         description: the departments
       follow_flag:
         type: string
-        description: indicate the follow status of the user to the kpi, string to display
+        description: 'indicate the follow status of the user to the kpi, string to display'
       follow_flag_value:
         type: integer
         description: indicate the follow status of the user to the kpi
@@ -2418,7 +2437,7 @@ paths:
           in: query
           required: true
           type: integer
-          description: 'the kpi id'
+          description: the kpi id
         - name: page
           in: query
           type: integer
@@ -2454,7 +2473,7 @@ paths:
           in: query
           required: true
           type: integer
-          description: 'the kpi id'
+          description: the kpi id
         - name: page
           in: query
           type: integer
@@ -2763,7 +2782,9 @@ paths:
         '200':
           description: Successful response
           schema:
-            $ref: '#/definitions/chart_data'
+            type: array
+            items:
+              $ref: '#/definitions/chart_data'
         '403':
           description: indicate the token or user session has expired
   /entries/chart_aggregate_data:
