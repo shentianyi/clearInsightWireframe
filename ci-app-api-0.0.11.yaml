@@ -373,45 +373,32 @@ definitions:
           type: boolean
         over_lower_boundary:
           type: boolean        
-  kpi_aggregative_details:
+  chart_aggregate_data:
     type: object
+    required:
+      - attributes
+      - value
+      - value_text
+      - percentage
+      - percentage_text
     properties:
-      kpi:
-        $ref: '#/definitions/kpi'
-      alert_text:
-        type: string
-      current_value:
-        type: number
-        format: float
-      frequency:
-        type: string
-        description: 'frequency in time span like hour, day, week'
-        enum:
-          - hour
-          - day
-          - week
-          - month
-          - quater
-          - year
-      calculate_method:
-        type: string
-        description: the calculate method the system supports
-        enum:
-          - average
-          - accumulate
-      from_time:
-        type: string
-        format: date-time
-      end_time:
-        type: string
-        format: date-time
-      department:
-        $ref: '#/definitions/department'
-      data_entries:
+      attributes:
         type: array
-        description: sorted by time
+        description: attribute
         items:
-          $ref: '#/definitions/data_entry_with_attributes'
+          $ref: '#/definitions/attribute_value'
+      value:
+        type: number
+        description: value
+      value_text:
+        type: string
+        description: value text
+      percentage:
+        type: number
+        description: percentage, round(2), if percentage is 98.87%, percentage number is 98.87
+      percentage_text:
+        type: string
+        description: percentage, if percentage is 98.87%, percentage text is 98.87%
   followed_kpi:
     type: object
     required:
@@ -2773,7 +2760,7 @@ paths:
           format: date-time
         - name: attributes
           in: query
-          description: donot need pass attribute_values to server
+          description:  need pass attribute values to server, if attribute id is passed
           schema:
             type: array
             items:
@@ -2849,7 +2836,7 @@ paths:
           format: date-time
         - name: attributes
           in: query
-          description: donot need pass attribute_values to server
+          description: donot need pass attribute values to server
           schema:
             type: array
             items:
@@ -2858,7 +2845,9 @@ paths:
         '200':
           description: Successful response
           schema:
-            $ref: '#/definitions/kpi_aggregative_details'
+            type: array
+            items:
+              $ref: '#/definitions/chart_aggregate_data'
         '403':
           description: indicate the token or user session has expired
   /snapshot:
