@@ -177,6 +177,15 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/comment'
+  attachment:
+    type: object
+    properties:
+      type:
+        type: string
+        description: image or snapshot
+      value:
+        type: object
+        description: the evidence
   comment:
     type: object
     properties:
@@ -187,10 +196,10 @@ definitions:
         type: string
         description: the text comment
       attachments:
-        description: 'the collection of evidence url (picture, video, snapshot)'
+        description: 'the collection of evidence (picture, video, snapshot)'
         type: array
         items:
-          type: string
+          $ref: '#/definitions/attachment'
       creator:
         description: the creator of the comment
         type: string
@@ -354,25 +363,25 @@ definitions:
   chart_data:
     type: object
     properties:
-        date_time:
-          type: dateTime
-          description: utc date
-        value:
-          type: number
-        value_text:
-          type: string
-        upper_boundary:
-          type: number
-        lower_boundary:
-          type: number
-        upper_boundary_text:
-          type: string
-        lower_boundary_text:
-          type: string
-        over_upper_boundary:
-          type: boolean
-        over_lower_boundary:
-          type: boolean        
+      date_time:
+        type: dateTime
+        description: utc date
+      value:
+        type: number
+      value_text:
+        type: string
+      upper_boundary:
+        type: number
+      lower_boundary:
+        type: number
+      upper_boundary_text:
+        type: string
+      lower_boundary_text:
+        type: string
+      over_upper_boundary:
+        type: boolean
+      over_lower_boundary:
+        type: boolean
   chart_aggregate_data:
     type: object
     required:
@@ -395,10 +404,10 @@ definitions:
         description: value text
       percentage:
         type: number
-        description: percentage, round(2), if percentage is 98.87%, percentage number is 98.87
+        description: 'percentage, round(2), if percentage is 98.87%, percentage number is 98.87'
       percentage_text:
         type: string
-        description: percentage, if percentage is 98.87%, percentage text is 98.87%
+        description: 'percentage, if percentage is 98.87%, percentage text is 98.87%'
   followed_kpi:
     type: object
     required:
@@ -2760,7 +2769,7 @@ paths:
           format: date-time
         - name: attributes
           in: query
-          description:  need pass attribute values to server, if attribute id is passed
+          description: 'need pass attribute values to server, if attribute id is passed'
           schema:
             type: array
             items:
