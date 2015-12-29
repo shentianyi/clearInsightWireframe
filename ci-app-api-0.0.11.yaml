@@ -303,22 +303,25 @@ definitions:
   snapshot:
     type: object
     properties:
-      snapshot_id:
+      alert_text:
         type: string
-        description: snapshot ID
-      kpi_id:
+        description: the followed kpi alert
+      current_value_text:
         type: string
-        description: the kpi id of the snapshot
-      department_id:
+      upper_boundary_text:
         type: string
-        description: the department ID of the snapshot
-      kpi_details:
-        $ref: '#/definitions/kpi_details'
-      created_on:
+      lower_boundary_text:
+        type: string
+      chart_data:
+        type: array
+        description: snapshot chart data
+        items:
+          $ref: '#/definitions/chart_data'
+      created_at:
         type: string
         format: date-time
         description: creation time on UTC format
-      created_by:
+      creator:
         $ref: '#/definitions/brief_user_info'
         description: "the creater's information"
   kpi_details:
@@ -2882,61 +2885,6 @@ paths:
           description: Successful response
           schema:
             $ref: '#/definitions/snapshot'
-        '403':
-          description: indicate the token or user session has expired
-    post:
-      description: post a snapshot to a discussion as comment
-      parameters:
-        - name: Accept-Language
-          in: header
-          description: the language code of the current user environment
-          required: true
-          type: string
-        - name: Authorization
-          in: header
-          description: the oauth token from the server
-          required: true
-          type: string
-        - name: kpi_details
-          in: body
-          description: the KPI performance of current query
-          schema:
-            $ref: '#/definitions/kpi_details'
-        - name: discussion_id
-          in: query
-          type: string
-          description: the discussion to add in
-      responses:
-        '201':
-          description: Successful response
-          schema:
-            $ref: '#/definitions/basic_feedback'
-        '403':
-          description: indicate the token or user session has expired
-  /upload_attachment:
-    post:
-      description: upload a file
-      parameters:
-        - name: Accept-Language
-          in: header
-          description: the language code of the current user environment
-          required: true
-          type: string
-        - name: Authorization
-          in: header
-          description: the oauth token from the server
-          required: true
-          type: string
-        - name: file
-          in: query
-          description: the file to upload.
-          type: string
-      responses:
-        '201':
-          description: Successful response
-          schema:
-            $ref: '#/definitions/basic_feedback'
-            description: in customized field set the url where the attachment uploaded stored
         '403':
           description: indicate the token or user session has expired
   /tasks:
