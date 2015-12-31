@@ -2442,6 +2442,11 @@ paths:
           required: true
           type: integer
           description: the kpi id
+        - name: relevant
+          in: query
+          required: false
+          type: boolean
+          description: the relavent flag
         - name: page
           in: query
           type: integer
