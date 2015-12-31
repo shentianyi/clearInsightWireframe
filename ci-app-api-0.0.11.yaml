@@ -2291,65 +2291,6 @@ paths:
               $ref: '#/definitions/followed_kpi'
         '403':
           description: indicate the token or user session has expired
-  /kpis/details:
-    get:
-      description: get kpi performance of a department during a time span with a calculate method
-      parameters:
-        - name: Accept-Language
-          in: header
-          description: the language code of the current user environment
-          required: true
-          type: string
-        - name: Authorization
-          in: header
-          description: the oauth token from the server
-          required: true
-          type: string
-        - name: kpi_id
-          in: query
-          type: string
-          description: the kpi id
-        - name: department_id
-          in: query
-          type: string
-          description: the department id
-        - name: frequency
-          in: query
-          type: string
-          description: the frequency of time span
-          enum:
-            - hour
-            - day
-            - week
-            - month
-            - quater
-            - year
-        - name: calculate_method
-          in: query
-          type: string
-          description: the calculate method to summerize the data
-          enum:
-            - average
-            - accumulate
-        - name: from_time
-          in: query
-          type: string
-          description: the start point of the time span
-          format: date-time
-        - name: end_time
-          in: query
-          type: string
-          description: the end point of the time span
-          format: date-time
-      responses:
-        '200':
-          description: Successful response
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/kpi_details'
-        '403':
-          description: indicate the token or user session has expired
   /discussions:
     get:
       description: get the discussion by ID
