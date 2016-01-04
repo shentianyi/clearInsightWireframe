@@ -1343,7 +1343,7 @@ paths:
         - name: department_id
           in: query
           type: integer
-          description: 'the parent department ID. If the department ID is null, return the top level of departments'
+          description: 'the parent department ID. If the department ID is not passed, return the top level of departments'
       responses:
         '200':
           description: Successful response
