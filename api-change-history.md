@@ -84,3 +84,5 @@
 13. add attribute_values to object attribute, it can be used in aggreate select
 14. add get /entries/chart_data for get chart data on S03.2
 15. change /discussions/comments api params
+16. add post /discussions/resolve api
+17. change get /discussions api return values

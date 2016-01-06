@@ -83,3 +83,4 @@
 12. change get /discussions/for_users to /discussions/users/created api;
 13. add attribute_values to object attribute, it can be used in aggreate select
 14. add get /entries/chart_data for get chart data on S03.2
+15. change /discussions/comments api params

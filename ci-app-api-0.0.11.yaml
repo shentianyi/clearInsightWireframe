@@ -242,6 +242,9 @@ definitions:
         enum:
           - open
           - closed
+      manageable:
+        type: boolean
+        description: the user can manage the discussion
   users_on_discussion:
     type: object
     properties:
@@ -2362,6 +2365,32 @@ paths:
           description: Successful response
           schema:
             $ref: '#/definitions/basic_feedback'
+        '403':
+          description: indicate the token or user session has expired
+  /discussions/resolve:
+    post:
+      description: create a discussion
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: the language code of the current user environment
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: the oauth token from the server
+          required: true
+          type: string
+        - name: id
+          in: body
+          type: string
+          description: the discussion id
+          required: true
+      responses:
+        '201':
+          description: Successful response
+          schema:
+            $ref: '#/definitions/discussion'
         '403':
           description: indicate the token or user session has expired
   /discussions/users/accesses:
