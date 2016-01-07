@@ -275,9 +275,7 @@ definitions:
       department_id:
         type: integer
       data:
-        type: object
-        item:
-          $ref: '#/definitions/data_entry_with_attributes'
+        $ref: '#/definitions/data_entry_with_attributes'
   data_entry:
     type: object
     properties:
