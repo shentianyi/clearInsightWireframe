@@ -123,6 +123,32 @@ definitions:
         $ref: '#/definitions/kpi'
       department:
         $ref: '#/definitions/department'
+  brief_entry_task_item:
+    type: object
+    properties:
+      task_item_id:
+        type: integer
+        description: the task item id
+      due_flag:
+        type: boolean
+        description: indicate whether there is task item on this user has due
+      to_due_at:
+        type: date
+        description: utc date of when should be dued
+      dued_at:
+        type: date
+        description: utc date of when has been dued
+      status:
+        type: string
+        description: the status string of the task
+      status_value:
+        type: integer
+        description: the status value of the task
+        enum:
+          - planned
+          - due_in_plan
+          - due_after_plan
+        
   task:
     type: object
     properties:
@@ -2940,14 +2966,23 @@ paths:
         - name: task_id
           in: query
           description: the task id to receive the task
-          type: string
+          required: true
+          type: integer
+        - name: page
+          in: query
+          type: integer
+          description: 'page index of request the list, start from 0'
+        - name: size
+          in: query
+          type: integer
+          description: 'page size of request the list, default is 20'
       responses:
         '200':
           description: Successful response
           schema:
             type: array
             items:
-              $ref: '#/definitions/task_item'
+              $ref: '#/definitions/brief_entry_task_item'
         '403':
           description: indicate the token or user session has expired
   /user_alert_count:
