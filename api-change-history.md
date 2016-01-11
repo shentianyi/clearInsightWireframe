@@ -86,3 +86,4 @@
 15. change /discussions/comments api params
 16. add post /discussions/resolve api
 17. change get /discussions api return values
+18. change post /discussions/members api return value

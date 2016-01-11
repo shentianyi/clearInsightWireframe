@@ -148,7 +148,6 @@ definitions:
           - planned
           - due_in_plan
           - due_after_plan
-        
   task:
     type: object
     properties:
@@ -2577,7 +2576,7 @@ paths:
         '201':
           description: Successful response
           schema:
-            $ref: '#/definitions/basic_feedback'
+            $ref: '#/definitions/users_on_discussion'
         '403':
           description: indicate the token or user session has expired
     delete:
