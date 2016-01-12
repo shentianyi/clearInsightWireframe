@@ -299,6 +299,9 @@ definitions:
         type: integer
       department_id:
         type: integer
+      entry_id:
+        type: string
+        description: entry id, can be blank, if update the entry data, it should not be blank
       data:
         $ref: '#/definitions/data_entry_with_attributes'
   data_entry:
