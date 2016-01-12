@@ -2599,6 +2599,40 @@ paths:
             $ref: '#/definitions/return_message'
         '403':
           description: indicate the token or user session has expired
+  /discussions/members/add_multiple:
+    post:
+      description: update the list of members in a discussion
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: the language code of the current user environment
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: the oauth token from the server
+          required: true
+          type: string
+        - name: id
+          in: body
+          description: discussion id
+          required: true
+          type: integer
+        - name: user_ids
+          in: body
+          description: member ids
+          required: true
+          type: array
+          items:
+            type: integer
+            description: array of user id of the members
+      responses:
+        '201':
+          description: Successful response
+          schema:
+            $ref: '#/definitions/users_on_discussion'
+        '403':
+          description: indicate the token or user session has expired
   /discussions/comments:
     get:
       description: get comments of a discussion
