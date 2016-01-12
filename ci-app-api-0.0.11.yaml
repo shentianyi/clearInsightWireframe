@@ -672,7 +672,7 @@ definitions:
       user:
         type: string
         format: email
-        description: user id
+        description: user email
       department_id:
         type: string
         description: the department id to assign
