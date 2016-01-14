@@ -2909,7 +2909,7 @@ paths:
               $ref: '#/definitions/chart_aggregate_data'
         '403':
           description: indicate the token or user session has expired
-  /snapshots:
+  /attachments/snapshots:
     get:
       description: get the snapshot by it
       parameters:
