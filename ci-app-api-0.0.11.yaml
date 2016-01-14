@@ -195,13 +195,14 @@ definitions:
   discussion_comments:
     type: object
     properties:
-      discussion_id:
+      content:
         type: string
-        description: the id of the discussion
-      comments:
+        description: the text comment
+      attachment_ids:
         type: array
         items:
-          $ref: '#/definitions/comment'
+          type: integer
+          description: the attachments id
   attachment:
     type: object
     properties:
@@ -211,6 +212,12 @@ definitions:
       value:
         type: object
         description: the evidence
+  image_attachs:
+    type: object
+    properties:
+      image:
+        type: image
+        description: the image attachment
   comment:
     type: object
     properties:
@@ -301,7 +308,7 @@ definitions:
         type: integer
       entry_id:
         type: string
-        description: entry id, can be blank, if update the entry data, it should not be blank
+        description: 'entry id, can be blank, if update the entry data, it should not be blank'
       data:
         $ref: '#/definitions/data_entry_with_attributes'
   data_entry:
@@ -2686,7 +2693,7 @@ paths:
           description: the discussion to add the comment
           required: true
           schema:
-            $ref: '#/definitions/comment'
+            $ref: '#/definitions/discussion_comments'
       responses:
         '201':
           description: Successful response
@@ -2902,7 +2909,7 @@ paths:
               $ref: '#/definitions/chart_aggregate_data'
         '403':
           description: indicate the token or user session has expired
-  /snapshot:
+  /snapshots:
     get:
       description: get the snapshot by it
       parameters:
@@ -2916,7 +2923,7 @@ paths:
           description: the oauth token from the server
           required: true
           type: string
-        - name: snapshot_id
+        - name: id
           in: query
           description: the snapshot id
           type: string
@@ -2925,6 +2932,80 @@ paths:
           description: Successful response
           schema:
             $ref: '#/definitions/snapshot'
+        '403':
+          description: indicate the token or user session has expired
+    post:
+      description: add a snapshot
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: the language code of the current user environment
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: the oauth token from the server
+          required: true
+          type: string
+        - name: snap
+          in: body
+          required: true
+          description: 'the snapshot data in json'
+          type: string
+        - name: alert_id
+          in: body
+          required: true
+          description: 'the akert id'
+          type: integer
+        - name: upper_boundary_text
+          in: body
+          required: true
+          description: 'the current upper boundary'
+          type: string
+        - name: lower_boundary_text
+          in: body
+          required: true
+          description: 'the current lower boundary'
+          type: string
+        - name: current_value_text
+          in: body
+          required: true
+          description: 'the current value'
+          type: string
+      responses:
+        '201':
+          description: Successful response
+          schema:
+            $ref: '#/definitions/basic_feedback'
+        '403':
+          description: indicate the token or user session has expired
+  /attachments/images:
+    post:
+      description: add a snapshot
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: the language code of the current user environment
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: the oauth token from the server
+          required: true
+          type: string
+        - name: attachments
+          in: body
+          required: true
+          description: 'the images list'
+          type: array
+          items:
+            type: image
+            $ref: '#/definitions/image_attachs'
+      responses:
+        '201':
+          description: Successful response
+          schema:
+            $ref: '#/definitions/basic_feedback'
         '403':
           description: indicate the token or user session has expired
   /tasks:

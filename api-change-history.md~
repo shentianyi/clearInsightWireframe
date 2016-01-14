@@ -74,7 +74,7 @@
 3. change /task_items to /tasks/entries/items
 4. change post /input_data to post /entries
 5. add get /kpis/follows to show on 3.2
-6. add field follow_id  and last_updated_at to object followed_kpi api
+6. add field follow_id  and last_updated_at to object followed_kpi 
 7. add get /alerts/kpi_follows/latest show on 3.2
 8. change /discussions api return value
 9. change /discussions/comments api params;
@@ -87,4 +87,4 @@
 16. add post /discussions/resolve api
 17. change get /discussions api return values
 18. change post /discussions/members api return value
-19. add post /discussions/members/add_multiple
+19. add post /discussions/members/add_multiple api
