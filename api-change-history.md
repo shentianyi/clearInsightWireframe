@@ -93,3 +93,8 @@
 22. change post /discussions/comments api params
 23. add post /attachments/image api
 24. change /attachments/snapshots api return value
+25. change get /kpis api params
+26. add get /alerts/tasks api
+27. add get /alerts/systems api
+28. add get /alerts/kpi_followed api
+29. add get /alerts/counts/unread api

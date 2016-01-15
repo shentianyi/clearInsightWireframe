@@ -58,6 +58,8 @@ definitions:
         type: string
       task_id:
         type: string
+      unread:
+        type: boolean
       handle_type:
         $ref: '#/definitions/alert_handle_type'
   system_alert:
@@ -65,6 +67,8 @@ definitions:
     properties:
       head:
         $ref: '#/definitions/alert_head'
+      unread:
+        type: boolean
       handle_type:
         $ref: '#/definitions/alert_handle_type'
   data_alert:
@@ -72,10 +76,8 @@ definitions:
     properties:
       head:
         $ref: '#/definitions/alert_head'
-      kpi_id:
-        type: string
-      department_id:
-        type: string
+      unread:
+        type: boolean
       handle_type:
         $ref: '#/definitions/alert_handle_type'
   kpi_follow_alert:
@@ -95,9 +97,8 @@ definitions:
         description: the alert type
         enum:
           - task
-          - data
-          - system
           - kpi_follow
+          - system
       count:
         type: number
         description: unread count
@@ -815,6 +816,7 @@ definitions:
       - target_min_text
       - uom
       - calculate_method
+      - frequency
       - viewable
     properties:
       kpi_id:
@@ -3136,7 +3138,7 @@ paths:
               $ref: '#/definitions/brief_entry_task_item'
         '403':
           description: indicate the token or user session has expired
-  /user_alert_count:
+  /alerts/users/counts/unread:
     get:
       description: get alerts of a user
       parameters:
@@ -3150,14 +3152,6 @@ paths:
           description: the oauth token from the server
           required: true
           type: string
-        - name: user_id
-          in: query
-          description: the user need to get alerts
-          type: string
-        - name: only_unread
-          in: query
-          description: whether get only unread alert
-          type: boolean
       responses:
         '200':
           description: Successful response
@@ -3167,7 +3161,7 @@ paths:
               $ref: '#/definitions/unread_alert'
         '403':
           description: indicate the token or user session has expired
-  /task_alerts:
+  /alerts/tasks:
     get:
       description: get task alerts of a user
       parameters:
@@ -3181,14 +3175,14 @@ paths:
           description: the oauth token from the server
           required: true
           type: string
-        - name: user_id
+        - name: page
           in: query
-          description: the user need to get alerts
-          type: string
-        - name: only_unread
+          type: integer
+          description: 'page index of request the list, start from 0'
+        - name: size
           in: query
-          description: whether get only unread alert
-          type: boolean
+          type: integer
+          description: 'page size of request the list, default is 20'
       responses:
         '200':
           description: Successful response
@@ -3198,7 +3192,7 @@ paths:
               $ref: '#/definitions/task_alert'
         '403':
           description: indicate the token or user session has expired
-  /system_alerts:
+  /alerts/systems:
     get:
       description: get alerts of a user
       parameters:
@@ -3212,14 +3206,14 @@ paths:
           description: the oauth token from the server
           required: true
           type: string
-        - name: user_id
+        - name: page
           in: query
-          description: the user need to get alerts
-          type: string
-        - name: only_unread
+          type: integer
+          description: 'page index of request the list, start from 0'
+        - name: size
           in: query
-          description: whether get only unread alert
-          type: boolean
+          type: integer
+          description: 'page size of request the list, default is 20'
       responses:
         '200':
           description: Successful response
@@ -3229,7 +3223,7 @@ paths:
               $ref: '#/definitions/system_alert'
         '403':
           description: indicate the token or user session has expired
-  /data_alerts:
+  /alerts/kpi_followed:
     get:
       description: get alerts of a user
       parameters:
@@ -3243,14 +3237,14 @@ paths:
           description: the oauth token from the server
           required: true
           type: string
-        - name: user_id
+        - name: page
           in: query
-          description: the user need to get alerts
-          type: string
-        - name: only_unread
+          type: integer
+          description: 'page index of request the list, start from 0'
+        - name: size
           in: query
-          description: whether get only unread alert
-          type: boolean
+          type: integer
+          description: 'page size of request the list, default is 20'
       responses:
         '200':
           description: Successful response
