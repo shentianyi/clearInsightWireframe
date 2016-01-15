@@ -3008,6 +3008,32 @@ paths:
             $ref: '#/definitions/basic_feedback'
         '403':
           description: indicate the token or user session has expired
+  /attachments/image:
+    post:
+      description: add a snapshot
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: the language code of the current user environment
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: the oauth token from the server
+          required: true
+          type: string
+        - name: image
+          in: body
+          required: true
+          description: 'the image'
+          type: image
+      responses:
+        '201':
+          description: Successful response
+          schema:
+            $ref: '#/definitions/basic_feedback'
+        '403':
+          description: indicate the token or user session has expired
   /tasks:
     get:
       description: get task by task id

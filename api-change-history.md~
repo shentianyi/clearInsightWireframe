@@ -88,3 +88,6 @@
 17. change get /discussions api return values
 18. change post /discussions/members api return value
 19. add post /discussions/members/add_multiple api
+20. add /attachments/snapshots api
+21. add /attachments/images api
+22. change post /discussions/comments api params
