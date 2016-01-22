@@ -751,7 +751,7 @@ definitions:
       - viewable_code
     properties:
       viewable_code:
-        type: string
+        type: integer
         description: the viewable type
         enum:
           - public
@@ -759,7 +759,7 @@ definitions:
           - partial_allow
           - partial_block
       user_group_id:
-        type: string
+        type: integer
         description: the tagged user group
   return_message:
     type: object
