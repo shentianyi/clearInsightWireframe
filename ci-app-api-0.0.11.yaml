@@ -652,6 +652,20 @@ definitions:
       user_group:
         $ref: '#/definitions/brief_user_group_info'
         description: user group
+          
+  kpi_detail_with_assignment:
+    type: object
+    required:
+      - kpi
+      - assignments
+    properties:
+      kpi:
+        $ref: '#/definitions/kpi_detail'
+      assignments:
+        type: array
+        items:
+          $ref: '#/definitions/assignment'
+          
   kpi_settings:
     type: object
     required:
@@ -707,6 +721,7 @@ definitions:
       attribute_value:
         type: string
         description: the attribute value
+        
   attribute:
     type: object
     required:
@@ -731,6 +746,8 @@ definitions:
       attribute_values:
         type: array
         description: the attribute values
+        
+        
   attributes_selection:
     type: object
     required:
@@ -802,7 +819,7 @@ definitions:
       customized_field:
         description: a customized field for different invoke
         type: object
-  kpi:
+  kpi_detail:
     type: object
     required:
       - kpi_id
@@ -818,6 +835,7 @@ definitions:
       - calculate_method
       - frequency
       - viewable
+      - attributes
     properties:
       kpi_id:
         type: string
@@ -846,11 +864,70 @@ definitions:
       target_min_text:
         type: string
       uom:
+        $ref: '#/definitions/enum_object'
+      calculate_method:
+        $ref: '#/definitions/enum_object'
+      frequency:
+        $ref: '#/definitions/enum_object'
+      viewable:
+        $ref: '#/definitions/viewable'
+      attributes:
+        type: array
+        description: the attributes
+        items:
+          $ref: '#/definitions/attribute'
+  kpi:
+    type: object
+    required:
+      - kpi_id
+      - kpi_name
+      - description
+      - creator
+      - created_on
+      - target_max
+      - target_min
+      - target_max_text
+      - target_min_text
+      - uom
+      - calculate_method
+      - frequency
+      - viewable
+      - attributes
+    properties:
+      kpi_id:
         type: string
+        description: the kpi unique key
+      kpi_name:
+        type: string
+        description: the kpi name
+      description:
+        type: string
+        description: the description of the KPI
+      creator:
+        type: string
+        description: "the creator's nick name"
+      created_on:
+        type: string
+        description: the creation time in UTC format
+      target_max:
+        type: number
+        description: the default max target
+      target_min:
+        type: number
+        format: float
+        description: the default min target
+      target_max_text:
+        type: string
+      target_min_text:
+        type: string
+      uom:
+        type: integer
         description: the unit of measurement code
       calculate_method:
-        type: string
+        type: integer
         description: the calculate methode code of the kpi
+      frequency:
+        type: integer
       viewable:
         $ref: '#/definitions/viewable'
       attributes:
@@ -1880,7 +1957,7 @@ paths:
         '200':
           description: successful
           schema:
-            $ref: '#/definitions/kpi_settings'
+            $ref: '#/definitions/kpi_detail_with_assignment'
         '403':
           description: indicate the token or user session has expired
     post:
@@ -1898,7 +1975,7 @@ paths:
           type: string
         - name: kpi
           in: body
-          description: the kpi name to create.
+          description: the kpi to create.
           required: true
           schema:
             $ref: '#/definitions/kpi_settings'
