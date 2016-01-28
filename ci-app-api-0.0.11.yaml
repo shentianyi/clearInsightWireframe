@@ -52,6 +52,24 @@ definitions:
         description: utc time
       sender:
         type: string
+        
+  base_alert_data:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: id of the object
+        
+  task_alert_data:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: id of the object 
+      due_flag:
+        type: boolean
+        description: weather is task is finished by user
+
   task_alert:
     type: object
     properties:
@@ -62,7 +80,8 @@ definitions:
       handle_type:
         $ref: '#/definitions/alert_handle_type'
       data:
-        $ref: '#/definitions/brief_entry_task_item'
+        $ref: '#/definitions/task_alert_data'
+        
   system_alert:
     type: object
     properties:
@@ -73,8 +92,8 @@ definitions:
       handle_type:
         $ref: '#/definitions/alert_handle_type'
       data:
-        description: when alert_type is 300(add to discussion), $ref:discussion ,when 400, $ref:user_on_department
-        $ref: '#/definitions/discussion'
+        description: when alert_type is 300(add to discussion), id is discussion_id ,when 400, id is department id
+        $ref: '#/definitions/base_alert_data'
   kpi_follow_alert:
     type: object
     properties:
@@ -85,7 +104,8 @@ definitions:
       handle_type:
         $ref: '#/definitions/alert_handle_type'
       data:
-        $ref: '#/definitions/followed_kpi'
+        description: id is follow id
+        $ref: '#/definitions/base_alert_data'
   unread_alert:
     type: object
     properties:
