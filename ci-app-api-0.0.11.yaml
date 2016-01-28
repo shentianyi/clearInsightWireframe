@@ -982,6 +982,9 @@ definitions:
       has_children:
         type: boolean
         description: flag to indicate whether it has chilren department
+      members:
+        type: arraay
+        description: user nick names in the department, limit 5, can be nil
   user_on_department:
     type: object
     properties:
@@ -1313,6 +1316,31 @@ paths:
         '403':
           description: indicate the token or user session has expired
   /departments:
+    get:
+      description: get department
+      parameters:
+        - name: id
+          in: query
+          description: department id
+          required: true
+          type: integer
+        - name: Accept-Language
+          in: header
+          description: the language code of the current user environment
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: the oauth token from the server
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            $ref: '#/definitions/department'
+        '403':
+          description: indicate the token or user session has expired
     post:
       description: create department
       parameters:
