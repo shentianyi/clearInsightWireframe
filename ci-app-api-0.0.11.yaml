@@ -3247,6 +3247,32 @@ paths:
               $ref: '#/definitions/brief_entry_task_item'
         '403':
           description: indicate the token or user session has expired
+  /tasks/entries/item:
+    get:
+      description: get task item detail by task item id
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: the language code of the current user environment
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: the oauth token from the server
+          required: true
+          type: string
+        - name: task_item_id
+          in: query
+          description: the task item id 
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            $ref: '#/definitions/brief_entry_task_item'
+        '403':
+          description: indicate the token or user session has expired
   /alerts/users/counts/unread:
     get:
       description: get alerts of a user
