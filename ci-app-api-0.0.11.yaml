@@ -42,6 +42,9 @@ definitions:
     properties:
       alert_id:
         type: integer
+      alert_type:
+        type: integer
+        description: alert type has 4: tasks(value is:100),kpi_follow(200),add_to_discussion(300),add_to_department(400).and 300&400 are system alert
       alert_text:
         type: string
       created_at:
@@ -54,14 +57,12 @@ definitions:
     properties:
       head:
         $ref: '#/definitions/alert_head'
-      task_item_id:
-        type: string
-      task_id:
-        type: string
       unread:
         type: boolean
       handle_type:
         $ref: '#/definitions/alert_handle_type'
+      data:
+        $ref: '#/definitions/brief_entry_task_item'
   system_alert:
     type: object
     properties:
@@ -71,7 +72,10 @@ definitions:
         type: boolean
       handle_type:
         $ref: '#/definitions/alert_handle_type'
-  data_alert:
+      data:
+        description: when alert_type is 300(add to discussion), $ref:discussion ,when 400, $ref:user_on_department
+        $ref: '#/definitions/discussion'
+  kpi_follow_alert:
     type: object
     properties:
       head:
@@ -80,15 +84,8 @@ definitions:
         type: boolean
       handle_type:
         $ref: '#/definitions/alert_handle_type'
-  kpi_follow_alert:
-    type: object
-    properties:
-      head:
-        $ref: '#/definitions/alert_head'
-      follow_id:
-        type: integer
-      handle_type:
-        $ref: '#/definitions/alert_handle_type'
+      data:
+        $ref: '#/definitions/followed_kpi'
   unread_alert:
     type: object
     properties:
@@ -152,6 +149,10 @@ definitions:
           - planned
           - due_in_plan
           - due_after_plan
+      kpi:
+        $ref: '#/definitions/kpi'
+      department:
+        $ref: '#/definitions/department'
   task:
     type: object
     properties:
@@ -252,6 +253,9 @@ definitions:
       title:
         type: string
         description: "the discussion's title"
+      content:
+        type: string
+        description: "the discussion's content"
       kpi_id:
         type: string
       department_id:
