@@ -116,6 +116,8 @@ definitions:
           - task
           - kpi_follow
           - system
+          - add_to_discussion
+          - add_to_department
       count:
         type: number
         description: unread count
