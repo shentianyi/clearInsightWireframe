@@ -120,6 +120,9 @@ definitions:
       dued_at:
         type: date
         description: utc date of when has been dued
+      assigner:
+        description: the assigner(user) of the task
+        $ref: '#/definitions/brief_user_info'
       kpi:
         $ref: '#/definitions/kpi'
       department:
@@ -144,7 +147,7 @@ definitions:
         description: the status string of the task
       status_value:
         type: integer
-        description: the status value of the task
+        description: the status value of the task, int values of planned is 100,due_in_plan is 200, due_after_plan is 300
         enum:
           - planned
           - due_in_plan
@@ -3198,6 +3201,11 @@ paths:
           description: the task id to receive the task
           required: true
           type: integer
+        - name: status
+          in: query
+          description: the status values of task item, like planed, default is [100], can be blank(not pass to server)
+          required: false
+          type: array
         - name: page
           in: query
           type: integer
