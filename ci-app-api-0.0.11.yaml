@@ -44,7 +44,7 @@ definitions:
         type: integer
       alert_type:
         type: integer
-        description: alert type has 4: tasks(value is:100),kpi_follow(200),add_to_discussion(300),add_to_department(400).and 300&400 are system alert
+        description: alert type has 4: tasks(value is:100),kpi_follow(200),add_to_discussion(310),add_to_department(320).and 310&320 are system alert
       alert_text:
         type: string
       created_at:
@@ -92,7 +92,7 @@ definitions:
       handle_type:
         $ref: '#/definitions/alert_handle_type'
       data:
-        description: when alert_type is 300(add to discussion), id is discussion_id ,when 400, id is department id
+        description: when alert_type is 310(add to discussion), id is discussion_id ,when 410, id is department id
         $ref: '#/definitions/base_alert_data'
   kpi_follow_alert:
     type: object
