@@ -34,9 +34,12 @@ definitions:
   alert_handle_type:
     type: object
     description: 'the alert message handle type, if auto_read, server will mark readed auto, if manual_read, user should mark read on ui'
-    enum:
-      - auto_read
-      - manual_read
+    properties:
+      id:
+        type: integer
+        description: 'alert type id,  100 is manualread, 200 is autoread'
+      name:
+        type: string
   alert_head:
     type: object
     properties:
@@ -44,7 +47,7 @@ definitions:
         type: integer
       alert_type:
         type: integer
-        description: alert type has 4: tasks(value is:100),kpi_follow(200),add_to_discussion(310),add_to_department(320).and 310&320 are system alert
+        description: "alert type has 4: tasks(value is:100),kpi_follow(200),add_to_discussion(310),add_to_department(320).and 310&320 are system alert"
       alert_text:
         type: string
       created_at:
@@ -3416,6 +3419,6 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/data_alert'
+              $ref: '#/definitions/kpi_follow_alert'
         '403':
           description: indicate the token or user session has expired
