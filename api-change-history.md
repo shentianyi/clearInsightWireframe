@@ -98,3 +98,5 @@
 27. add get /alerts/systems api
 28. add get /alerts/kpi_followed api
 29. add get /alerts/counts/unread api
+30. add post /alerts/read api
+31. add post /users/device_infos
